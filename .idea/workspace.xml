@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a2b6b00e-a05d-4e3d-9b80-748bcacda1f3" name="Changes" comment="Added login and signup interface adapters and views">
-      <change afterPath="$PROJECT_DIR$/src/interface_adapter/logged_in/LoggedInState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/interface_adapter/logged_in/LoggedInViewModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="a2b6b00e-a05d-4e3d-9b80-748bcacda1f3" name="Changes" comment="Added java classes for LoggedIn and edited SignupView.java" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -95,7 +91,7 @@
       <option name="presentableId" value="Default" />
       <updated>1698704427450</updated>
       <workItem from="1698704428532" duration="3143000" />
-      <workItem from="1699029445770" duration="4786000" />
+      <workItem from="1699029445770" duration="5140000" />
     </task>
     <task id="LOCAL-00001" summary="Added login and signup interface adapters and views">
       <option name="closed" value="true" />
@@ -105,7 +101,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699033358605</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Added java classes for LoggedIn and edited SignupView.java">
+      <option name="closed" value="true" />
+      <created>1699034704668</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1699034704668</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -114,6 +118,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Adding more core features" />
     <MESSAGE value="Added login and signup interface adapters and views" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added login and signup interface adapters and views" />
+    <MESSAGE value="Added java classes for LoggedIn and edited SignupView.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added java classes for LoggedIn and edited SignupView.java" />
   </component>
 </project>
