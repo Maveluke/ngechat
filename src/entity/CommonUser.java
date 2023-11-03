@@ -5,9 +5,13 @@ public class CommonUser implements User {
         private String Username;
         private final String Id;
 
-        public CommonUser(String username, String Id){
+        private final String Password;
+
+        public CommonUser(String username, String Id, String password){
                 this.Username = username;
                 this.Id = Id;
+                this.Password = password;
+
 
         }
 
@@ -24,6 +28,7 @@ public class CommonUser implements User {
                 return this.Id;
         }
 
+        public String getPassword() {return this.Password;}
 
         }
 
