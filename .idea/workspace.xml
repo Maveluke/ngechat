@@ -4,26 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a2b6b00e-a05d-4e3d-9b80-748bcacda1f3" name="Changes" comment="Adding more core features">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/interface_adapter/UserCreationFailed.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/interface_adapter/ViewManagerModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/interface_adapter/ViewModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/interface_adapter/login/LoginPresenter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/interface_adapter/login/LoginState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/interface_adapter/login/LoginViewModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/interface_adapter/signup/SignupPresenter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/interface_adapter/signup/SignupState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/interface_adapter/signup/SignupViewModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/view/LabelTextPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/view/LoginView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/view/SignupView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/view/ViewManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interface_adapter/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interface_adapter/login/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/interface_adapter/SignupController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/interface_adapter/signup/SignupController.java" afterDir="false" />
-    </list>
+    <list default="true" id="a2b6b00e-a05d-4e3d-9b80-748bcacda1f3" name="Changes" comment="Added java classes for LoggedIn and edited SignupView.java" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -61,11 +42,12 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "Melissa",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -109,8 +91,25 @@
       <option name="presentableId" value="Default" />
       <updated>1698704427450</updated>
       <workItem from="1698704428532" duration="3143000" />
-      <workItem from="1699029445770" duration="3712000" />
+      <workItem from="1699029445770" duration="5140000" />
     </task>
+    <task id="LOCAL-00001" summary="Added login and signup interface adapters and views">
+      <option name="closed" value="true" />
+      <created>1699033358605</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1699033358605</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added java classes for LoggedIn and edited SignupView.java">
+      <option name="closed" value="true" />
+      <created>1699034704668</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1699034704668</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -118,6 +117,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Adding more core features" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding more core features" />
+    <MESSAGE value="Added login and signup interface adapters and views" />
+    <MESSAGE value="Added java classes for LoggedIn and edited SignupView.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added java classes for LoggedIn and edited SignupView.java" />
   </component>
 </project>
