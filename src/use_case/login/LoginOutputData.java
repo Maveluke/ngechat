@@ -1,10 +1,10 @@
 package use_case.login;
 
-public class LogInOutputData {
+public class LoginOutputData {
 
     String Username;
 
-    public LogInOutputData(String Username) {
+    public LoginOutputData(String Username) {
         this.Username = Username;
     }
 

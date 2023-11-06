@@ -1,6 +1,5 @@
 package use_case.login;
 
-import data_access.DataAccessObject;
 import entity.User;
 
 import java.util.Objects;
@@ -8,15 +7,15 @@ import java.util.Objects;
 public class LoginInteractor implements LoginInputBoundary {
 
     private final LoginDataAccessInterface userDataAccessObject;
-    private final LogInOutputBoundary loginPresenter;
+    private final LoginOutputBoundary loginPresenter;
 
-    public LoginInteractor(LogInOutputBoundary logInOutputBoundary,
+    public LoginInteractor(LoginOutputBoundary logInOutputBoundary,
                            LoginDataAccessInterface dataAccessObject){
         this.userDataAccessObject = dataAccessObject;
         this.loginPresenter = logInOutputBoundary;
     }
 
-    public void execute(LogInInputData logInInputData) {
+    public void execute(LoginInputData logInInputData) {
 
         String username = logInInputData.getUsername();
         String password = logInInputData.getPassword();
@@ -31,7 +30,7 @@ public class LoginInteractor implements LoginInputBoundary {
             } else {
 
                 User user = userDataAccessObject.get(username);
-                LogInOutputData loginOutputData = new LogInOutputData(user.getName());
+                LoginOutputData loginOutputData = new LoginOutputData(user.getName());
                 loginPresenter.prepareSuccessView(loginOutputData);
 
             }
