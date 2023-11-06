@@ -1,4 +1,4 @@
-package use_case.LogIn;
+package use_case.login;
 
 public interface LogInOutputBoundary {
 
