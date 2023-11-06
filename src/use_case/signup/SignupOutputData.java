@@ -7,9 +7,10 @@ public class SignupOutputData {
 
     private boolean useCaseFailed;
 
-    public SignupOutputData(String username, boolean useCaseFailed) {
+    public SignupOutputData(String username, String creationTime, boolean useCaseFailed) {
         this.username = username;
         this.useCaseFailed = useCaseFailed;
+        this.creationTime = creationTime;
     }
 
     public String getUsername() {
