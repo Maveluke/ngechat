@@ -11,8 +11,6 @@ public class CommonUser implements User {
                 this.Username = username;
                 this.Id = Id;
                 this.Password = password;
-
-
         }
 
         public String getName(){
