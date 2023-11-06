@@ -14,21 +14,21 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface {
 
     private final String masterKey;
     private final String downloadURL;
+    private final String uploadURL;
     private final Map<String, User> accounts = new HashMap<>();
 
     //  TODO: Implement the constructor by downloading files from the API
-    public UserDataAccessObject(String masterKey, String downloadURL){
+    public UserDataAccessObject(String masterKey, String uploadURL, String downloadURL){
         this.masterKey = masterKey;
+        this.uploadURL = uploadURL;
         this.downloadURL = downloadURL;
     }
 
-    // TODO: Implement existsByName
     @Override
     public boolean existsByName(String identifier) {
         return accounts.containsKey(identifier);
     }
 
-    // TODO: Implement save (and upload changes to API)
     @Override
     public void save(User user) {
         MediaType mediaType = MediaType.parse("application/json");
