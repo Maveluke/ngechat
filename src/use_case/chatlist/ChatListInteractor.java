@@ -1,5 +1,7 @@
 package use_case.chatlist;
 
+import entity.Chat;
+
 import java.util.ArrayList;
 
 public class ChatListInteractor implements ChatListInputBoundary{
@@ -18,7 +20,7 @@ public class ChatListInteractor implements ChatListInputBoundary{
         if (chatListDataAccessObject.is_empty()) {
             chatListPresenter.prepareFailView("No chat available");
         } else {
-            ArrayList<chat> chatList = chatListDataAccessObject.getChat()
+            ArrayList<Chat> chatList = chatListDataAccessObject.getChat();
             ChatListOutputData chatListOutputData = new ChatListOutputData(chatList);
             chatListPresenter.prepareSuccessView(chatListOutputData);
         }
