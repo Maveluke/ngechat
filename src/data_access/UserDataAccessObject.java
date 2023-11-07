@@ -3,6 +3,7 @@ package data_access;
 import entity.User;
 import okhttp3.*;
 import org.json.JSONObject;
+import use_case.login.LoginDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 import java.time.LocalDateTime;
@@ -10,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserDataAccessObject implements SignupUserDataAccessInterface {
+public class UserDataAccessObject implements SignupUserDataAccessInterface, LoginDataAccessInterface {
 
     private final String masterKey;
     private final String downloadURL;
@@ -55,5 +56,10 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface {
         }catch (Exception e){
             System.out.println("Fail to get response");
         }
+    }
+
+    @Override
+    public User get(String username) {
+        return accounts.get(username);
     }
 }
