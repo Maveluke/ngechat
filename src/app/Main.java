@@ -25,7 +25,7 @@ public class Main {
         application.add(views);
 
         ViewManagerModel viewManagerModel = new ViewManagerModel();
-//        new ViewManager(views, cardLayout, viewManagerModel);
+        new ViewManager(views, cardLayout, viewManagerModel);
 
         LoginViewModel loginViewModel = new LoginViewModel();
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
@@ -44,10 +44,10 @@ public class Main {
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
-//        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
-//        views.add(loginView, loginView.viewName);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
+        views.add(loginView, loginView.viewName);
 
-        viewManagerModel.setActiveView(signupView.viewName);
+        viewManagerModel.setActiveView(loginView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
