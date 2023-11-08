@@ -4,16 +4,17 @@ import entity.Chat;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ChatListOutputData {
 
-    private ArrayList<Chat> ChatList;
+    private HashMap<String, Chat> ChatList;
 
-    public ChatListOutputData(ArrayList<Chat> chatList){
+    public ChatListOutputData(HashMap<String, Chat> chatList){
         this.ChatList = chatList;
     }
 
-    public ArrayList<Chat> getChatList(){
+    public HashMap<String, Chat> getChatList(){
         return ChatList;
     }
 

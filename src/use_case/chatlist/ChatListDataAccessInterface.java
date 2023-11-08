@@ -3,10 +3,11 @@ package use_case.chatlist;
 import entity.Chat;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface ChatListDataAccessInterface {
 
-    public ArrayList<Chat> getChat();
+    public HashMap<String, Chat> getChat();
 
 
     // implement this by checking if getChat().is_empty() is true
