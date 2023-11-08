@@ -21,7 +21,7 @@ public class ChatListInteractor implements ChatListInputBoundary{
         if (chatListDataAccessObject.is_empty()) {
             chatListPresenter.prepareFailView("No chat available");
         } else {
-            HashMap<String, Chat> chatList = chatListDataAccessObject.getChat();
+            ArrayList<Chat> chatList = chatListDataAccessObject.getChat();
             ChatListOutputData chatListOutputData = new ChatListOutputData(chatList);
             chatListPresenter.prepareSuccessView(chatListOutputData);
         }

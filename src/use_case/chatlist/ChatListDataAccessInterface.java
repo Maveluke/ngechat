@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 public interface ChatListDataAccessInterface {
 
-    public HashMap<String, Chat> getChat();
+    public ArrayList<Chat> getChat();
 
 
     // implement this by checking if getChat().is_empty() is true

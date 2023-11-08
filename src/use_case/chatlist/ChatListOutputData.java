@@ -8,13 +8,13 @@ import java.util.HashMap;
 
 public class ChatListOutputData {
 
-    private HashMap<String, Chat> ChatList;
+    private ArrayList<Chat> ChatList;
 
-    public ChatListOutputData(HashMap<String, Chat> chatList){
+    public ChatListOutputData(ArrayList<Chat> chatList){
         this.ChatList = chatList;
     }
 
-    public HashMap<String, Chat> getChatList(){
+    public ArrayList<Chat> getChatList(){
         return ChatList;
     }
 
