@@ -2,12 +2,14 @@ package use_case.chatlist;
 
 import entity.Chat;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public interface ChatListDataAccessInterface {
 
-    public ArrayList<Chat> getChat();
+
+    public HashMap<String, ArrayList<String>> getChats();
 
 
     // implement this by checking if getChat().is_empty() is true
