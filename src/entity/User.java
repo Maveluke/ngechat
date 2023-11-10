@@ -9,4 +9,8 @@ public interface User {
     public String getID();
 
     public String getPassword();
+
+    public boolean userAddFriend(User friend);
+
+    public boolean userRemoveFriend(User friend);
 }

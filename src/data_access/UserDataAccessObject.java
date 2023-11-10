@@ -2,7 +2,9 @@ package data_access;
 
 import entity.User;
 import okhttp3.*;
+import org.json.JSONArray;
 import org.json.JSONObject;
+import use_case.add_contact.AddContactDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 import java.time.LocalDateTime;
@@ -10,12 +12,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserDataAccessObject implements SignupUserDataAccessInterface {
+public class UserDataAccessObject implements SignupUserDataAccessInterface, AddContactDataAccessInterface {
 
     private final String masterKey;
     private final String downloadURL;
     private final String uploadURL;
     private final Map<String, User> accounts = new HashMap<>();
+    private String currentUsername = null;
 
     //  TODO: Implement the constructor by downloading files from the API
     public UserDataAccessObject(String masterKey, String uploadURL, String downloadURL){
@@ -36,6 +39,8 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface {
 
         JSONObject userToSave = new JSONObject();
         userToSave.put(user.getName(), user.getPassword());
+        JSONArray userFriends = new JSONArray(); // key: username, value: collection ID
+        userToSave.put("friends", userFriends);
 
         LocalDateTime localDateTime = LocalDateTime.now();
         RequestBody body = RequestBody.create(userToSave.toString(), mediaType);
@@ -55,5 +60,21 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface {
         }catch (Exception e){
             System.out.println("Fail to get response");
         }
+    }
+
+    @Override
+    public boolean addFriend(String username, String friendUsername) {
+        User user = accounts.get(username);
+        User friend = accounts.get(friendUsername);
+        return user.userAddFriend(friend) && friend.userAddFriend(user);
+    }
+
+    @Override
+    public User getCurrentUser() {
+        return accounts.get(this.currentUsername);
+    }
+
+    public void setCurrentUsername(String currentUsername) {
+        this.currentUsername = currentUsername;
     }
 }
