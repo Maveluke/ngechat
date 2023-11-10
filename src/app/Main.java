@@ -4,7 +4,6 @@ import data_access.UserDataAccessObject;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_contact.AddContactViewModel;
 import interface_adapter.friends_list.FriendsListViewModel;
-import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
 import view.AddContactView;
@@ -15,7 +14,6 @@ import view.ViewManager;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.rmi.server.ExportException;
 
 public class Main {
     public static void main(String[] args) throws IOException{
@@ -31,7 +29,6 @@ public class Main {
         new ViewManager(views, cardLayout, viewManagerModel);
 
         LoginViewModel loginViewModel = new LoginViewModel();
-        LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
         AddContactViewModel addContactViewModel = new AddContactViewModel();
         FriendsListViewModel friendsListViewModel = new FriendsListViewModel();
