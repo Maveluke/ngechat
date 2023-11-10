@@ -1,8 +1,11 @@
 package view;
 
+import interface_adapter.login.LoginState;
+import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupState;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.switch_view.SwitchViewController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,12 +24,15 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
     private final SignupController signupController;
+    private final SwitchViewController switchViewController;
 
     private final JButton signUp;
     private final JButton cancel;
+    private final JButton logIn;
 
-    public SignupView(SignupController controller, SignupViewModel signupViewModel) {
+    public SignupView(SwitchViewController switchViewController, SignupController controller, SignupViewModel signupViewModel) {
 
+        this.switchViewController = switchViewController;
         this.signupController = controller;
         this.signupViewModel = signupViewModel;
         signupViewModel.addPropertyChangeListener(this);
@@ -42,11 +48,21 @@ public class SignupView extends JPanel implements ActionListener, PropertyChange
                 new JLabel(SignupViewModel.REPEAT_PASSWORD_LABEL), repeatPasswordInputField);
 
         JPanel buttons = new JPanel();
+        logIn = new JButton(LoginViewModel.LOGIN_BUTTON_LABEL);
+        buttons.add(logIn);
         signUp = new JButton(SignupViewModel.SIGNUP_BUTTON_LABEL);
         buttons.add(signUp);
         cancel = new JButton(SignupViewModel.CANCEL_BUTTON_LABEL);
         buttons.add(cancel);
 
+        logIn.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        switchViewController.execute("log in");
+                    }
+                }
+        );
         signUp.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
