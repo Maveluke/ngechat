@@ -1,4 +1,4 @@
-package view;
+package view.in_chat;
 
 public class InChatGroupView extends InChatView {
 }
