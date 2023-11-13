@@ -7,7 +7,7 @@ import use_case.chatlist.ChatListOutputBoundary;
 public class ChatListPresenter implements ChatListOutputBoundary{
 
     private final interface_adapter.chatlist.ChatListViewModel chatlistViewModel;
-    private ViewManagerModel viewManagerModel;
+    private final ViewManagerModel viewManagerModel;
     public ChatListPresenter(ChatListViewModel chatlistViewModel, ViewManagerModel viewManagerModel) {
         this.chatlistViewModel = chatlistViewModel;
         this.viewManagerModel = viewManagerModel;
@@ -17,10 +17,12 @@ public class ChatListPresenter implements ChatListOutputBoundary{
     public void prepareSuccessView(ChatListOutputData chatListOutputData) {
         chatlistViewModel.set_chat(chatListOutputData.getChatList());
         chatlistViewModel.firePropertyChanged();
+        viewManagerModel.setActiveView(chatlistViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 
     @Override
     public void prepareFailView(String error) {
-        System.out.println("error");
+        System.out.println(error);
     }
 }

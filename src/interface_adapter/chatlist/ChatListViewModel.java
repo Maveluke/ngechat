@@ -10,6 +10,7 @@ import java.util.HashMap;
 public class ChatListViewModel extends ViewModel{
 
     private static String username = "Username";
+//    TODO: use current user's username
 
     private HashMap<String, ArrayList<String>> chatList = new HashMap<String, ArrayList<String>>();
 
