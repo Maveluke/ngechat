@@ -19,8 +19,8 @@ public class ChatListView {
         this.chatListViewModel = chatlistViewModel;
         
         JFrame chatframe = new JFrame("ngechat");
-        JPanel user = new JPanel();
-        user.setLayout(new BoxLayout(user, BoxLayout.X_AXIS));
+        JPanel header = new JPanel();
+        header.setLayout(new BoxLayout(header, BoxLayout.X_AXIS));
 
         ImageIcon profpic = new ImageIcon("src/View/Photos/GenericPP.jpg");
 //      TODO: change profpic filename to the actual profpic file name
@@ -28,10 +28,10 @@ public class ChatListView {
         Image newimg = image.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
         profpic = new ImageIcon(newimg);
         JLabel _profpic = new JLabel(profpic);
-        user.add(_profpic);
+        header.add(_profpic);
 
         JLabel username = new JLabel(chatlistViewModel.getUsername());
-        user.add(username);
+        header.add(username);
 
         ImageIcon addchat = new ImageIcon("src/Photos/Plus.png");
         Image _add = addchat.getImage();
@@ -64,7 +64,7 @@ public class ChatListView {
 
             }
         });
-        user.add(addicon, BorderLayout.EAST);
+        header.add(addicon, BorderLayout.EAST);
 
         ImageIcon delete = new ImageIcon("src/Photos/Delete.png");
         Image _delete = delete.getImage();
@@ -97,9 +97,9 @@ public class ChatListView {
 
             }
         });
-        user.add(deleteicon, BorderLayout.EAST);
+        header.add(deleteicon, BorderLayout.EAST);
 
-        chatframe.add(user);
+        chatframe.add(header);
 
         HashMap<String, ArrayList<String>> chatlist = chatlistViewModel.getChatList();
         for (String person: chatlist.keySet()) {
@@ -160,7 +160,7 @@ public class ChatListView {
         chatframe.setVisible(true);
         chatframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        user.addMouseListener(new MouseListener() {
+        header.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
 //          TODO: go to profile
