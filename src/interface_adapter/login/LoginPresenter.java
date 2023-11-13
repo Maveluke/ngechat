@@ -1,25 +1,22 @@
 package interface_adapter.login;
 
-import interface_adapter.logged_in.LoggedInState;
-import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.signup.SignupState;
+import interface_adapter.chat_list.ChatListState;
+import interface_adapter.chat_list.ChatListViewModel;
 import use_case.login.LoginOutputBoundary;
 import use_case.login.LoginOutputData;
-import use_case.signup.SignupOutputBoundary;
-import use_case.signup.SignupOutputData;
 
 public class LoginPresenter implements LoginOutputBoundary {
 
     private final interface_adapter.login.LoginViewModel loginViewModel;
-    private final LoggedInViewModel loggedInViewModel;
+    private final ChatListViewModel chatListViewModel;
     private ViewManagerModel viewManagerModel;
 
     public LoginPresenter(ViewManagerModel viewManagerModel,
-                          LoggedInViewModel loggedInViewModel,
+                          ChatListViewModel chatListViewModel,
                           interface_adapter.login.LoginViewModel loginViewModel) {
         this.viewManagerModel = viewManagerModel;
-        this.loggedInViewModel = loggedInViewModel;
+        this.chatListViewModel = chatListViewModel;
         this.loginViewModel = loginViewModel;
     }
 
@@ -27,12 +24,13 @@ public class LoginPresenter implements LoginOutputBoundary {
     public void prepareSuccessView(LoginOutputData response) {
         // On success, switch to the logged in view.
 
-        LoggedInState loggedInState = loggedInViewModel.getState();
-        loggedInState.setUsername(response.getUsername());
-        this.loggedInViewModel.setState(loggedInState);
-        this.loggedInViewModel.firePropertyChanged();
+        ChatListState chatListState = chatListViewModel.getState();
 
-        this.viewManagerModel.setActiveView(loggedInViewModel.getViewName());
+        // TODO: add something (?)
+        this.chatListViewModel.setState(chatListState);
+        this.chatListViewModel.firePropertyChanged();
+
+        this.viewManagerModel.setActiveView(chatListViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }
 
