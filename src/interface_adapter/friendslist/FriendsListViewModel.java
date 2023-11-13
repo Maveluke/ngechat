@@ -1,4 +1,4 @@
-package interface_adapter.FriendsList;
+package interface_adapter.friendslist;
 
 public class FriendsListViewModel {
 }

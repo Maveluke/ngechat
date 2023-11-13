@@ -1,7 +1,7 @@
-package view.contacts;
+package view.contacts_list;
 
-import interface_adapter.FriendsList.FriendsListController;
-import interface_adapter.FriendsList.FriendsListViewModel;
+import interface_adapter.friendslist.FriendsListController;
+import interface_adapter.friendslist.FriendsListViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,8 +9,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class FriendsListView {
-    private final FriendsListViewModel friendsListViewModel;
     private final FriendsListController friendsListController;
+    private final FriendsListViewModel friendsListViewModel;
     FriendsListView(FriendsListController controller, FriendsListViewModel friendsListViewModel) {
         this.friendsListController = controller;
         this.friendsListViewModel = friendsListViewModel;

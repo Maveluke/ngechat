@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ChatListView {
-    private final ChatListViewModel chatListViewModel;
     private final ChatListController chatListController;
+    private final ChatListViewModel chatListViewModel;
     ChatListView(ChatListController controller, ChatListViewModel chatlistViewModel){
         
         this.chatListController = controller;
