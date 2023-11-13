@@ -1,6 +1,5 @@
 package view;
 
-import entity.Chat;
 import interface_adapter.chatlist.ChatListController;
 import interface_adapter.chatlist.ChatListViewModel;
 
@@ -24,6 +23,7 @@ public class ChatListView {
         user.setLayout(new BoxLayout(user, BoxLayout.X_AXIS));
 
         ImageIcon profpic = new ImageIcon("src/View/Photos/GenericPP.jpg");
+//      TODO: change profpic filename to the actual profpic file name
         Image image = profpic.getImage();
         Image newimg = image.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
         profpic = new ImageIcon(newimg);
@@ -33,19 +33,71 @@ public class ChatListView {
         JLabel username = new JLabel(chatlistViewModel.getUsername());
         user.add(username);
 
-        ImageIcon delete = new ImageIcon("src/Photos/Delete.png");
-        Image _delete = delete.getImage();
-        Image newdelete = _delete.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
-        delete = new ImageIcon(newdelete);
-        JLabel deleteicon = new JLabel(delete);
-        user.add(deleteicon, BorderLayout.EAST);
-
         ImageIcon addchat = new ImageIcon("src/Photos/Plus.png");
         Image _add = addchat.getImage();
         Image newadd = _add.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
         addchat = new ImageIcon(newadd);
         JLabel addicon = new JLabel(addchat);
+        addicon.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+//              TODO: implement add chat
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
         user.add(addicon, BorderLayout.EAST);
+
+        ImageIcon delete = new ImageIcon("src/Photos/Delete.png");
+        Image _delete = delete.getImage();
+        Image newdelete = _delete.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
+        delete = new ImageIcon(newdelete);
+        JLabel deleteicon = new JLabel(delete);
+        deleteicon.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+//              TODO: implement delete chat
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+        user.add(deleteicon, BorderLayout.EAST);
 
         chatframe.add(user);
 
@@ -55,6 +107,7 @@ public class ChatListView {
             chatpanel.setLayout(new BoxLayout(chatpanel, BoxLayout.X_AXIS));
 
             ImageIcon pic = new ImageIcon("src/View/Photos/GenericPP2.jpg");
+//          TODO: change profpic filename to the actual profpic file name
             Image _image = pic.getImage();
             Image _newimg = _image.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
             pic = new ImageIcon(_newimg);
