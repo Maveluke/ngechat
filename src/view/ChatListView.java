@@ -33,6 +33,20 @@ public class ChatListView {
         JLabel username = new JLabel(chatlistViewModel.getUsername());
         user.add(username);
 
+        ImageIcon delete = new ImageIcon("src/Photos/Delete.png");
+        Image _delete = delete.getImage();
+        Image newdelete = _delete.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
+        delete = new ImageIcon(newdelete);
+        JLabel deleteicon = new JLabel(delete);
+        user.add(deleteicon, BorderLayout.EAST);
+
+        ImageIcon addchat = new ImageIcon("src/Photos/Plus.png");
+        Image _add = addchat.getImage();
+        Image newadd = _add.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
+        addchat = new ImageIcon(newadd);
+        JLabel addicon = new JLabel(addchat);
+        user.add(addicon, BorderLayout.EAST);
+
         chatframe.add(user);
 
         HashMap<String, ArrayList<String>> chatlist = chatlistViewModel.getChatList();
