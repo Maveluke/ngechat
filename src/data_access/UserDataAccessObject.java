@@ -5,14 +5,18 @@ import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import use_case.add_contact.AddContactDataAccessInterface;
+import use_case.chat_list.ChatListDataAccessInterface;
+import use_case.login.LoginDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserDataAccessObject implements SignupUserDataAccessInterface, AddContactDataAccessInterface {
+public class UserDataAccessObject implements SignupUserDataAccessInterface,
+        AddContactDataAccessInterface, ChatListDataAccessInterface, LoginDataAccessInterface {
 
     private final String masterKey;
     private final String downloadURL;
@@ -39,7 +43,7 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface, AddC
 
         JSONObject userToSave = new JSONObject();
         userToSave.put(user.getName(), user.getPassword());
-        JSONArray userFriends = new JSONArray(); // key: username, value: collection ID
+        JSONArray userFriends = new JSONArray(); // key: username, value: collection ID (?)
         userToSave.put("friends", userFriends);
 
         LocalDateTime localDateTime = LocalDateTime.now();
@@ -63,6 +67,11 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface, AddC
     }
 
     @Override
+    public User get(String username) {
+        return accounts.get(username);
+    }
+
+    @Override
     public boolean addFriend(String username, String friendUsername) {
         User user = accounts.get(username);
         User friend = accounts.get(friendUsername);
@@ -76,5 +85,20 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface, AddC
 
     public void setCurrentUsername(String currentUsername) {
         this.currentUsername = currentUsername;
+    }
+
+    @Override
+    public HashMap<String, ArrayList<String>> getChats() {
+        return null;
+    }
+
+    @Override
+    public boolean is_empty() {
+        return false;
+    }
+
+    @Override
+    public void deleteChat() {
+
     }
 }
