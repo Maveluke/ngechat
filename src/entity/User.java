@@ -1,16 +1,18 @@
 package entity;
 
+import java.util.ArrayList;
+
 public interface User {
 
-    public String getName();
+    String getName();
 
     void changeName(String name);
 
-    public String getID();
+    String getPassword();
 
-    public String getPassword();
+    ArrayList<User> getFriendsList();
 
-    public boolean userAddFriend(User friend);
+    boolean userAddFriend(User friend);
 
-    public boolean userRemoveFriend(User friend);
+    boolean userRemoveFriend(User friend);
 }
