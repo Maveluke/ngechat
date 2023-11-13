@@ -1,8 +1,5 @@
-package use_case.chatlist;
+package use_case.chat_list;
 
-import entity.Chat;
-
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
