@@ -15,7 +15,7 @@ public class CommonGroup implements Group {
     };
 
     public void addUsers(User user){
-        this.Users.put(user.getID(), user);
+        this.Users.put(user.getName(), user);
     }
 
 }
