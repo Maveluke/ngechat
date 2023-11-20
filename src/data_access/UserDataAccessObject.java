@@ -5,6 +5,7 @@ import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import use_case.add_chat.AddChatDataAccessInterface;
+import use_case.add_contact.AddContactDataAccessInterface;
 import use_case.chat_list.ChatListDataAccessInterface;
 import use_case.friends_list.FriendsListDataAccessInterface;
 import use_case.login.LoginDataAccessInterface;
@@ -17,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserDataAccessObject implements SignupUserDataAccessInterface,
-        AddChatDataAccessInterface, ChatListDataAccessInterface, LoginDataAccessInterface, FriendsListDataAccessInterface {
+        AddContactDataAccessInterface, ChatListDataAccessInterface, LoginDataAccessInterface, FriendsListDataAccessInterface {
 
     private final String masterKey;
     private final String downloadURL;
