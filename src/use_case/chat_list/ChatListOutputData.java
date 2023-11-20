@@ -7,8 +7,11 @@ public class ChatListOutputData {
 
     private HashMap<String, ArrayList<String>> ChatList;
 
-    public ChatListOutputData(HashMap<String, ArrayList<String>> chatList){
+    private String currentUserName;
+
+    public ChatListOutputData(HashMap<String, ArrayList<String>> chatList, String currentUserName){
         this.ChatList = chatList;
+        this.currentUserName = currentUserName;
     }
 
     public HashMap<String, ArrayList<String>> getChatList(){

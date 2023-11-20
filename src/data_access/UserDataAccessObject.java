@@ -4,8 +4,10 @@ import entity.User;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import use_case.add_chat.AddChatDataAccessInterface;
 import use_case.add_contact.AddContactDataAccessInterface;
 import use_case.chat_list.ChatListDataAccessInterface;
+import use_case.friends_list.FriendsListDataAccessInterface;
 import use_case.login.LoginDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
@@ -16,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserDataAccessObject implements SignupUserDataAccessInterface,
-        AddContactDataAccessInterface, ChatListDataAccessInterface, LoginDataAccessInterface {
+        AddContactDataAccessInterface, ChatListDataAccessInterface, LoginDataAccessInterface, FriendsListDataAccessInterface {
 
     private final String masterKey;
     private final String downloadURL;
@@ -93,8 +95,18 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
     }
 
     @Override
-    public boolean is_empty() {
-        return false;
+    public boolean chatIsEmpty() {
+        return getChats().isEmpty();
+    }
+
+    @Override
+    public boolean friendsIsEmpty() {
+        return getFriends().isEmpty();
+    }
+
+    @Override
+    public HashMap<String, String> getFriends() {
+        return null;
     }
 
     @Override
