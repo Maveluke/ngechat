@@ -1,18 +1,20 @@
 package app;
 
 import data_access.UserDataAccessObject;
+import entity.CommonUserFactory;
+import entity.User;
+import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.add_contact.AddContactViewModel;
+import interface_adapter.chat_list.ChatListViewModel;
+import interface_adapter.friends_list.FriendsListViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
-import view.LoginView;
-import view.SignupView;
-import view.ViewManager;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
-import java.rmi.server.ExportException;
 
 public class Main {
     public static void main(String[] args) throws IOException{
@@ -29,6 +31,9 @@ public class Main {
 
         LoginViewModel loginViewModel = new LoginViewModel();
         SignupViewModel signupViewModel = new SignupViewModel();
+        AddContactViewModel addContactViewModel = new AddContactViewModel();
+        FriendsListViewModel friendsListViewModel = new FriendsListViewModel();
+        ChatListViewModel chatListViewModel = new ChatListViewModel();
 
         String masterKey = "$2a$10$xfVheBzZjicxu..Dy7zLHeBNVrrPWZ/jEK/qfX7nTY.WKY/Tx9LM2";
         String uploadURL = "https://api.jsonbin.io/v3/b";
@@ -43,10 +48,13 @@ public class Main {
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
-        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
+        LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, chatListViewModel, userDataAccessObject);
         views.add(loginView, loginView.viewName);
 
-        viewManagerModel.setActiveView(loginView.viewName);
+        AddContactView addContactView = AddContactViewFactory.create(viewManagerModel, addContactViewModel, friendsListViewModel, userDataAccessObject);
+        views.add(addContactView, addContactView.viewName);
+
+        viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
