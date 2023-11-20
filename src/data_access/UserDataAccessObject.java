@@ -71,12 +71,12 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
         return accounts.get(username);
     }
 
-//    @Override
-//    public boolean addFriend(String username, String friendUsername) {
-//        User user = accounts.get(username);
-//        User friend = accounts.get(friendUsername);
-//        return user.userAddFriend(friend) && friend.userAddFriend(user);
-//    }
+    @Override
+    public boolean addFriend(String username, String friendUsername) {
+        User user = accounts.get(username);
+        User friend = accounts.get(friendUsername);
+        return user.userAddFriend(friend) && friend.userAddFriend(user);
+    }
 
     @Override
     public User getCurrentUser() {

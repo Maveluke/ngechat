@@ -6,14 +6,23 @@ public class Chat {
      */
     private Message lastMessage;
 
-    private String name;
+    private String username;
 
-    public String getName() {
-        return name;
+    public Chat(String username, Message message) {
+        this.lastMessage = message;
+        this.username = username;
     }
 
-    public String getLastMessage(){
-        return LastMessage;
+    public String getName() {
+        return username;
+    }
+
+    public void setLastMessage(Message newMessage) {
+        this.lastMessage = newMessage;
+    }
+
+    public Message getLastMessage(){
+        return lastMessage;
     }
 
 }
