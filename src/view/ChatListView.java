@@ -19,6 +19,7 @@ public class ChatListView {
         this.chatListViewModel = chatlistViewModel;
         
         JFrame chatframe = new JFrame("ngechat");
+        chatframe.setLayout(new BoxLayout(chatframe.getContentPane(), BoxLayout.Y_AXIS));
         JPanel header = new JPanel();
         header.setLayout(new BorderLayout());
 

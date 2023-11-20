@@ -16,14 +16,16 @@ public class InChatPrivateView {
         this.inChatPrivateViewModel = inChatPrivateViewModel;
 
         JFrame inchatframe = new JFrame("ngechat");
+        inchatframe.setLayout(new BoxLayout(inchatframe.getContentPane(), BoxLayout.Y_AXIS));
         JPanel header = new JPanel();
-        header.setLayout(new BoxLayout(header, BoxLayout.X_AXIS));
+        header.setLayout(new BorderLayout());
 
         JLabel friend  = new JLabel("Name");
 //      TODO: change Name to actual username of the friend
         header.add(friend);
 
-        ImageIcon back = new ImageIcon("src/Photos/Return.png");
+        ImageIcon back = new ImageIcon("src/view/Photos/Return.png");
+//      TODO: change to the actual profpic
         Image _back = back.getImage();
         Image newback = _back.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         back = new ImageIcon(newback);
