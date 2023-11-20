@@ -1,4 +1,4 @@
-package use_case.chatlist;
+package use_case.chat_list;
 
 public interface ChatListInputBoundary {
 

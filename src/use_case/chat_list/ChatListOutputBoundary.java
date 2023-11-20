@@ -1,6 +1,4 @@
-package use_case.chatlist;
-
-import use_case.login.LoginOutputData;
+package use_case.chat_list;
 
 public interface ChatListOutputBoundary {
 

@@ -1,6 +1,4 @@
-package use_case.chatlist;
-
-import entity.Chat;
+package use_case.chat_list;
 
 import java.util.ArrayList;
 import java.util.HashMap;

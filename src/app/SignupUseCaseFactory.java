@@ -26,8 +26,8 @@ public class SignupUseCaseFactory {
             ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, SignupViewModel signupViewModel, UserDataAccessObject userDataAccessObject) {
 
         try {
-            SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject);
-            return new SignupView(signupController, signupViewModel);
+            SignupController signupController = createSignupController(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject);
+            return new SignupView(SwitchViewUseCaseFactory.createSwitchViewUseCase(viewManagerModel), signupController, signupViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }
@@ -35,7 +35,7 @@ public class SignupUseCaseFactory {
         return null;
     }
 
-    private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel, SignupUserDataAccessInterface userDataAccessObject) throws IOException {
+    private static SignupController createSignupController(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel, SignupUserDataAccessInterface userDataAccessObject) throws IOException {
 
         // Notice how we pass this method's parameters to the Presenter.
         SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
