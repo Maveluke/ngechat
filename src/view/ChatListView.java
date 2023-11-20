@@ -20,7 +20,7 @@ public class ChatListView {
         
         JFrame chatframe = new JFrame("ngechat");
         JPanel header = new JPanel();
-        header.setLayout(new BoxLayout(header, BoxLayout.X_AXIS));
+        header.setLayout(new BorderLayout());
 
         ImageIcon profpic = new ImageIcon("src/View/Photos/GenericPP.jpg");
 //      TODO: change profpic filename to the actual profpic file name
@@ -28,12 +28,40 @@ public class ChatListView {
         Image newimg = image.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
         profpic = new ImageIcon(newimg);
         JLabel _profpic = new JLabel(profpic);
-        header.add(_profpic);
+        _profpic.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+//                TODO: go to profile
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+        header.add(_profpic, BorderLayout.WEST);
 
         JLabel username = new JLabel(chatlistViewModel.getUsername());
-        header.add(username);
+        header.add(username, BorderLayout.CENTER);
 
-        ImageIcon addchat = new ImageIcon("src/Photos/Plus.png");
+        JPanel buttons = new JPanel();
+
+        ImageIcon addchat = new ImageIcon("src/view/Photos/Plus.png");
         Image _add = addchat.getImage();
         Image newadd = _add.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
         addchat = new ImageIcon(newadd);
@@ -64,9 +92,9 @@ public class ChatListView {
 
             }
         });
-        header.add(addicon, BorderLayout.EAST);
+        buttons.add(addicon, BorderLayout.EAST);
 
-        ImageIcon delete = new ImageIcon("src/Photos/Delete.png");
+        ImageIcon delete = new ImageIcon("src/view/Photos/Delete.png");
         Image _delete = delete.getImage();
         Image newdelete = _delete.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
         delete = new ImageIcon(newdelete);
@@ -97,14 +125,16 @@ public class ChatListView {
 
             }
         });
-        header.add(deleteicon, BorderLayout.EAST);
+        buttons.add(deleteicon, BorderLayout.EAST);
+
+        header.add(buttons, BorderLayout.EAST);
 
         chatframe.add(header);
 
         HashMap<String, ArrayList<String>> chatlist = chatlistViewModel.getChatList();
         for (String person: chatlist.keySet()) {
             JPanel chatpanel = new JPanel();
-            chatpanel.setLayout(new BoxLayout(chatpanel, BoxLayout.X_AXIS));
+            chatpanel.setLayout(new BoxLayout(chatpanel, BoxLayout.Y_AXIS));
 
             ImageIcon pic = new ImageIcon("src/View/Photos/GenericPP2.jpg");
 //          TODO: change profpic filename to the actual profpic file name
@@ -115,14 +145,16 @@ public class ChatListView {
             chatpanel.add(_pic);
 
             JPanel _chatpanel = new JPanel();
-            _chatpanel.setLayout(new BoxLayout(_chatpanel, BoxLayout.Y_AXIS));
+            _chatpanel.setLayout(new BoxLayout(_chatpanel, BoxLayout.X_AXIS));
 
             JLabel name = new JLabel(person);
+            name.setAlignmentX(Component.LEFT_ALIGNMENT);
             _chatpanel.add(name);
 
             JLabel message = new JLabel(chatlist.get(person).get(2) + ": " +
                     chatlist.get(person).get(0) + " (" +
                     chatlist.get(person).get(1) + ")");
+            message.setAlignmentX(Component.LEFT_ALIGNMENT);
             _chatpanel.add(message);
 
             chatpanel.add(_chatpanel);

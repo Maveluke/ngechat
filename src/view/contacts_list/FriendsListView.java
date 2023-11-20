@@ -16,13 +16,16 @@ public class FriendsListView {
         this.friendsListViewModel = friendsListViewModel;
 
         JFrame friendframe = new JFrame("ngechat");
+        friendframe.setLayout(new BoxLayout(friendframe.getContentPane(), BoxLayout.Y_AXIS));
         JPanel header = new JPanel();
-        header.setLayout(new BoxLayout(header, BoxLayout.X_AXIS));
+        header.setLayout(new BorderLayout());
 
         JLabel friends = new JLabel("Friends");
-        header.add(friends);
+        header.add(friends, BorderLayout.WEST);
 
-        ImageIcon addfriend = new ImageIcon("src/Photos/Plus.png");
+        JPanel buttons = new JPanel();
+
+        ImageIcon addfriend = new ImageIcon("src/view/Photos/Plus.png");
         Image _add = addfriend.getImage();
         Image newadd = _add.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         addfriend = new ImageIcon(newadd);
@@ -53,9 +56,9 @@ public class FriendsListView {
 
             }
         });
-        header.add(addicon, BorderLayout.EAST);
+        buttons.add(addicon, BorderLayout.EAST);
 
-        ImageIcon block = new ImageIcon("src/Photos/Cross.png");
+        ImageIcon block = new ImageIcon("src/view/Photos/Cross.png");
         Image _block = block.getImage();
         Image newblock = _block.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         block = new ImageIcon(newblock);
@@ -86,9 +89,9 @@ public class FriendsListView {
 
             }
         });
-        header.add(blockicon, BorderLayout.EAST);
+        buttons.add(blockicon, BorderLayout.EAST);
 
-        ImageIcon back = new ImageIcon("src/Photos/Return.png");
+        ImageIcon back = new ImageIcon("src/view/Photos/Return.png");
         Image _back = back.getImage();
         Image newback = _back.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         back = new ImageIcon(newback);
@@ -119,17 +122,22 @@ public class FriendsListView {
 
             }
         });
-        header.add(backicon, BorderLayout.EAST);
+        buttons.add(backicon, BorderLayout.EAST);
 
         friendframe.add(header);
 
+        header.add(buttons, BorderLayout.EAST);
+
+        JPanel friendspanel = new JPanel();
+        friendspanel.setLayout(new BoxLayout(friendspanel, BoxLayout.Y_AXIS));
+
         for() {
-//      TODO: implement the actual for loop
+//            TODO: implement for loop
             JPanel friendpanel = new JPanel();
             friendpanel.setLayout(new BoxLayout(friendpanel, BoxLayout.X_AXIS));
 
-            ImageIcon profpic = new ImageIcon("src/View/Photos/GenericPP.jpg");
-//          TODO: change profpic filename to the actual profpic file name
+            ImageIcon profpic = new ImageIcon("src/view/Photos/GenericPP.jpg");
+//            TODO: replace with actual profpic
             Image image = profpic.getImage();
             Image newimg = image.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
             profpic = new ImageIcon(newimg);
@@ -137,9 +145,20 @@ public class FriendsListView {
             friendpanel.add(_profpic);
 
             JLabel name = new JLabel("Username");
-//          TODO: change username to the actual Username of the friend
+//            TODO: replace with actual username
             friendpanel.add(name);
+
+            friendpanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+            friendspanel.add(friendpanel);
         }
+
+        friendframe.add(friendspanel, BorderLayout.WEST);
+
+        JScrollPane scrollpane = new JScrollPane(friendspanel);
+
+        friendframe.add(scrollpane, BorderLayout.WEST);
+        scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        friendframe.getContentPane().add(scrollpane);
 
         friendframe.pack();
         friendframe.setVisible(true);
