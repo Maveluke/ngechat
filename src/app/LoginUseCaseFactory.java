@@ -3,7 +3,7 @@ package app;
 import entity.CommonUserFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.chat_list.ChatListViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
@@ -21,29 +21,21 @@ public class LoginUseCaseFactory {
     public static LoginView create(
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,
-            LoggedInViewModel loggedInViewModel,
+            ChatListViewModel chatListViewModel,
             LoginDataAccessInterface userDataAccessObject) {
 
-        try {
-            LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
-            return new LoginView(loginViewModel, loginController);
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "Could not open user data file.");
-        }
-
-        return null;
+        LoginController loginController = createLoginUseCase(viewManagerModel, loginViewModel, chatListViewModel, userDataAccessObject);
+        return new LoginView(loginViewModel, loginController);
     }
 
     private static LoginController createLoginUseCase(
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,
-            LoggedInViewModel loggedInViewModel,
-            LoginDataAccessInterface userDataAccessObject) throws IOException {
+            ChatListViewModel chatListViewModel,
+            LoginDataAccessInterface userDataAccessObject){
 
         // Notice how we pass this method's parameters to the Presenter.
-        LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, loggedInViewModel, loginViewModel);
-
-        UserFactory userFactory = new CommonUserFactory();
+        LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel, chatListViewModel, loginViewModel);
 
         LoginInputBoundary loginInteractor = new LoginInteractor(loginOutputBoundary,userDataAccessObject);
 

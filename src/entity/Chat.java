@@ -1,6 +1,9 @@
 package entity;
 
 public class Chat {
+    /***
+     * This class represents the chat shown in ChatListView
+     */
     private Message lastMessage;
 
     private String name;
@@ -8,5 +11,4 @@ public class Chat {
     public String getName() {
         return name;
     }
-
 }

@@ -1,6 +1,6 @@
 package data_access;
 
-import use_case.chatlist.ChatListDataAccessInterface;
+import use_case.chat_list.ChatListDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
