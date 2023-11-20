@@ -9,4 +9,8 @@ public class Chat {
         return name;
     }
 
+    public String getLastMessage(){
+        return LastMessage
+    }
+
 }

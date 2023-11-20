@@ -1,9 +1,14 @@
-package use_case.friendslist;
+package use_case.friends_list;
+
+import entity.User;
 
 import java.util.HashMap;
 
 public interface FriendsListDataAccessInterface {
-    boolean is_empty();
+    boolean friendsIsEmpty();
 
-    HashMap<String, String> getChats();
+    HashMap<String, String> getFriends();
+
+    User getCurrentUser();
+
 }

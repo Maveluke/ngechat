@@ -1,10 +1,8 @@
-package use_case.friendslist;
+package use_case.friends_list;
 
-import use_case.chatlist.ChatListDataAccessInterface;
-import use_case.chatlist.ChatListOutputBoundary;
-import use_case.chatlist.ChatListOutputData;
+import entity.User;
+import use_case.chat_list.ChatListOutputData;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FriendsListInteractor implements FriendsListInputBoundary {
@@ -20,11 +18,14 @@ public class FriendsListInteractor implements FriendsListInputBoundary {
     @Override
     public void execute() {
         if (friendsListDataAccessObject.is_empty()) {
-            friendsListPresenter.prepareFailView("No chat available");
+            friendsListPresenter.prepareFailView("You have no friends");
         } else {
-            HashMap<String, String> friendsList = friendsListDataAccessObject.getChats();
-            ChatListOutputData chatListOutputData = new ChatListOutputData(chatList);
-            friendsListPresenter.prepareSuccessView(chatListOutputData);
+            User currentUser = friendsListDataAccessObject.getCurrentUser();
+            String currentUserName = currentUser.getName();
+            HashMap<String, String> friendsList = friendsListDataAccessObject.getFriends();
+
+            FriendsListOutputData friendsListOutputData = new FriendsListOutputData(friendsList, currentUserName);
+            friendsListPresenter.prepareSuccessView(friendsListOutputData);
         }
     }
 

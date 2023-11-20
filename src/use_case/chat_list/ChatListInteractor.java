@@ -1,6 +1,6 @@
-package use_case.chatlist;
+package use_case.chat_list;
 
-import entity.Chat;
+import entity.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,12 +18,17 @@ public class ChatListInteractor implements ChatListInputBoundary{
 
     @Override
     public void execute() {
-        if (chatListDataAccessObject.is_empty()) {
+        if (chatListDataAccessObject.chatIsEmpty()) {
             chatListPresenter.prepareFailView("No chat available");
         } else {
+            User currentUser = chatListDataAccessObject.getCurrentUser();
+            String currentUserName = currentUser.getName();
+
             HashMap<String, ArrayList<String>> chatList = chatListDataAccessObject.getChats();
-            ChatListOutputData chatListOutputData = new ChatListOutputData(chatList);
+
+            ChatListOutputData chatListOutputData = new ChatListOutputData(chatList, currentUserName);
             chatListPresenter.prepareSuccessView(chatListOutputData);
         }
     }
+
 }

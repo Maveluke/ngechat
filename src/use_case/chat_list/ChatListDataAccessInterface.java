@@ -1,8 +1,7 @@
-package use_case.chatlist;
+package use_case.chat_list;
 
-import entity.Chat;
+import entity.User;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,9 +10,10 @@ public interface ChatListDataAccessInterface {
 
     public HashMap<String, ArrayList<String>> getChats();
 
+    public User getCurrentUser();
 
     // implement this by checking if getChat().is_empty() is true
-    public boolean is_empty();
+    public boolean chatIsEmpty();
 
     // Not necessary for now, might need it later
     public void deleteChat();

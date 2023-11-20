@@ -1,8 +1,8 @@
 package interface_adapter.chatlist;
 
 import interface_adapter.ViewManagerModel;
-import use_case.chatlist.ChatListOutputData;
-import use_case.chatlist.ChatListOutputBoundary;
+import use_case.chat_list.ChatListOutputData;
+import use_case.chat_list.ChatListOutputBoundary;
 
 public class ChatListPresenter implements ChatListOutputBoundary{
 

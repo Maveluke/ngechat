@@ -1,6 +1,6 @@
-package use_case.friendslist;
+package use_case.friends_list;
 
-import use_case.chatlist.ChatListOutputData;
+import use_case.chat_list.ChatListOutputData;
 
 public interface FriendsListOutputBoundary {
 
@@ -8,5 +8,5 @@ public interface FriendsListOutputBoundary {
     void prepareFailView(String noChatAvailable);
 
 
-    void prepareSuccessView(ChatListOutputData chatListOutputData);
+    void prepareSuccessView(FriendsListOutputData friendsListOutputData);
 }

@@ -1,2 +1,8 @@
-package use_case.add_chat;public interface AddChatDataAccessInterface {
+package use_case.add_chat;
+
+public interface AddChatDataAccessInterface {
+
+
+
+
 }

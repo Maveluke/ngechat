@@ -1,2 +1,4 @@
-package use_case.add_chat;public class AddChatOutputData {
+package use_case.add_chat;
+
+public class AddChatOutputData {
 }

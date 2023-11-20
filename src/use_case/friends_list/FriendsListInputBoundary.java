@@ -1,4 +1,4 @@
-package use_case.friendslist;
+package use_case.friends_list;
 
 public interface FriendsListInputBoundary {
 
