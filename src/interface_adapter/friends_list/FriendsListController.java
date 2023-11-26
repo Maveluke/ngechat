@@ -1,19 +1,13 @@
 package interface_adapter.friends_list;
 
-import use_case.signup.SignupInputBoundary;
-import use_case.signup.SignupInputData;
+import use_case.friends_list.FriendsListInputBoundary;
 
 public class FriendsListController {
 
-    final SignupInputBoundary userSignupUseCaseInteractor;
-    public FriendsListController(SignupInputBoundary userSignupUseCaseInteractor) {
-        this.userSignupUseCaseInteractor = userSignupUseCaseInteractor;
+    final FriendsListInputBoundary friendsListInteractor;
+    public FriendsListController(FriendsListInputBoundary friendsListInteractor) {
+        this.friendsListInteractor = friendsListInteractor;
     }
 
-    public void execute(String username, String password1, String password2) {
-        SignupInputData signupInputData = new SignupInputData(
-                username, password1, password2);
-
-        userSignupUseCaseInteractor.execute(signupInputData);
-    }
+    public void execute() { friendsListInteractor.execute(); }
 }

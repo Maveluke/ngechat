@@ -1,12 +1,13 @@
 package view.contacts_list;
 
-import interface_adapter.friendslist.FriendsListController;
-import interface_adapter.friendslist.FriendsListViewModel;
+import interface_adapter.friends_list.FriendsListController;
+import interface_adapter.friends_list.FriendsListViewModel;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.HashMap;
 
 public class FriendsListView {
     private final FriendsListController friendsListController;
@@ -14,6 +15,8 @@ public class FriendsListView {
     FriendsListView(FriendsListController controller, FriendsListViewModel friendsListViewModel) {
         this.friendsListController = controller;
         this.friendsListViewModel = friendsListViewModel;
+
+        HashMap<String, String> friendslist = friendsListViewModel.getFriendslist();
 
         JFrame friendframe = new JFrame("ngechat");
         friendframe.setLayout(new BoxLayout(friendframe.getContentPane(), BoxLayout.Y_AXIS));
@@ -131,8 +134,7 @@ public class FriendsListView {
         JPanel friendspanel = new JPanel();
         friendspanel.setLayout(new BoxLayout(friendspanel, BoxLayout.Y_AXIS));
 
-        for() {
-//            TODO: implement for loop
+        for (friend: friendslist.keySet()) {
             JPanel friendpanel = new JPanel();
             friendpanel.setLayout(new BoxLayout(friendpanel, BoxLayout.X_AXIS));
 
@@ -144,8 +146,7 @@ public class FriendsListView {
             JLabel _profpic = new JLabel(profpic);
             friendpanel.add(_profpic);
 
-            JLabel name = new JLabel("Username");
-//            TODO: replace with actual username
+            JLabel name = new JLabel(String.valueOf(friends));
             friendpanel.add(name);
 
             friendpanel.setAlignmentX(Component.LEFT_ALIGNMENT);
