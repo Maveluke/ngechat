@@ -134,7 +134,7 @@ public class FriendsListView {
         JPanel friendspanel = new JPanel();
         friendspanel.setLayout(new BoxLayout(friendspanel, BoxLayout.Y_AXIS));
 
-        for (friend: friendslist.keySet()) {
+        for (String friend: friendslist.keySet()) {
             JPanel friendpanel = new JPanel();
             friendpanel.setLayout(new BoxLayout(friendpanel, BoxLayout.X_AXIS));
 
@@ -146,7 +146,7 @@ public class FriendsListView {
             JLabel _profpic = new JLabel(profpic);
             friendpanel.add(_profpic);
 
-            JLabel name = new JLabel(String.valueOf(friends));
+            JLabel name = new JLabel(friend);
             friendpanel.add(name);
 
             friendpanel.setAlignmentX(Component.LEFT_ALIGNMENT);
