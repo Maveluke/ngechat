@@ -102,7 +102,7 @@ public class FriendsListView {
         backicon.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-//              TODO: implement back (go back to profile)
+//              TODO: implement back (go back to chatlist)
             }
 
             @Override
@@ -151,6 +151,33 @@ public class FriendsListView {
 
             friendpanel.setAlignmentX(Component.LEFT_ALIGNMENT);
             friendspanel.add(friendpanel);
+
+            friendpanel.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+//                    TODO: go to inchat
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+
+                }
+            });
         }
 
         friendframe.add(friendspanel, BorderLayout.WEST);
