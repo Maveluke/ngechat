@@ -15,5 +15,5 @@ public interface ChatListDataAccessInterface {
     // Not necessary for now, might need it later
     public void deleteChat();
 
-
+    void addFriendTobinID(String username, String binID);
 }
