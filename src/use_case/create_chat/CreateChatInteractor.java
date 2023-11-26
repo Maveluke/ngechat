@@ -1,13 +1,21 @@
 package use_case.create_chat;
 
+import entity.Chat;
 import entity.ChatFactory;
 
 public class CreateChatInteractor implements CreateChatInputBoundary{
 
-    CreateChatDataAccessInterface createChatDataAccessObject;
-    CreateChatOutputBoundary createChatPresenter;
+    private CreateChatDataAccessInterface createChatDataAccessObject;
+    private CreateChatOutputBoundary createChatPresenter;
 
-    ChatFactory chatFactory;
+    private ChatFactory chatFactory;
+
+
+    public CreateChatInteractor(CreateChatDataAccessInterface createChatDataAccessObject, CreateChatOutputBoundary createChatPresenter, ChatFactory chatFactory) {
+        this.createChatDataAccessObject = createChatDataAccessObject;
+        this.createChatPresenter = createChatPresenter;
+        this.chatFactory = chatFactory;
+    }
 
     @Override
     public void execute(CreateChatInputData createChatInputData) {
@@ -24,9 +32,7 @@ public class CreateChatInteractor implements CreateChatInputBoundary{
             // so then after that we can display the in-chat view.
         } else {
 
-            chatFactory.create(userToChat, null);
-
-            createChatDataAccessObject.createChat(userToChat); // this adds new data to the DAO
+            Chat newChat = chatFactory.create(userToChat, null);
 
             CreateChatOutputData createChatOutputData = new CreateChatOutputData(userToChat);
 
