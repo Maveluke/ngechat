@@ -1,5 +1,6 @@
 package data_access;
 
+import entity.User;
 import use_case.chat_list.ChatListDataAccessInterface;
 
 import java.util.ArrayList;
@@ -14,7 +15,12 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface {
     }
 
     @Override
-    public boolean is_empty() {
+    public User getCurrentUser() {
+        return null;
+    }
+
+    @Override
+    public boolean chatIsEmpty() {
         return false;
     }
 
