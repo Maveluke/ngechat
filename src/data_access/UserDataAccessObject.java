@@ -4,7 +4,6 @@ import entity.User;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import use_case.add_chat.AddChatDataAccessInterface;
 import use_case.add_contact.AddContactDataAccessInterface;
 import use_case.chat_list.ChatListDataAccessInterface;
 import use_case.create_chat.CreateChatDataAccessInterface;
