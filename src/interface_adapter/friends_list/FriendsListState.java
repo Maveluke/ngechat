@@ -1,5 +1,7 @@
 package interface_adapter.friends_list;
 
+import java.util.HashMap;
+
 public class FriendsListState {
     private String username = "";
     private String usernameError = null;
@@ -7,6 +9,8 @@ public class FriendsListState {
     private String passwordError = null;
     private String repeatPassword = "";
     private String repeatPasswordError = null;
+
+    private HashMap<String, String> friendsList = new HashMap<>();
 
     public FriendsListState(FriendsListState copy) {
         username = copy.username;
@@ -20,6 +24,15 @@ public class FriendsListState {
     // Because of the previous copy constructor, the default constructor must be explicit.
     public FriendsListState() {
     }
+
+    public HashMap<String, String> getFriendsList() {
+        return friendsList;
+    }
+
+    public void setFriendsList(HashMap<String, String> friendsList) {
+        this.friendsList = friendsList;
+    }
+
 
     public String getUsername() {
         return username;
