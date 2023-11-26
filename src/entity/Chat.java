@@ -1,14 +1,10 @@
 package entity;
 
-public class Chat {
+import java.util.ArrayList;
+
+public interface Chat {
     /***
-     * This class represents the chat shown in ChatListView
+     * This class represents a collection of messages.
      */
-    private Message lastMessage;
-
-    private String name;
-
-    public String getName() {
-        return name;
-    }
+    String getName();
 }
