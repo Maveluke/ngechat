@@ -132,7 +132,7 @@ public class ChatListView {
 
         chatframe.add(header);
 
-        HashMap<String, ArrayList<String>> chatlist = chatlistViewModel.getChatList();
+        HashMap<String, ArrayList<String>> chatlist = chatlistViewModel.getState().getChatList();
         for (String person: chatlist.keySet()) {
             JPanel chatpanel = new JPanel();
             chatpanel.setLayout(new BoxLayout(chatpanel, BoxLayout.Y_AXIS));

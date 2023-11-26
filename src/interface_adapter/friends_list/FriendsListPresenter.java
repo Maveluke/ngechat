@@ -3,45 +3,42 @@ package interface_adapter.friends_list;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
+import use_case.friends_list.FriendsListOutputBoundary;
+import use_case.friends_list.FriendsListOutputData;
 import use_case.signup.SignupOutputBoundary;
 import use_case.signup.SignupOutputData;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 
-public class FriendsListPresenter implements SignupOutputBoundary {
+public class FriendsListPresenter implements FriendsListOutputBoundary {
 
     private final FriendsListViewModel friendsListViewModel;
-    private final LoginViewModel loginViewModel;
     private ViewManagerModel viewManagerModel;
 
     public FriendsListPresenter(ViewManagerModel viewManagerModel,
-                                FriendsListViewModel friendsListViewModel,
-                                LoginViewModel loginViewModel) {
+                                FriendsListViewModel friendsListViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.friendsListViewModel = friendsListViewModel;
-        this.loginViewModel = loginViewModel;
     }
 
     @Override
-    public void prepareSuccessView(SignupOutputData response) {
-        // On success, switch to the login view.
-        LocalDateTime responseTime = LocalDateTime.parse(response.getCreationTime());
-        response.setCreationTime(responseTime.format(DateTimeFormatter.ofPattern("hh:mm:ss")));
+    public void prepareSuccessView(FriendsListOutputData response) {
 
-        LoginState loginState = loginViewModel.getState();
-        loginState.setUsername(response.getUsername());
-        this.loginViewModel.setState(loginState);
-        loginViewModel.firePropertyChanged();
 
-        viewManagerModel.setActiveView(loginViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
-    }
+        HashMap<String, String> friendsList = response.getFriends();
 
-    @Override
-    public void prepareFailView(String error) {
         FriendsListState friendsListState = friendsListViewModel.getState();
-        friendsListState.setUsernameError(error);
+
+        friendsListState.setFriendsList(friendsList);
+
+        this.friendsListViewModel.setState(friendsListState);
+
         friendsListViewModel.firePropertyChanged();
+
+        viewManagerModel.setActiveView(friendsListViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
+
     }
 }
