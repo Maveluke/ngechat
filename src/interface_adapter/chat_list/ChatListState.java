@@ -8,6 +8,8 @@ public class ChatListState {
         this.currentUser = currentUser;
     }
 
-
+    public String getCurrentUser() {
+        return currentUser;
+    }
 
 }

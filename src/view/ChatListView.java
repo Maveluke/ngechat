@@ -1,8 +1,8 @@
 package view;
 
 import entity.Chat;
-import interface_adapter.chatlist.ChatListController;
-import interface_adapter.chatlist.ChatListViewModel;
+import interface_adapter.chat_list.ChatListController;
+import interface_adapter.chat_list.ChatListViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,7 +30,7 @@ public class ChatListView {
         JLabel _profpic = new JLabel(profpic);
         user.add(_profpic);
 
-        JLabel username = new JLabel(chatlistViewModel.getUsername());
+        JLabel username = new JLabel(chatlistViewModel.getState().getCurrentUser());
         user.add(username);
 
         ImageIcon delete = new ImageIcon("src/Photos/Delete.png");
