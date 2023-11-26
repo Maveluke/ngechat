@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserDataAccessObject implements SignupUserDataAccessInterface,
-        AddContactDataAccessInterface, ChatListDataAccessInterface, LoginDataAccessInterface {
+        AddContactDataAccessInterface, LoginDataAccessInterface {
 
     private static final String USER_BIN_ID = "";
     private static final MediaType mediaType = MediaType.parse("application/json");
@@ -201,20 +201,5 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
 
     public void setCurrentUsername(String currentUsername) {
         this.currentUsername = currentUsername;
-    }
-
-    @Override
-    public HashMap<String, ArrayList<String>> getChats() {
-        return null;
-    }
-
-    @Override
-    public boolean is_empty() {
-        return false;
-    }
-
-    @Override
-    public void deleteChat() {
-
     }
 }
