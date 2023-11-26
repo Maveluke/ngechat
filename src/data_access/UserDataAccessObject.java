@@ -19,8 +19,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserDataAccessObject implements SignupUserDataAccessInterface,
-        AddContactDataAccessInterface, ChatListDataAccessInterface, LoginDataAccessInterface, FriendsListDataAccessInterface,
-        CreateChatDataAccessInterface {
+        AddContactDataAccessInterface, LoginDataAccessInterface, FriendsListDataAccessInterface
+{
 
     private final String masterKey;
     private final String downloadURL;
@@ -92,44 +92,15 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
     }
 
     @Override
-    public HashMap<String, ArrayList<String>> getChats() {
-        // TODO : Implement this
-        return null;
-    }
-
-    public boolean chatExist(String targetUser) {
-        for (String key : getChats().keySet()) {
-            if (key.equals(targetUser)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public void createChat(String userToChat) {
-        // TODO : Implement this (Not really creating chat, just add the name to the API bin)
-    }
-
-    @Override
-    public boolean chatIsEmpty() {
-        return getChats().isEmpty();
-    }
-
-    @Override
     public boolean friendsIsEmpty() {
         return getFriends().isEmpty();
     }
 
     @Override
-    public HashMap<String, String> getFriends() {
+    public HashMap<String, String> getFriends(){
         // TODO : Implement this
 
         return null;
     }
 
-    @Override
-    public void deleteChat() {
-
-    }
 }
