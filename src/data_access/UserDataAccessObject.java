@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import use_case.add_chat.AddChatDataAccessInterface;
 import use_case.add_contact.AddContactDataAccessInterface;
 import use_case.chat_list.ChatListDataAccessInterface;
+import use_case.create_chat.CreateChatDataAccessInterface;
 import use_case.friends_list.FriendsListDataAccessInterface;
 import use_case.login.LoginDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
@@ -18,7 +19,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserDataAccessObject implements SignupUserDataAccessInterface,
-        AddContactDataAccessInterface, ChatListDataAccessInterface, LoginDataAccessInterface, FriendsListDataAccessInterface {
+        AddContactDataAccessInterface, ChatListDataAccessInterface, LoginDataAccessInterface, FriendsListDataAccessInterface,
+        CreateChatDataAccessInterface {
 
     private final String masterKey;
     private final String downloadURL;
@@ -91,7 +93,22 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
 
     @Override
     public HashMap<String, ArrayList<String>> getChats() {
+        // TODO : Implement this
         return null;
+    }
+
+    public boolean chatExist(String targetUser) {
+        for (String key : getChats().keySet()) {
+            if (key.equals(targetUser)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void createChat(String userToChat) {
+        // TODO : Implement this (Not really creating chat, just add the name to the API bin)
     }
 
     @Override
@@ -106,6 +123,8 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
 
     @Override
     public HashMap<String, String> getFriends() {
+        // TODO : Implement this
+
         return null;
     }
 
