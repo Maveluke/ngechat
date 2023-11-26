@@ -28,7 +28,7 @@ import java.io.IOException;
 public class FriendsListUseCaseFactory {
 
     public static FriendsListView create(
-            ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, FriendsListViewModel friendsListViewModel, UserDataAccessObject userDataAccessObject) {
+            ViewManagerModel viewManagerModel, FriendsListViewModel friendsListViewModel, UserDataAccessObject userDataAccessObject) {
 
         try {
             FriendsListController friendsListController = createFriendsListController(viewManagerModel, friendsListViewModel, userDataAccessObject);
