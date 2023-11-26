@@ -2,7 +2,6 @@ package app;
 
 import data_access.UserDataAccessObject;
 import entity.CommonUserFactory;
-import entity.User;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_contact.AddContactViewModel;
@@ -36,11 +35,10 @@ public class Main {
         ChatListViewModel chatListViewModel = new ChatListViewModel();
 
         String masterKey = "$2a$10$xfVheBzZjicxu..Dy7zLHeBNVrrPWZ/jEK/qfX7nTY.WKY/Tx9LM2";
-        String uploadURL = "https://api.jsonbin.io/v3/b";
-        String downloadURL = "https://api.jsonbin.io/v3/b/653f1b8c54105e766fc8df34?meta=false";
+        UserFactory userFactory = new CommonUserFactory();
         UserDataAccessObject userDataAccessObject;
         try{
-            userDataAccessObject = new UserDataAccessObject(masterKey, uploadURL, downloadURL);
+            userDataAccessObject = new UserDataAccessObject(masterKey, userFactory);
         }catch (Exception e){
             System.out.println("The creation of User Data Access Object is unsuccessful");
             throw new IOException();
