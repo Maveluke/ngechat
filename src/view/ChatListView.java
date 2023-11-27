@@ -1,7 +1,7 @@
 package view;
 
-import interface_adapter.chatlist.ChatListController;
-import interface_adapter.chatlist.ChatListViewModel;
+import interface_adapter.chat_list.ChatListController;
+import interface_adapter.chat_list.ChatListViewModel;
 
 import javax.swing.*;
 import java.awt.*;

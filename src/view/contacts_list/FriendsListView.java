@@ -7,9 +7,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.HashMap;
 
-public class FriendsListView {
+public class FriendsListView extends JPanel{
     private final FriendsListController friendsListController;
     private final FriendsListViewModel friendsListViewModel;
     FriendsListView(FriendsListController controller, FriendsListViewModel friendsListViewModel) {
@@ -17,9 +18,12 @@ public class FriendsListView {
         this.friendsListViewModel = friendsListViewModel;
 
         HashMap<String, String> friendslist = friendsListViewModel.getFriendslist();
+        ArrayList<JPanel> friendsListPanels = new ArrayList<JPanel>();
 
-        JFrame friendframe = new JFrame("ngechat");
-        friendframe.setLayout(new BoxLayout(friendframe.getContentPane(), BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+//        JFrame friendframe = new JFrame("ngechat");
+//        friendframe.setLayout(new BoxLayout(friendframe.getContentPane(), BoxLayout.Y_AXIS));
+
         JPanel header = new JPanel();
         header.setLayout(new BorderLayout());
 
@@ -30,10 +34,10 @@ public class FriendsListView {
 
         ImageIcon addfriend = new ImageIcon("src/view/Photos/Plus.png");
         Image _add = addfriend.getImage();
-        Image newadd = _add.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        addfriend = new ImageIcon(newadd);
-        JLabel addicon = new JLabel(addfriend);
-        addicon.addMouseListener(new MouseListener() {
+        Image newAdd = _add.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        addfriend = new ImageIcon(newAdd);
+        JLabel addIcon = new JLabel(addfriend);
+        addIcon.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
 //              TODO: implement add friend
@@ -59,17 +63,17 @@ public class FriendsListView {
 
             }
         });
-        buttons.add(addicon, BorderLayout.EAST);
+        buttons.add(addIcon, BorderLayout.EAST);
 
         ImageIcon block = new ImageIcon("src/view/Photos/Cross.png");
         Image _block = block.getImage();
-        Image newblock = _block.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        block = new ImageIcon(newblock);
-        JLabel blockicon = new JLabel(block);
-        blockicon.addMouseListener(new MouseListener() {
+        Image newBlock = _block.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        block = new ImageIcon(newBlock);
+        JLabel blockIcon = new JLabel(block);
+        blockIcon.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-//              TODO: implement block friend
+              setBlockCheckboxesVisibility(friendsListPanels);
             }
 
             @Override
@@ -92,14 +96,14 @@ public class FriendsListView {
 
             }
         });
-        buttons.add(blockicon, BorderLayout.EAST);
+        buttons.add(blockIcon, BorderLayout.EAST);
 
         ImageIcon back = new ImageIcon("src/view/Photos/Return.png");
         Image _back = back.getImage();
-        Image newback = _back.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-        back = new ImageIcon(newback);
-        JLabel backicon = new JLabel(back);
-        backicon.addMouseListener(new MouseListener() {
+        Image newBack = _back.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        back = new ImageIcon(newBack);
+        JLabel backIcon = new JLabel(back);
+        backIcon.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
 //              TODO: implement back (go back to chatlist)
@@ -125,14 +129,14 @@ public class FriendsListView {
 
             }
         });
-        buttons.add(backicon, BorderLayout.EAST);
+        buttons.add(backIcon, BorderLayout.EAST);
 
-        friendframe.add(header);
+        this.add(header);
 
         header.add(buttons, BorderLayout.EAST);
 
-        JPanel friendspanel = new JPanel();
-        friendspanel.setLayout(new BoxLayout(friendspanel, BoxLayout.Y_AXIS));
+        JPanel friendsPanel = new JPanel();
+        friendsPanel.setLayout(new BoxLayout(friendsPanel, BoxLayout.Y_AXIS));
 
         for (String friend: friendslist.keySet()) {
             JPanel friendpanel = new JPanel();
@@ -141,16 +145,16 @@ public class FriendsListView {
             ImageIcon profpic = new ImageIcon("src/view/Photos/GenericPP.jpg");
 //            TODO: replace with actual profpic
             Image image = profpic.getImage();
-            Image newimg = image.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
-            profpic = new ImageIcon(newimg);
-            JLabel _profpic = new JLabel(profpic);
-            friendpanel.add(_profpic);
+            Image newImg = image.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
+            profpic = new ImageIcon(newImg);
+            JLabel _profPic = new JLabel(profpic);
+            friendpanel.add(_profPic);
 
             JLabel name = new JLabel(friend);
             friendpanel.add(name);
 
             friendpanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-            friendspanel.add(friendpanel);
+            friendsPanel.add(friendpanel);
 
             friendpanel.addMouseListener(new MouseListener() {
                 @Override
@@ -180,16 +184,36 @@ public class FriendsListView {
             });
         }
 
-        friendframe.add(friendspanel, BorderLayout.WEST);
+        this.add(friendsPanel, BorderLayout.WEST);
 
-        JScrollPane scrollpane = new JScrollPane(friendspanel);
+        JScrollPane scrollPane = new JScrollPane(friendsPanel);
 
-        friendframe.add(scrollpane, BorderLayout.WEST);
-        scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        friendframe.getContentPane().add(scrollpane);
+        this.add(scrollPane, BorderLayout.WEST);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        this.add(scrollPane);
 
-        friendframe.pack();
-        friendframe.setVisible(true);
-        friendframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        friendframe.pack();
+//        friendframe.setVisible(true);
+//        friendframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    private void setBlockCheckboxesVisibility(ArrayList<JPanel> panelList) {
+        for (JPanel friendpanel: panelList) {
+            if (friendpanel.getName() == null) {
+                JCheckBox blockcheckbox = new JCheckBox("");
+                blockcheckbox.setName("block");
+                friendpanel.add(blockcheckbox);
+                friendpanel.setName("blocking");
+            }
+            else if (friendpanel.getName() == "blocking"){
+                for (Component component: friendpanel.getComponents()) {
+                    if (component.getName() == "block") {
+                        friendpanel.remove(component);
+                    }
+                }
+                friendpanel.setName(null);
+            }
+            friendpanel.revalidate();
+        }
     }
 }
