@@ -6,12 +6,18 @@ import interface_adapter.chat_list.ChatListViewModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ChatListView {
+public class ChatListView extends JPanel implements ActionListener, PropertyChangeListener {
+
+    public final String viewName = "chat list";
     private final ChatListController chatListController;
     private final ChatListViewModel chatListViewModel;
     public ChatListView(ChatListController controller, ChatListViewModel chatlistViewModel){
@@ -58,7 +64,7 @@ public class ChatListView {
         });
         header.add(_profpic, BorderLayout.WEST);
 
-        JLabel username = new JLabel(chatlistViewModel.getUsername());
+        JLabel username = new JLabel(chatlistViewModel.getState().getUsername());
         header.add(username, BorderLayout.CENTER);
 
         JPanel buttons = new JPanel();
@@ -190,9 +196,9 @@ public class ChatListView {
             });
         }
 
-        chatframe.pack();
-        chatframe.setVisible(true);
-        chatframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        chatframe.pack();
+//        chatframe.setVisible(true);
+//        chatframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         header.addMouseListener(new MouseListener() {
             @Override
@@ -222,4 +228,13 @@ public class ChatListView {
         });
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        // TODO
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        // TODO
+    }
 }
