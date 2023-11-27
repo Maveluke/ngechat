@@ -2,6 +2,7 @@ package app;
 
 import data_access.ChatListDataAccessObject;
 import data_access.UserDataAccessObject;
+import entity.CommonChatFactory;
 import entity.CommonUserFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
@@ -40,13 +41,17 @@ public class Main {
         UserDataAccessObject userDataAccessObject;
         try{
             userDataAccessObject = new UserDataAccessObject(masterKey, userFactory);
+            // TODO: Delete later
+            userDataAccessObject.setCurrentUsername("admin");
+            //
         }catch (Exception e){
-            System.out.println("The creation of User Data Access Object is unsuccessful");
+            System.out.println("The creation of User Data Access Object is unsuccessful with error: " + e.getMessage());
             throw new IOException();
         }
+        CommonChatFactory commonChatFactory = new CommonChatFactory();
         ChatListDataAccessObject chatListDataAccessObject;
         try {
-            chatListDataAccessObject = new ChatListDataAccessObject(masterKey, )
+            chatListDataAccessObject = new ChatListDataAccessObject(masterKey, commonChatFactory);
         }catch (Exception e){
             System.out.println("The creation of ChatListDAO is unsuccessful");
             throw new IOException();
@@ -60,9 +65,10 @@ public class Main {
         AddContactView addContactView = AddContactViewFactory.create(viewManagerModel, addContactViewModel, friendsListViewModel, userDataAccessObject);
         views.add(addContactView, addContactView.viewName);
 
-        ChatListView chatListView = ChatListUseCaseFactory.create(viewManagerModel, chatListViewModel, );
+        ChatListView chatListView = ChatListUseCaseFactory.create(viewManagerModel, chatListViewModel, chatListDataAccessObject, userDataAccessObject);
+        views.add(chatListView, chatListView.viewName);
 
-        viewManagerModel.setActiveView(signupView.viewName);
+        viewManagerModel.setActiveView(chatListView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
