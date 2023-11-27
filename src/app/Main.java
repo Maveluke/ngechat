@@ -1,5 +1,6 @@
 package app;
 
+import data_access.ChatListDataAccessObject;
 import data_access.UserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
@@ -43,6 +44,13 @@ public class Main {
             System.out.println("The creation of User Data Access Object is unsuccessful");
             throw new IOException();
         }
+        ChatListDataAccessObject chatListDataAccessObject;
+        try {
+            chatListDataAccessObject = new ChatListDataAccessObject(masterKey, )
+        }catch (Exception e){
+            System.out.println("The creation of ChatListDAO is unsuccessful");
+            throw new IOException();
+        }
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
         views.add(signupView, signupView.viewName);
 
@@ -51,6 +59,8 @@ public class Main {
 
         AddContactView addContactView = AddContactViewFactory.create(viewManagerModel, addContactViewModel, friendsListViewModel, userDataAccessObject);
         views.add(addContactView, addContactView.viewName);
+
+        ChatListView chatListView = ChatListUseCaseFactory.create(viewManagerModel, chatListViewModel, );
 
         viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
