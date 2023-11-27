@@ -2,14 +2,14 @@ package entity;
 
 import java.time.LocalDateTime;
 
-public abstract class Message {
+public class Message {
     private final String message;
     private final LocalDateTime timeSent;
-    private final User sender;
-    public Message(String message, LocalDateTime timeSent, User sender){
+    private final String senderUsername;
+    public Message(String message, LocalDateTime timeSent, String senderUsername){
         this.message = message;
         this.timeSent = timeSent;
-        this.sender = sender;
+        this.senderUsername = senderUsername;
     }
 
     public String getMessage() {
@@ -20,7 +20,7 @@ public abstract class Message {
         return timeSent;
     }
 
-    public User getSender() {
-        return sender;
+    public String getSender() {
+        return this.senderUsername;
     }
 }

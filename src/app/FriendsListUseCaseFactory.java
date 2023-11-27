@@ -20,7 +20,7 @@ import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
 import use_case.signup.SignupUserDataAccessInterface;
 import view.SignupView;
-import view.contacts.FriendsListView;
+import view.contacts_list.FriendsListView;
 
 import javax.swing.*;
 import java.io.IOException;
