@@ -35,7 +35,7 @@ public class ChatListUseCaseFactory {
             LoginDataAccessInterface userDataAccessObject){
 
         // Notice how we pass this method's parameters to the Presenter.
-        ChatListOutputBoundary chatListOutputBoundary = new ChatListPresenter(viewManagerModel, chatListViewModel);
+        ChatListOutputBoundary chatListOutputBoundary = new ChatListPresenter(chatListViewModel, viewManagerModel);
 
         ChatListInputBoundary chatListInteractor = new ChatListInteractor(userDataAccessObject, chatListDataAccessObject, chatListOutputBoundary);
 

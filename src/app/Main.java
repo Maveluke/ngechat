@@ -1,8 +1,9 @@
 package app;
 
+import data_access.ChatListDataAccessObject;
 import data_access.UserDataAccessObject;
+import entity.CommonChatFactory;
 import entity.CommonUserFactory;
-import entity.User;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_contact.AddContactViewModel;
@@ -36,13 +37,23 @@ public class Main {
         ChatListViewModel chatListViewModel = new ChatListViewModel();
 
         String masterKey = "$2a$10$xfVheBzZjicxu..Dy7zLHeBNVrrPWZ/jEK/qfX7nTY.WKY/Tx9LM2";
-        String uploadURL = "https://api.jsonbin.io/v3/b";
-        String downloadURL = "https://api.jsonbin.io/v3/b/653f1b8c54105e766fc8df34?meta=false";
+        UserFactory userFactory = new CommonUserFactory();
         UserDataAccessObject userDataAccessObject;
         try{
-            userDataAccessObject = new UserDataAccessObject(masterKey, uploadURL, downloadURL);
+            userDataAccessObject = new UserDataAccessObject(masterKey, userFactory);
+            // TODO: Delete later
+            userDataAccessObject.setCurrentUsername("admin");
+            //
         }catch (Exception e){
-            System.out.println("The creation of User Data Access Object is unsuccessful");
+            System.out.println("The creation of User Data Access Object is unsuccessful with error: " + e.getMessage());
+            throw new IOException();
+        }
+        CommonChatFactory commonChatFactory = new CommonChatFactory();
+        ChatListDataAccessObject chatListDataAccessObject;
+        try {
+            chatListDataAccessObject = new ChatListDataAccessObject(masterKey, commonChatFactory);
+        }catch (Exception e){
+            System.out.println("The creation of ChatListDAO is unsuccessful");
             throw new IOException();
         }
         SignupView signupView = SignupUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
@@ -55,7 +66,10 @@ public class Main {
         AddContactView addContactView = AddContactViewFactory.create(viewManagerModel, addContactViewModel, friendsListViewModel, userDataAccessObject);
         views.add(addContactView, addContactView.viewName);
 
-        viewManagerModel.setActiveView(signupView.viewName);
+        ChatListView chatListView = ChatListUseCaseFactory.create(viewManagerModel, chatListViewModel, chatListDataAccessObject, userDataAccessObject);
+        views.add(chatListView, chatListView.viewName);
+
+        viewManagerModel.setActiveView(chatListView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
