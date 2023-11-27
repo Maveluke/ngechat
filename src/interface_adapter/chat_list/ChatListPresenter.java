@@ -1,37 +1,30 @@
 package interface_adapter.chat_list;
 
 import interface_adapter.ViewManagerModel;
-import use_case.signup.SignupOutputBoundary;
-import use_case.signup.SignupOutputData;
+import use_case.chat_list.ChatListOutputBoundary;
+import use_case.chat_list.ChatListOutputData;
 
-public class ChatListPresenter implements SignupOutputBoundary {
 
-    private final ChatListViewModel chatListViewModel;
-    private ViewManagerModel viewManagerModel;
+public class ChatListPresenter implements ChatListOutputBoundary {
 
-    public ChatListPresenter(ViewManagerModel viewManagerModel,
-                             ChatListViewModel chatListViewModel) {
+    private final interface_adapter.chat_list.ChatListViewModel chatlistViewModel;
+    private final ViewManagerModel viewManagerModel;
+    public ChatListPresenter(ChatListViewModel chatlistViewModel, ViewManagerModel viewManagerModel) {
+        this.chatlistViewModel = chatlistViewModel;
         this.viewManagerModel = viewManagerModel;
-        this.chatListViewModel = chatListViewModel;
     }
 
     @Override
-    public void prepareSuccessView(SignupOutputData response) {
-        // On success, switch to the chat_list view.
-
-//        LocalDateTime responseTime = LocalDateTime.parse(response.getCreationTime());
-//        response.setCreationTime(responseTime.format(DateTimeFormatter.ofPattern("hh:mm:ss")));
-//
-//        LoginState loginState = loginViewModel.getState();
-//        loginState.setUsername(response.getUsername());
-//        this.loginViewModel.setState(loginState);
-//        loginViewModel.firePropertyChanged();
-//
-//        viewManagerModel.setActiveView(loginViewModel.getViewName());
-//        viewManagerModel.firePropertyChanged();
+    public void prepareSuccessView(ChatListOutputData chatListOutputData) {
+        ChatListState currentState = chatlistViewModel.getState();
+        currentState.setChatList(chatListOutputData.getChatList());
+        chatlistViewModel.firePropertyChanged();
+        viewManagerModel.setActiveView(chatlistViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 
     @Override
     public void prepareFailView(String error) {
+        System.out.println(error);
     }
 }

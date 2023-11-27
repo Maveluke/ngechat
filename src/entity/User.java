@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface User {
 
@@ -10,9 +11,11 @@ public interface User {
 
     String getPassword();
 
-    ArrayList<User> getFriendsList();
+    HashMap<User, String> getFriendToBinMap();
 
-    boolean userAddFriend(User friend);
+    boolean userAddFriend(User friend, String binID);
 
     boolean userRemoveFriend(User friend);
+
+    boolean isFriendWith(String friendUsername);
 }
