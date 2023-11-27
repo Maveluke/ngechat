@@ -17,16 +17,14 @@ public class FriendsListInteractor implements FriendsListInputBoundary {
 
     @Override
     public void execute() {
-        if (friendsListDataAccessObject.isFriendsEmpty()) {
-            friendsListPresenter.prepareFailView("You have no friends");
-        } else {
+
             User currentUser = friendsListDataAccessObject.getCurrentUser();
             String currentUserName = currentUser.getName();
             HashMap<String, String> friendsList = friendsListDataAccessObject.getFriends();
 
             FriendsListOutputData friendsListOutputData = new FriendsListOutputData(friendsList, currentUserName);
             friendsListPresenter.prepareSuccessView(friendsListOutputData);
-        }
+
     }
 
 

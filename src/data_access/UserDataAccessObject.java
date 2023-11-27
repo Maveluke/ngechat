@@ -4,9 +4,11 @@ import entity.User;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import use_case.add_chat.AddChatDataAccessInterface;
 import use_case.add_contact.AddContactDataAccessInterface;
 import use_case.block_contact.BlockContactDataAccessInterface;
 import use_case.chat_list.ChatListDataAccessInterface;
+import use_case.create_chat.CreateChatDataAccessInterface;
 import use_case.friends_list.FriendsListDataAccessInterface;
 import use_case.login.LoginDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
@@ -113,7 +115,9 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
     }
 
     @Override
-    public HashMap<String, String> getFriends() {
+    public HashMap<String, String> getFriends(){
+        // TODO : Implement this
+
         return null;
     }
 

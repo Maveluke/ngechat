@@ -10,8 +10,6 @@ public interface ChatListDataAccessInterface {
 
     public HashMap<String, ArrayList<String>> getChats();
 
-    public User getCurrentUser();
-
     // implement this by checking if getChat().is_empty() is true
     public boolean chatIsEmpty();
 
