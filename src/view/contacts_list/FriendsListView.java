@@ -1,7 +1,7 @@
 package view.contacts_list;
 
-import interface_adapter.friendslist.FriendsListController;
-import interface_adapter.friendslist.FriendsListViewModel;
+import interface_adapter.friends_list.FriendsListController;
+import interface_adapter.friends_list.FriendsListViewModel;
 
 import javax.swing.*;
 import java.awt.*;
