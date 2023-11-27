@@ -272,16 +272,6 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
     }
 
     @Override
-    public HashMap<String, ArrayList<String>> getChats() {
-        return null;
-    }
-
-    @Override
-    public boolean chatIsEmpty() {
-        return getChats().isEmpty();
-    }
-
-    @Override
     public boolean friendsIsEmpty() {
         return getFriends().isEmpty();
     }
