@@ -9,4 +9,6 @@ public interface LoginDataAccessInterface {
     User get(String username);
 
     void setCurrentUsername(String username);
+
+    User getCurrentUser();
 }
