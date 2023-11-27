@@ -4,8 +4,8 @@ import entity.User;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import use_case.add_chat.AddChatDataAccessInterface;
 import use_case.add_contact.AddContactDataAccessInterface;
+import use_case.block_contact.BlockContactDataAccessInterface;
 import use_case.chat_list.ChatListDataAccessInterface;
 import use_case.friends_list.FriendsListDataAccessInterface;
 import use_case.login.LoginDataAccessInterface;
@@ -18,7 +18,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserDataAccessObject implements SignupUserDataAccessInterface,
-        AddContactDataAccessInterface, ChatListDataAccessInterface, LoginDataAccessInterface, FriendsListDataAccessInterface {
+        AddContactDataAccessInterface, ChatListDataAccessInterface, LoginDataAccessInterface,
+        FriendsListDataAccessInterface, BlockContactDataAccessInterface {
 
     private final String masterKey;
     private final String downloadURL;
@@ -78,6 +79,13 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
         User user = accounts.get(username);
         User friend = accounts.get(friendUsername);
         return user.userAddFriend(friend) && friend.userAddFriend(user);
+    }
+
+    @Override
+    public boolean blockFriend(String username, String friendUsername) {
+        User user = accounts.get(username);
+        User friend = accounts.get(friendUsername);
+        return user.userRemoveFriend(friend) && friend.userRemoveFriend(user);
     }
 
     @Override
