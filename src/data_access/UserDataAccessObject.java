@@ -259,7 +259,48 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
     public boolean blockFriend(String username, String friendUsername) {
         User user = accounts.get(username);
         User friend = accounts.get(friendUsername);
-        return user.userRemoveFriend(friend) && friend.userRemoveFriend(user);
+
+        // Add friend locally
+        user.userRemoveFriend(friend);
+        friend.userRemoveFriend(user);
+
+        // Add friend remotely
+        blockFriendRemotely(username, friendUsername);
+        return true;
+    }
+
+    private void blockFriendRemotely(String username, String friendUsername) {
+        JSONArray usersRemote = getUsersListRemote();
+        for (int i = 0; i < usersRemote.length(); i++) {
+            JSONObject currentUserJSON = usersRemote.getJSONObject(i);
+            if (currentUserJSON.getString("username").equals(username)) {
+                JSONArray oldFriendsList = currentUserJSON.getJSONArray("friends");
+
+                for (int j = 0; j < oldFriendsList.length(); j++) {
+                    JSONObject friendJSON = usersRemote.getJSONObject(i);
+                    if (friendJSON.getString("username").equals(friendUsername)) {
+                        oldFriendsList.remove(j);
+                    }
+                }
+
+                currentUserJSON.put("friends", oldFriendsList);
+                usersRemote.put(i, currentUserJSON);
+            }
+            if (currentUserJSON.getString("username").equals(friendUsername)) {
+                JSONArray oldFriendsList = currentUserJSON.getJSONArray("friends");
+
+                for (int j = 0; j < oldFriendsList.length(); j++) {
+                    JSONObject friendJSON = usersRemote.getJSONObject(i);
+                    if (friendJSON.getString("username").equals(username)) {
+                        oldFriendsList.remove(j);
+                    }
+
+                    currentUserJSON.put("friends", oldFriendsList);
+                    usersRemote.put(i, currentUserJSON);
+                }
+            }
+        }
+        updateRemoteUsers(usersRemote);
     }
 
     @Override
