@@ -6,18 +6,16 @@ import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import use_case.add_contact.AddContactDataAccessInterface;
-import use_case.chat_list.ChatListDataAccessInterface;
 import use_case.login.LoginDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class UserDataAccessObject implements SignupUserDataAccessInterface,
-        AddContactDataAccessInterface, LoginDataAccessInterface {
+        AddContactDataAccessInterface, LoginDataAccessInterface{
 
     private static final String USER_BIN_ID = "";
     private static final MediaType mediaType = MediaType.parse("application/json");
@@ -27,7 +25,6 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
     private final Map<String, User> accounts = new HashMap<>();
     private String currentUsername = null;
 
-    //  TODO: Implement the constructor by downloading files from the API
     public UserDataAccessObject(String masterKey, UserFactory userFactory){
         this.masterKey = masterKey;
         this.userFactory = userFactory;
@@ -198,7 +195,7 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
     public User getCurrentUser() {
         return accounts.get(this.currentUsername);
     }
-
+    @Override
     public void setCurrentUsername(String currentUsername) {
         this.currentUsername = currentUsername;
     }
