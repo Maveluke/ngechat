@@ -1,7 +1,7 @@
 package view.contacts_list;
 
-import interface_adapter.friendslist.FriendsListController;
-import interface_adapter.friendslist.FriendsListViewModel;
+import interface_adapter.friends_list.FriendsListController;
+import interface_adapter.friends_list.FriendsListViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -131,26 +131,26 @@ public class FriendsListView {
         JPanel friendspanel = new JPanel();
         friendspanel.setLayout(new BoxLayout(friendspanel, BoxLayout.Y_AXIS));
 
-        for() {
-//            TODO: implement for loop
-            JPanel friendpanel = new JPanel();
-            friendpanel.setLayout(new BoxLayout(friendpanel, BoxLayout.X_AXIS));
-
-            ImageIcon profpic = new ImageIcon("src/view/Photos/GenericPP.jpg");
-//            TODO: replace with actual profpic
-            Image image = profpic.getImage();
-            Image newimg = image.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
-            profpic = new ImageIcon(newimg);
-            JLabel _profpic = new JLabel(profpic);
-            friendpanel.add(_profpic);
-
-            JLabel name = new JLabel("Username");
-//            TODO: replace with actual username
-            friendpanel.add(name);
-
-            friendpanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-            friendspanel.add(friendpanel);
-        }
+//        for() {
+////            TODO: implement for loop
+//            JPanel friendpanel = new JPanel();
+//            friendpanel.setLayout(new BoxLayout(friendpanel, BoxLayout.X_AXIS));
+//
+//            ImageIcon profpic = new ImageIcon("src/view/Photos/GenericPP.jpg");
+////            TODO: replace with actual profpic
+//            Image image = profpic.getImage();
+//            Image newimg = image.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
+//            profpic = new ImageIcon(newimg);
+//            JLabel _profpic = new JLabel(profpic);
+//            friendpanel.add(_profpic);
+//
+//            JLabel name = new JLabel("Username");
+////            TODO: replace with actual username
+//            friendpanel.add(name);
+//
+//            friendpanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+//            friendspanel.add(friendpanel);
+//        }
 
         friendframe.add(friendspanel, BorderLayout.WEST);
 

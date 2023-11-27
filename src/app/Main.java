@@ -51,6 +51,7 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, chatListViewModel, userDataAccessObject);
         views.add(loginView, loginView.viewName);
 
+
         AddContactView addContactView = AddContactViewFactory.create(viewManagerModel, addContactViewModel, friendsListViewModel, userDataAccessObject);
         views.add(addContactView, addContactView.viewName);
 

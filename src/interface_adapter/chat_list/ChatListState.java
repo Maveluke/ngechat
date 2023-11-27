@@ -5,9 +5,9 @@ import java.util.HashMap;
 
 public class ChatListState {
 
-    String currentUser;
+    private String currentUser = "";
 
-    HashMap<String, ArrayList<String>> chatList;
+    private HashMap<String, ArrayList<String>> chatList = null;
 
     public void setCurrentUser(String currentUser) {
         this.currentUser = currentUser;
@@ -19,6 +19,10 @@ public class ChatListState {
 
     public HashMap<String, ArrayList<String>> getChatList(){
         return chatList;
+    }
+
+    public void setChatList(HashMap<String, ArrayList<String>> chatList) {
+        this.chatList = chatList;
     }
 
 }

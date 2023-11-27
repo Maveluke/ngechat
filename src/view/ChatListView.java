@@ -1,7 +1,7 @@
 package view;
 
-import interface_adapter.chatlist.ChatListController;
-import interface_adapter.chatlist.ChatListViewModel;
+import interface_adapter.chat_list.ChatListController;
+import interface_adapter.chat_list.ChatListViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,7 +57,7 @@ public class ChatListView {
         });
         header.add(_profpic, BorderLayout.WEST);
 
-        JLabel username = new JLabel(chatlistViewModel.getUsername());
+        JLabel username = new JLabel(chatlistViewModel.getState().getCurrentUser());
         header.add(username, BorderLayout.CENTER);
 
         JPanel buttons = new JPanel();
