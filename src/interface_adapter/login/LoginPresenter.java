@@ -25,8 +25,7 @@ public class LoginPresenter implements LoginOutputBoundary {
         // On success, switch to the logged in view.
 
         ChatListState chatListState = chatListViewModel.getState();
-
-        // TODO: add something (?)
+        chatListState.setUsername(response.getUsername());
         this.chatListViewModel.setState(chatListState);
         this.chatListViewModel.firePropertyChanged();
 
