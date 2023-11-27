@@ -1,13 +1,11 @@
 package data_access;
 
-import entity.Chat;
-import entity.CommonChat;
-import entity.Message;
-import entity.User;
+import entity.*;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import use_case.chat_list.ChatListDataAccessInterface;
+import use_case.create_chat.CreateChatDataAccessInterface;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -19,7 +17,7 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
 
     private static final MediaType mediaType = MediaType.parse("application/json");
     private final String masterKey;
-    private HashMap<String, String> friendTobinID;
+    private HashMap<String, String> friendTobinID; // friend username to binId
     private HashMap<String, Chat> chatList = new HashMap<>(); // Friend username to Chat
     private CommonChatFactory chatFactory;
     private static final String API_URL = "https://api.jsonbin.io/v3/b";
@@ -39,29 +37,22 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
 
             Response response = client.newCall(request).execute();
             JSONObject responseJSON = new JSONObject(response.body().string());
-            JSONArray senders = responseJSON.getJSONArray("senders");
-            HashMap<String, ArrayList<Message>> newMessagesMap = new HashMap<>();
+            JSONArray messages = responseJSON.getJSONArray("messages");
+            ArrayList<ArrayList<Object>> messagesInfo = new ArrayList<>();
 
-            boolean isChatEmpty = true;
-
-            for (int i = 0; i < senders.length(); i++) {
-                JSONObject sender = senders.getJSONObject(i);
-                String senderUsername = sender.getString("sender");
-                JSONArray messagesJSON = sender.getJSONArray("messages");
-                ArrayList<Message> tempMessagesArray = new ArrayList<>();
-                if (!messagesJSON.isEmpty()) isChatEmpty = false;
-                for (int j = 0; j < messagesJSON.length(); j++) {
-                    LocalDateTime timeSent = LocalDateTime.parse(messagesJSON.getJSONObject(i).getString("timeSent"));
-                    Message message = new Message(messagesJSON.getJSONObject(i).getString("message"), timeSent, senderUsername);
-                    tempMessagesArray.add(message);
-                }
-                newMessagesMap.put(senderUsername, tempMessagesArray);
+            for (int i = 0; i < messages.length(); i++) {
+                JSONObject singleMessageInfo = messages.getJSONObject(i);
+                ArrayList<Object> senderToMessage = new ArrayList<>();
+                LocalDateTime timeSent = LocalDateTime.parse(singleMessageInfo.getString("timeSent"));
+                Message tempMessage = new Message(singleMessageInfo.getString("message"), timeSent, singleMessageInfo.getString("sender"));
+                senderToMessage.add(singleMessageInfo.getString("sender"));
+                senderToMessage.add(tempMessage);
             }
             // So that the Chat will not be created
-            if (isChatEmpty){
+            if (messages.isEmpty()){
                 return null;
             }
-            return chatFactory.create(newMessagesMap, binID);
+            return chatFactory.create(messagesInfo, binID);
         }catch (IOException e){
             System.out.println("Fail to download chat from API! with the error" + e);
         }
@@ -105,6 +96,16 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
             }
         }
         return false;
+    }
+
+    @Override
+    public String getBinID(String friendUsername) {
+        return friendTobinID.get(friendUsername);
+    }
+
+    @Override
+    public void addChat(String friendUsername, Chat chat) {
+        chatList.put(friendUsername, chat);
     }
 
 }
