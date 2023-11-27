@@ -22,7 +22,7 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
         AddContactDataAccessInterface, LoginDataAccessInterface, FriendsListDataAccessInterface
 {
 
-    private static final String USER_BIN_ID = "";
+    private static final String USER_BIN_ID = "65642e610574da7622cc9825";
     private static final MediaType mediaType = MediaType.parse("application/json");
     private final String masterKey;
     private static final String API_URL = "https://api.jsonbin.io/v3/b";
@@ -46,8 +46,8 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
                     .build();
 
             Response response = client.newCall(request).execute();
-
-            return new JSONArray(response.body().string()); // TODO: not sure whether this is possible
+//            String tempString = response.body().string();
+            return new JSONArray(response.body().string());
         }catch (IOException e){
             System.out.println("Fail to download users from API! with the error" + e);
         }
@@ -64,6 +64,8 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
                     User user = userFactory.create(userJSON.getString("username"), userJSON.getString("password"));
                     accounts.put(userJSON.getString("username"), user);
                 }
+                System.out.println(this);
+                System.out.println();
             }
             // Update each user's friends list
             for (int i = 0; i < usersList.length(); i++) {
@@ -112,16 +114,66 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
             String binID = createBinID();
 
             if(binID.equals("error")) return false;
-
+            // Add friend locally
             user.userAddFriend(friend, binID);
             friend.userAddFriend(user, binID);
+
+            // Add friend remotely
+            addFriendRemotely(username, friendUsername, binID);
             return true;
         }
         return false;
     }
+    private void addFriendRemotely(String username, String friendUsername, String binID){
+        JSONArray usersRemote = getUsersListRemote();
+        for (int i = 0; i < usersRemote.length(); i++) {
+            JSONObject currentUserJSON = usersRemote.getJSONObject(i);
+            if (currentUserJSON.getString("username").equals(username)){
+                JSONArray oldFriendsList = currentUserJSON.getJSONArray("friends");
+
+                JSONObject newFriend = new JSONObject();
+                newFriend.put("username", friendUsername);
+                newFriend.put("binID", binID);
+
+                oldFriendsList.put(newFriend);
+                currentUserJSON.put("friends", oldFriendsList);
+                usersRemote.put(i, currentUserJSON);
+            }
+            if (currentUserJSON.getString("username").equals(friendUsername)){
+                JSONArray oldFriendsList = currentUserJSON.getJSONArray("friends");
+
+                JSONObject newFriend = new JSONObject();
+                newFriend.put("username", username);
+                newFriend.put("binID", binID);
+
+                oldFriendsList.put(newFriend);
+                currentUserJSON.put("friends", oldFriendsList);
+                usersRemote.put(i, currentUserJSON);
+            }
+        }
+        JSONObject body = new JSONObject();
+        body.put("users", usersRemote);
+        RequestBody updateBody = RequestBody.create(body.toString(), mediaType);
+        OkHttpClient client = new OkHttpClient();
+        Request uploadRequest = new Request.Builder()
+                .url(API_URL + "/" + USER_BIN_ID)
+                .put(updateBody)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("X-Master-Key", this.masterKey)
+                .build();
+
+        try{
+            Response updateResponse = client.newCall(uploadRequest).execute();
+        }catch (Exception e){
+            System.out.println("Fail to get response when uploading users");
+        }
+    }
+
     // Create a new bin for user and friend to chat
     private String createBinID(){
-        RequestBody body = RequestBody.create(new JSONObject().toString(), mediaType);
+        JSONArray messagesInfoJSON = new JSONArray();
+        messagesInfoJSON.put(new JSONObject());
+        RequestBody body = RequestBody.create(messagesInfoJSON.toString(), mediaType);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(API_URL)
@@ -131,7 +183,8 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
                 .build();
         try{
             Response response = client.newCall(request).execute();
-            return new JSONObject(response.body().toString()).getJSONObject("metadata").getString("id");
+            String tempResponse = response.body().string();
+            return new JSONObject(tempResponse).getJSONObject("metadata").getString("id");
         }catch (Exception e){
             System.out.println("Fail to get response");
         }
@@ -166,9 +219,11 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
             Response downloadResponse = client.newCall(downloadRequest).execute();
             JSONArray usersList = new JSONArray(downloadResponse.body().string());
             // Update locally
-            usersList.put(userToSave);
+            accounts.put(user.getName(), user);
             // Update remotely
+            usersList.put(userToSave);
             updateRemoteUsers(usersList);
+            System.out.println(this);
         }catch (Exception e){
             System.out.println("Fail to get response when downloading users");
         }
@@ -176,11 +231,13 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
     }
 
     public void updateRemoteUsers(JSONArray usersList){
-        RequestBody updateBody = RequestBody.create(usersList.toString(), mediaType);
+        JSONObject body = new JSONObject();
+        body.put("users", usersList);
+        RequestBody updateBody = RequestBody.create(body.toString(), mediaType);
         OkHttpClient client = new OkHttpClient();
         Request uploadRequest = new Request.Builder()
                 .url(API_URL + "/" + USER_BIN_ID)
-                .post(updateBody)
+                .put(updateBody)
                 .addHeader("Content-Type", "application/json")
                 .addHeader("X-Master-Key", this.masterKey)
                 .build();
@@ -204,7 +261,6 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
     public void setCurrentUsername(String currentUsername) {
         this.currentUsername = currentUsername;
     }
-}
 
     @Override
     public boolean friendsIsEmpty() {
@@ -216,6 +272,27 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
         // TODO : Implement this
 
         return null;
+    }
+
+    @Override
+    public String toString(){
+        String ret = "";
+        if (this.currentUsername != null) ret += this.currentUsername;
+        else ret += "null";
+        ret += "\n";
+
+        for (String username :
+                accounts.keySet()) {
+            ret += String.format("username: %s\n", username);
+            User currentUser = accounts.get(username);
+            ret += String.format("password: %s\n", currentUser.getPassword());
+            ret += "friends: \n";
+            for (User friend:
+                 currentUser.getFriendToBinMap().keySet()) {
+                ret += String.format("- %s\n", friend.getName());
+            }
+        }
+        return ret;
     }
 
 }
