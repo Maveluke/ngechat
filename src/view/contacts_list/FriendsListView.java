@@ -11,7 +11,7 @@ import java.awt.event.MouseListener;
 public class FriendsListView {
     private final FriendsListController friendsListController;
     private final FriendsListViewModel friendsListViewModel;
-    FriendsListView(FriendsListController controller, FriendsListViewModel friendsListViewModel) {
+    public FriendsListView(FriendsListController controller, FriendsListViewModel friendsListViewModel) {
         this.friendsListController = controller;
         this.friendsListViewModel = friendsListViewModel;
 
