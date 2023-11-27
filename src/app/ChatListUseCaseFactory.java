@@ -22,21 +22,22 @@ public class ChatListUseCaseFactory {
     public static ChatListView create(
             ViewManagerModel viewManagerModel,
             ChatListViewModel chatListViewModel,
-            ChatListDataAccessInterface chatListDataAccessObject) {
+            ChatListDataAccessInterface chatListDataAccessObject, LoginDataAccessInterface userDataAccessObject) {
 
-        ChatListController chatListController = createChatListController(viewManagerModel, chatListViewModel, chatListDataAccessObject);
+        ChatListController chatListController = createChatListController(viewManagerModel, chatListViewModel, chatListDataAccessObject, userDataAccessObject);
         return new ChatListView(chatListController, chatListViewModel);
     }
 
     private static ChatListController createChatListController(
             ViewManagerModel viewManagerModel,
             ChatListViewModel chatListViewModel,
-            ChatListDataAccessInterface chatListDataAccessObject){
+            ChatListDataAccessInterface chatListDataAccessObject,
+            LoginDataAccessInterface userDataAccessObject){
 
         // Notice how we pass this method's parameters to the Presenter.
         ChatListOutputBoundary chatListOutputBoundary = new ChatListPresenter(chatListViewModel, viewManagerModel);
 
-        ChatListInputBoundary chatListInteractor = new ChatListInteractor(chatListDataAccessObject, chatListOutputBoundary);
+        ChatListInputBoundary chatListInteractor = new ChatListInteractor(userDataAccessObject, chatListDataAccessObject, chatListOutputBoundary);
 
         return new ChatListController(chatListInteractor);
     }
