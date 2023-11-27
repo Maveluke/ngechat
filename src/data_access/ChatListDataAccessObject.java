@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class ChatListDataAccessObject implements ChatListDataAccessInterface {
+public class ChatListDataAccessObject implements ChatListDataAccessInterface, CreateChatDataAccessInterface {
 
     private static final MediaType mediaType = MediaType.parse("application/json");
     private final String masterKey;
@@ -89,12 +89,22 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface {
     }
 
     @Override
-    public boolean is_empty() {
+    public boolean chatIsEmpty() {
         return false;
     }
 
     @Override
     public void deleteChat() {
-
     }
+
+    @Override
+    public boolean chatExist(String targetUser) {
+        for (String key : getChats().keySet()) {
+            if (key.equals(targetUser)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

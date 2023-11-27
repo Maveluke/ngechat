@@ -20,7 +20,7 @@ public class ChatListInteractor implements ChatListInputBoundary{
 
     @Override
     public void execute() {
-        if (chatListDataAccessObject.is_empty()) {
+        if (chatListDataAccessObject.chatIsEmpty()) {
             chatListPresenter.prepareFailView("No chat available");
         } else {
             HashMap<User, String> userFriendTobinID = userDataAccessObject.getCurrentUser().getFriendToBinMap();

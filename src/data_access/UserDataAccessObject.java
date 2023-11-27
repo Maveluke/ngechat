@@ -6,16 +6,21 @@ import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import use_case.add_contact.AddContactDataAccessInterface;
+import use_case.chat_list.ChatListDataAccessInterface;
+import use_case.create_chat.CreateChatDataAccessInterface;
+import use_case.friends_list.FriendsListDataAccessInterface;
 import use_case.login.LoginDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class UserDataAccessObject implements SignupUserDataAccessInterface,
-        AddContactDataAccessInterface, LoginDataAccessInterface{
+        AddContactDataAccessInterface, LoginDataAccessInterface, FriendsListDataAccessInterface
+{
 
     private static final String USER_BIN_ID = "";
     private static final MediaType mediaType = MediaType.parse("application/json");
@@ -140,7 +145,7 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
 
     @Override
     public void save(User user) {
-        // TODO: Change the implementation to update instead of uploading a new user
+        MediaType mediaType = MediaType.parse("application/json");
         DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss:SS");
 
         JSONObject userToSave = new JSONObject();
@@ -199,4 +204,18 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
     public void setCurrentUsername(String currentUsername) {
         this.currentUsername = currentUsername;
     }
+}
+
+    @Override
+    public boolean friendsIsEmpty() {
+        return getFriends().isEmpty();
+    }
+
+    @Override
+    public HashMap<String, String> getFriends(){
+        // TODO : Implement this
+
+        return null;
+    }
+
 }

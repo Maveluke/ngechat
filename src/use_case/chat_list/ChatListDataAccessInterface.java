@@ -10,7 +10,7 @@ public interface ChatListDataAccessInterface {
 
 
     // implement this by checking if getChat().is_empty() is true
-    public boolean is_empty();
+    public boolean chatIsEmpty();
 
     // Not necessary for now, might need it later
     public void deleteChat();
