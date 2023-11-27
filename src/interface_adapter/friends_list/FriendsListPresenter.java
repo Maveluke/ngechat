@@ -20,9 +20,4 @@ public class FriendsListPresenter implements FriendsListOutputBoundary {
     public void prepareSuccessView(FriendsListOutputData friendsListOutputData) {
 
     }
-
-    @Override
-    public void prepareFailView(String noChatAvailable) {
-        System.out.println(noChatAvailable);
-    }
 }

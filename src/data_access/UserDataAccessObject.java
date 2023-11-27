@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserDataAccessObject implements SignupUserDataAccessInterface,
-        AddContactDataAccessInterface, ChatListDataAccessInterface, LoginDataAccessInterface,
+        AddContactDataAccessInterface, LoginDataAccessInterface,
         FriendsListDataAccessInterface, BlockContactDataAccessInterface {
 
     private static final String USER_BIN_ID = "65642e610574da7622cc9825";
@@ -253,13 +253,6 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
     @Override
     public User get(String username) {
         return accounts.get(username);
-    }
-
-    @Override
-    public boolean addFriend(String username, String friendUsername) {
-        User user = accounts.get(username);
-        User friend = accounts.get(friendUsername);
-        return user.userAddFriend(friend) && friend.userAddFriend(user);
     }
 
     @Override
