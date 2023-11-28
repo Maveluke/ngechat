@@ -1,5 +1,6 @@
 package view.contacts_list;
 
+import interface_adapter.block_contact.BlockContactState;
 import interface_adapter.friends_list.FriendsListController;
 import interface_adapter.friends_list.FriendsListViewModel;
 import interface_adapter.block_contact.BlockContactController;
@@ -7,6 +8,8 @@ import interface_adapter.block_contact.BlockContactViewModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -17,7 +20,7 @@ public class FriendsListView extends JPanel{
     private final FriendsListViewModel friendsListViewModel;
     private final BlockContactController blockContactController;
     private final BlockContactViewModel blockContactViewModel;
-    FriendsListView(FriendsListController controller, FriendsListViewModel friendsListViewModel,
+    public FriendsListView(FriendsListController controller, FriendsListViewModel friendsListViewModel,
                     BlockContactController blockContactController, BlockContactViewModel blockContactViewModel) {
         this.friendsListController = controller;
         this.friendsListViewModel = friendsListViewModel;
@@ -158,6 +161,7 @@ public class FriendsListView extends JPanel{
             friendpanel.add(_profPic);
 
             JLabel name = new JLabel(friend);
+            name.setName("Username");
             friendpanel.add(name);
 
             friendpanel.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -229,6 +233,28 @@ public class FriendsListView extends JPanel{
             block.setName("blockButton");
             buttons.setName("blocking");
             buttons.add(block);
+            block.addActionListener(
+                    new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            ArrayList<String> selectedFriends = new ArrayList<String>();
+                            for (JPanel friendPanel: panelList) {
+                                for (Component component: friendPanel.getComponents()) {
+                                    if (component instanceof JCheckBox) {
+                                        if (((JCheckBox) component).isSelected()) {
+                                            for (Component _component: friendPanel.getComponents()) {
+                                                if (_component.getName() == "Username") {
+                                                    selectedFriends.add(((JLabel) _component).getText());
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            blockContactController.execute(selectedFriends);
+                        }
+                    }
+            );
         }
         else if (buttons.getName().equals("blocking")) {
             for (Component component: buttons.getComponents()) {

@@ -8,4 +8,7 @@ public class BlockContactState {
 
     public BlockContactState() {}
 
+    public void setSelected(ArrayList<String> selected) {
+        this.selected = selected;
+    }
 }
