@@ -1,31 +1,42 @@
 package app;
 
+import data_access.UserDataAccessObject;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.chat_list.ChatListController;
 import interface_adapter.chat_list.ChatListPresenter;
 import interface_adapter.chat_list.ChatListViewModel;
-import interface_adapter.login.LoginController;
-import interface_adapter.login.LoginPresenter;
-import interface_adapter.login.LoginViewModel;
+import interface_adapter.friends_list.FriendsListController;
+import interface_adapter.friends_list.FriendsListPresenter;
+import interface_adapter.friends_list.FriendsListViewModel;
 import use_case.chat_list.ChatListDataAccessInterface;
 import use_case.chat_list.ChatListInputBoundary;
 import use_case.chat_list.ChatListInteractor;
 import use_case.chat_list.ChatListOutputBoundary;
+import use_case.friends_list.FriendsListDataAccessInterface;
+import use_case.friends_list.FriendsListInputBoundary;
+import use_case.friends_list.FriendsListInteractor;
+import use_case.friends_list.FriendsListOutputBoundary;
 import use_case.login.LoginDataAccessInterface;
-import use_case.login.LoginInputBoundary;
-import use_case.login.LoginInteractor;
-import use_case.login.LoginOutputBoundary;
 import view.ChatListView;
-import view.LoginView;
+
+import java.io.IOException;
 
 public class ChatListUseCaseFactory {
     public static ChatListView create(
             ViewManagerModel viewManagerModel,
             ChatListViewModel chatListViewModel,
-            ChatListDataAccessInterface chatListDataAccessObject, LoginDataAccessInterface userDataAccessObject) {
+            FriendsListViewModel friendsListViewModel,
+
+            ChatListDataAccessInterface chatListDataAccessObject, UserDataAccessObject userDataAccessObject) {
 
         ChatListController chatListController = createChatListController(viewManagerModel, chatListViewModel, chatListDataAccessObject, userDataAccessObject);
-        return new ChatListView(chatListController, chatListViewModel);
+        try{
+            FriendsListController friendsListController = createFriendsListController(viewManagerModel, friendsListViewModel, userDataAccessObject);
+            return new ChatListView(chatListController, chatListViewModel, friendsListController);
+        }catch (IOException e){
+            System.out.println("Fail to generate friendsListController in ChatListUseCaseFactory");
+        }
+        return null;
     }
 
     private static ChatListController createChatListController(
@@ -40,5 +51,15 @@ public class ChatListUseCaseFactory {
         ChatListInputBoundary chatListInteractor = new ChatListInteractor(userDataAccessObject, chatListDataAccessObject, chatListOutputBoundary);
 
         return new ChatListController(chatListInteractor);
+    }
+    private static FriendsListController createFriendsListController(ViewManagerModel viewManagerModel, FriendsListViewModel friendsListViewModel, FriendsListDataAccessInterface userDataAccessObject) throws IOException {
+
+        // Notice how we pass this method's parameters to the Presenter.
+        FriendsListOutputBoundary friendsListOutputBoundary = new FriendsListPresenter(viewManagerModel, friendsListViewModel);
+
+        FriendsListInputBoundary friendsListInteractor = new FriendsListInteractor(
+                userDataAccessObject, friendsListOutputBoundary);
+
+        return new FriendsListController(friendsListInteractor);
     }
 }
