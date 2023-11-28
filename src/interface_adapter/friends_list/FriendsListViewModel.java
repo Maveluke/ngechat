@@ -10,7 +10,7 @@ public class FriendsListViewModel extends ViewModel {
     private FriendsListState state = new FriendsListState();
 
     public FriendsListViewModel() {
-        super("sign up");
+        super("friends list");
     }
 
     public void setState(FriendsListState state) {
