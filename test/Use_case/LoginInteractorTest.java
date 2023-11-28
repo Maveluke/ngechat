@@ -11,21 +11,48 @@ import static org.junit.Assert.*;
 public class LoginInteractorTest {
     @Test
     public void successTest() {
-        LoginInputData loginInputData = new LoginInputData("Timothy", "ILOVEJESUS");
+        LoginInputData loginInputData = new LoginInputData("admin", "admin");
         String masterKey = "$2a$10$xfVheBzZjicxu..Dy7zLHeBNVrrPWZ/jEK/qfX7nTY.WKY/Tx9LM2";
         String uploadURL = "https://api.jsonbin.io/v3/b";
         String downloadURL = "https://api.jsonbin.io/v3/b/653f1b8c54105e766fc8df34?meta=false";
-        LoginDataAccessInterface userRepository = new UserDataAccessObject(masterKey, uploadURL, downloadURL);
+        CommonUserFactory userFactory = new CommonUserFactory();
+        LoginDataAccessInterface userRepository = new UserDataAccessObject(masterKey, userFactory);
 
         LoginOutputBoundary successPresenter = new LoginOutputBoundary() {
             @Override
             public void prepareSuccessView(LoginOutputData user) {
-                assertEquals("Timothy", user.getUsername());
-                assertTrue(userRepository.existsByName("Timothy"));
+                assertEquals("admin", user.getUsername());
+                assertTrue(userRepository.existsByName("admin"));
             }
 
             @Override
             public void prepareFailView(String error) { fail("Use case failure is unexpected.");
+
+            }
+        };
+        LoginInputBoundary interactor = new LoginInteractor(successPresenter, userRepository);
+        interactor.execute(loginInputData);
+
+    }
+
+    @Test
+    public void failureTest() {
+        LoginInputData loginInputData = new LoginInputData("timothy", "admin");
+        String masterKey = "$2a$10$xfVheBzZjicxu..Dy7zLHeBNVrrPWZ/jEK/qfX7nTY.WKY/Tx9LM2";
+        String uploadURL = "https://api.jsonbin.io/v3/b";
+        String downloadURL = "https://api.jsonbin.io/v3/b/653f1b8c54105e766fc8df34?meta=false";
+        CommonUserFactory userFactory = new CommonUserFactory();
+        LoginDataAccessInterface userRepository = new UserDataAccessObject(masterKey, userFactory);
+
+        LoginOutputBoundary successPresenter = new LoginOutputBoundary() {
+            @Override
+            public void prepareSuccessView(LoginOutputData user) {
+                fail("Use case success is unexpected.");
+            }
+
+            @Override
+            public void prepareFailView(String error)  {
+                assertEquals("Username does not exist!", error);
 
             }
         };
