@@ -11,5 +11,7 @@ public class InchatOutputData {
         this.messages = messages;
     }
 
-
+    public ArrayList<ArrayList<Object>> getMessages() {
+        return messages;
+    }
 }
