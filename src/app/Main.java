@@ -12,6 +12,7 @@ import interface_adapter.friends_list.FriendsListViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupViewModel;
 import view.*;
+import view.contacts_list.FriendsListView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -69,7 +70,10 @@ public class Main {
         ChatListView chatListView = ChatListUseCaseFactory.create(viewManagerModel, chatListViewModel, chatListDataAccessObject, userDataAccessObject);
         views.add(chatListView, chatListView.viewName);
 
-        viewManagerModel.setActiveView(chatListView.viewName);
+        FriendsListView friendsListView = FriendsListUseCaseFactory.create(viewManagerModel, friendsListViewModel, userDataAccessObject);
+        views.add(friendsListView, friendsListView.viewName);
+
+        viewManagerModel.setActiveView(friendsListView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();

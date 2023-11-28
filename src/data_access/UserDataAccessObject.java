@@ -47,7 +47,7 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
 
             Response response = client.newCall(request).execute();
 //            String tempString = response.body().string();
-            return new JSONArray(response.body().string());
+            return new JSONObject(response.body().string()).getJSONArray("users");
         }catch (IOException e){
             System.out.println("Fail to download users from API! with the error" + e);
         }

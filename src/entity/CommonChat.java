@@ -1,7 +1,6 @@
 package entity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class CommonChat implements Chat{
     private final String binID;
@@ -18,19 +17,24 @@ public class CommonChat implements Chat{
     }
 
     @Override
-    public Message getLastMessage() {
-        return (Message) messages.get(messages.size() - 1).get(1);
+    public CommonMessage getLastMessage() {
+        return (CommonMessage) messages.get(messages.size() - 1).get(1);
     }
 
-    public void addMessage(String senderUsername, Message message){
+    public void addMessage(String senderUsername, CommonMessage commonMessage){
         ArrayList<Object> newMessage = new ArrayList<>();
         newMessage.add(senderUsername);
-        newMessage.add(message);
+        newMessage.add(commonMessage);
         this.messages.add(newMessage);
     }
 
     public String getBinID() {
         return binID;
     }
+
+    public ArrayList<ArrayList<Object>> getMessages() {
+        return messages;
+    }
+
 }
 
