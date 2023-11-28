@@ -17,7 +17,7 @@ public class FriendsListView extends JPanel{
     private final FriendsListViewModel friendsListViewModel;
     private final BlockContactController blockContactController;
     private final BlockContactViewModel blockContactViewModel;
-    FriendsListView(FriendsListController controller, FriendsListViewModel friendsListViewModel,
+    public FriendsListView(FriendsListController controller, FriendsListViewModel friendsListViewModel,
                     BlockContactController blockContactController, BlockContactViewModel blockContactViewModel) {
         this.friendsListController = controller;
         this.friendsListViewModel = friendsListViewModel;
