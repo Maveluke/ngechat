@@ -8,7 +8,8 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class FriendsListView {
+public class FriendsListView extends JPanel{
+    public final String viewName = "friends list";
     private final FriendsListController friendsListController;
     private final FriendsListViewModel friendsListViewModel;
     public FriendsListView(FriendsListController controller, FriendsListViewModel friendsListViewModel) {
