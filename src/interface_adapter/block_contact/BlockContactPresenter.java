@@ -24,6 +24,6 @@ public class BlockContactPresenter implements BlockContactOutputBoundary {
 
     @Override
     public void prepareFailView(String error) {
-
+        System.out.println(error);
     }
 }

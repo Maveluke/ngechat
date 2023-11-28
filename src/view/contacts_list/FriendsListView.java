@@ -2,6 +2,8 @@ package view.contacts_list;
 
 import interface_adapter.friends_list.FriendsListController;
 import interface_adapter.friends_list.FriendsListViewModel;
+import interface_adapter.block_contact.BlockContactController;
+import interface_adapter.block_contact.BlockContactViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,9 +15,14 @@ import java.util.HashMap;
 public class FriendsListView extends JPanel{
     private final FriendsListController friendsListController;
     private final FriendsListViewModel friendsListViewModel;
-    FriendsListView(FriendsListController controller, FriendsListViewModel friendsListViewModel) {
+    private final BlockContactController blockContactController;
+    private final BlockContactViewModel blockContactViewModel;
+    FriendsListView(FriendsListController controller, FriendsListViewModel friendsListViewModel,
+                    BlockContactController blockContactController, BlockContactViewModel blockContactViewModel) {
         this.friendsListController = controller;
         this.friendsListViewModel = friendsListViewModel;
+        this.blockContactController = blockContactController;
+        this.blockContactViewModel = blockContactViewModel;
 
         HashMap<String, String> friendslist = friendsListViewModel.getFriendslist();
         ArrayList<JPanel> friendsListPanels = new ArrayList<JPanel>();
@@ -73,7 +80,7 @@ public class FriendsListView extends JPanel{
         blockIcon.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-              setBlockCheckboxesVisibility(friendsListPanels);
+              setBlockCheckboxesVisibility(friendsListPanels, buttons);
             }
 
             @Override
@@ -197,15 +204,16 @@ public class FriendsListView extends JPanel{
 //        friendframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    private void setBlockCheckboxesVisibility(ArrayList<JPanel> panelList) {
+    private void setBlockCheckboxesVisibility(ArrayList<JPanel> panelList, JPanel buttons) {
         for (JPanel friendpanel: panelList) {
             if (friendpanel.getName() == null) {
                 JCheckBox blockcheckbox = new JCheckBox("");
                 blockcheckbox.setName("block");
                 friendpanel.add(blockcheckbox);
                 friendpanel.setName("blocking");
+
             }
-            else if (friendpanel.getName() == "blocking"){
+            else if (friendpanel.getName().equals("blocking")) {
                 for (Component component: friendpanel.getComponents()) {
                     if (component.getName() == "block") {
                         friendpanel.remove(component);
@@ -215,5 +223,21 @@ public class FriendsListView extends JPanel{
             }
             friendpanel.revalidate();
         }
+
+        if (buttons.getName() == null) {
+            JButton block = new JButton("Block");
+            block.setName("blockButton");
+            buttons.setName("blocking");
+            buttons.add(block);
+        }
+        else if (buttons.getName().equals("blocking")) {
+            for (Component component: buttons.getComponents()) {
+                if (component.getName() == "blockButton") {
+                    buttons.remove(component);
+                }
+            }
+            buttons.setName(null);
+        }
+        buttons.revalidate();
     }
 }
