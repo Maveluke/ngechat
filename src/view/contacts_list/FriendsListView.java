@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FriendsListView extends JPanel{
+
+    public final String viewName = "friends list";
     private final FriendsListController friendsListController;
     private final FriendsListViewModel friendsListViewModel;
     private final BlockContactController blockContactController;
