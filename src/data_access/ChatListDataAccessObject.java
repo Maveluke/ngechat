@@ -8,7 +8,9 @@ import use_case.chat_list.ChatListDataAccessInterface;
 import use_case.create_chat.CreateChatDataAccessInterface;
 
 import java.io.IOException;
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -26,6 +28,28 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
         this.chatFactory = chatFactory;
     }
     private Chat getChatRemote(String binID){
+        JSONArray messages = getChatJSONRemotely(binID);
+        ArrayList<ArrayList<Object>> messagesInfo = new ArrayList<>();
+
+        for (int i = 0; i < messages.length(); i++) {
+            JSONObject singleMessageInfo = messages.getJSONObject(i);
+
+            ArrayList<Object> senderToMessage = new ArrayList<>();
+
+            LocalDateTime timeSent = LocalDateTime.parse(singleMessageInfo.getString("timeSent"));
+            Message tempMessage = new Message(singleMessageInfo.getString("message"), timeSent, singleMessageInfo.getString("sender"));
+
+            senderToMessage.add(singleMessageInfo.getString("sender"));
+            senderToMessage.add(tempMessage);
+            messagesInfo.add(senderToMessage);
+        }
+        // So that the Chat will not be created
+        if (messages.isEmpty()){
+            return null;
+        }
+        return chatFactory.create(messagesInfo, binID);
+    }
+    private JSONArray getChatJSONRemotely(String binID){
         try{
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
@@ -37,30 +61,54 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
 
             Response response = client.newCall(request).execute();
             JSONObject responseJSON = new JSONObject(response.body().string());
-            JSONArray messages = responseJSON.getJSONArray("messages");
-            ArrayList<ArrayList<Object>> messagesInfo = new ArrayList<>();
-
-            for (int i = 0; i < messages.length(); i++) {
-                JSONObject singleMessageInfo = messages.getJSONObject(i);
-                ArrayList<Object> senderToMessage = new ArrayList<>();
-                LocalDateTime timeSent = LocalDateTime.parse(singleMessageInfo.getString("timeSent"));
-                Message tempMessage = new Message(singleMessageInfo.getString("message"), timeSent, singleMessageInfo.getString("sender"));
-                senderToMessage.add(singleMessageInfo.getString("sender"));
-                senderToMessage.add(tempMessage);
-            }
-            // So that the Chat will not be created
-            if (messages.isEmpty()){
-                return null;
-            }
-            return chatFactory.create(messagesInfo, binID);
-        }catch (IOException e){
-            System.out.println("Fail to download chat from API! with the error" + e);
+            return responseJSON.getJSONArray("messages");
+        } catch (IOException e){
+            System.out.println("Fail to download chat from API! with the error: " + e);
         }
         return null;
     }
+    // TODO: This should be a method of inChatDAI
+    public void sendMessage(Message message, String binID){
+        String contentMessage = message.getMessage();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy, hh:mm:ss:SS");
+        String timeSent = message.getTimeSent().format(formatter);
+        String sender = message.getSender();
+
+        // Update Chat locally
+        // TODO: Implement after inChatPrivate is implemented
+        // Update Chat remotely
+         JSONObject singleMessageInfo = new JSONObject();
+         singleMessageInfo.put("sender", sender);
+         singleMessageInfo.put("timeSent", timeSent);
+         singleMessageInfo.put("message", contentMessage);
+
+        JSONArray retrievedMessages = getChatJSONRemotely(binID);
+        retrievedMessages.put(singleMessageInfo);
+        updateChatRemote(retrievedMessages, binID);
+    }
+    private void updateChatRemote(JSONArray messages, String binID){
+        JSONObject body = new JSONObject();
+        body.put("messages", messages);
+        RequestBody updateBody = RequestBody.create(body.toString(), mediaType);
+        OkHttpClient client = new OkHttpClient();
+        Request uploadRequest = new Request.Builder()
+                .url(API_URL + "/" + binID)
+                .put(updateBody)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("X-Master-Key", this.masterKey)
+                .build();
+
+        try{
+            Response updateResponse = client.newCall(uploadRequest).execute();
+        }catch (Exception e){
+            System.out.println("Fail to get response when uploading users");
+        }
+    }
     @Override
-    public void addFriendTobinID(String username, String binID) {
-        this.friendTobinID.put(username, binID);
+    public void updateChatWithBinID(String friendUsername, String binID) {
+        this.friendTobinID.put(friendUsername, binID);
+        Chat existingChat = getChatRemote(binID);
+        if (existingChat != null) chatList.put(friendUsername, existingChat);
     }
 
     @Override
@@ -81,7 +129,7 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
 
     @Override
     public boolean chatIsEmpty() {
-        return false;
+        return chatList.isEmpty();
     }
 
     @Override
