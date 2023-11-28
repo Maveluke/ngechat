@@ -8,15 +8,17 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class InChatPrivateView {
+public class InChatPrivateView extends JPanel{
     private final InChatPrivateController inChatPrivateController;
     private final InChatPrivateViewModel inChatPrivateViewModel;
     InChatPrivateView(InChatPrivateController controller, InChatPrivateViewModel inChatPrivateViewModel) {
         this.inChatPrivateController = controller;
         this.inChatPrivateViewModel = inChatPrivateViewModel;
 
-        JFrame inchatframe = new JFrame("ngechat");
-        inchatframe.setLayout(new BoxLayout(inchatframe.getContentPane(), BoxLayout.Y_AXIS));
+//        JFrame inchatframe = new JFrame("ngechat");
+//        inchatframe.setLayout(new BoxLayout(inchatframe.getContentPane(), BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
         JPanel header = new JPanel();
         header.setLayout(new BorderLayout());
 
@@ -33,7 +35,7 @@ public class InChatPrivateView {
         backicon.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-//              TODO: implement back (go back to profile)
+//              TODO: implement back (go back to chatlist)
             }
 
             @Override
@@ -58,10 +60,6 @@ public class InChatPrivateView {
         });
         header.add(backicon, BorderLayout.EAST);
 
-        inchatframe.add(header);
-
-        inchatframe.pack();
-        inchatframe.setVisible(true);
-        inchatframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.add(header);
     }
 }
