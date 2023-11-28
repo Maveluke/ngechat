@@ -8,7 +8,6 @@ import java.security.PublicKey;
 import java.util.HashMap;
 
 public class FriendsListViewModel extends ViewModel {
-    private FriendsListState state;
 
     public HashMap<String, String> friendslist = new HashMap<String, String>();
 
@@ -17,14 +16,6 @@ public class FriendsListViewModel extends ViewModel {
     }
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
-
-    public FriendsListState getState() {
-        return state;
-    }
-
-    public void setState(FriendsListState state) {
-        this.state = state;
-    }
 
     public void firePropertyChanged() {
         support.firePropertyChange("friendslist", null, friendslist);

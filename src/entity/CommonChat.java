@@ -17,8 +17,8 @@ public class CommonChat implements Chat{
     }
 
     @Override
-    public CommonMessage getLastMessage() {
-        return (CommonMessage) messages.get(messages.size() - 1).get(1);
+    public Message getLastMessage() {
+        return (Message) messages.get(messages.size() - 1).get(1);
     }
 
     public void addMessage(String senderUsername, CommonMessage commonMessage){

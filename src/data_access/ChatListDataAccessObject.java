@@ -70,7 +70,7 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
                 chatList.keySet()) {
             ArrayList<String> tempArray = new ArrayList<>();
             Chat currentChat = chatList.get(friendUsername);
-            CommonMessage lastCommonMessage = currentChat.getLastMessage();
+            Message lastCommonMessage = currentChat.getLastMessage();
             tempArray.add(lastCommonMessage.getMessage());
             tempArray.add(lastCommonMessage.getTimeSent().toString());
             tempArray.add(lastCommonMessage.getSender());

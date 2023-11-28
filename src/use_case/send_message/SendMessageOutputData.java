@@ -4,11 +4,11 @@ import java.time.LocalDateTime;
 
 public class SendMessageOutputData {
 
-    String sender;
+    private String sender;
 
-    LocalDateTime datetime;
+    private LocalDateTime datetime;
 
-    String text;
+    private String text;
 
     public SendMessageOutputData(String text, LocalDateTime datetime, String sender) {
         this.text = text;
@@ -16,10 +16,15 @@ public class SendMessageOutputData {
         this.datetime = datetime;
     }
 
+    public String getSender() {
+        return sender;
+    }
 
+    public String getText() {
+        return text;
+    }
 
-
-
-
-
+    public LocalDateTime getDatetime() {
+        return datetime;
+    }
 }

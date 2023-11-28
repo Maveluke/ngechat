@@ -14,7 +14,15 @@ public class SendMessageInputData {
         this.binID = binID;
     }
 
+    public String getBinID() {
+        return binID;
+    }
 
+    public String getFriendName() {
+        return friendName;
+    }
 
-
+    public String getUsername() {
+        return username;
+    }
 }

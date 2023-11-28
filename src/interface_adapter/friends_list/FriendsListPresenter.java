@@ -29,11 +29,7 @@ public class FriendsListPresenter implements FriendsListOutputBoundary {
 
         HashMap<String, String> friendsList = response.getFriends();
 
-        FriendsListState friendsListState = friendsListViewModel.getState();
-
-        friendsListState.setFriendsList(friendsList);
-
-        this.friendsListViewModel.setState(friendsListState);
+        this.friendsListViewModel.setFriendslist(friendsList);
 
         friendsListViewModel.firePropertyChanged();
 
