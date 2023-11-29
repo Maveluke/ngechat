@@ -6,14 +6,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import use_case.chat_list.ChatListDataAccessInterface;
 import use_case.create_chat.CreateChatDataAccessInterface;
+import use_case.in_chat.InChatDataAccessInterface;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 
-public class ChatListDataAccessObject implements ChatListDataAccessInterface, CreateChatDataAccessInterface {
+public class ChatListDataAccessObject implements ChatListDataAccessInterface, CreateChatDataAccessInterface, InChatDataAccessInterface {
 
     private static final MediaType mediaType = MediaType.parse("application/json");
     private final String masterKey;
@@ -44,9 +44,9 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
                 JSONObject singleMessageInfo = messages.getJSONObject(i);
                 ArrayList<Object> senderToMessage = new ArrayList<>();
                 LocalDateTime timeSent = LocalDateTime.parse(singleMessageInfo.getString("timeSent"));
-                Message tempMessage = new Message(singleMessageInfo.getString("message"), timeSent, singleMessageInfo.getString("sender"));
+                CommonMessage tempCommonMessage = new CommonMessage(singleMessageInfo.getString("message"), timeSent, singleMessageInfo.getString("sender"));
                 senderToMessage.add(singleMessageInfo.getString("sender"));
-                senderToMessage.add(tempMessage);
+                senderToMessage.add(tempCommonMessage);
             }
             // So that the Chat will not be created
             if (messages.isEmpty()){
@@ -70,10 +70,10 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
                 chatList.keySet()) {
             ArrayList<String> tempArray = new ArrayList<>();
             Chat currentChat = chatList.get(friendUsername);
-            Message lastMessage = currentChat.getLastMessage();
-            tempArray.add(lastMessage.getMessage());
-            tempArray.add(lastMessage.getTimeSent().toString());
-            tempArray.add(lastMessage.getSender());
+            Message lastCommonMessage = currentChat.getLastMessage();
+            tempArray.add(lastCommonMessage.getMessage());
+            tempArray.add(lastCommonMessage.getTimeSent().toString());
+            tempArray.add(lastCommonMessage.getSender());
             ret.put(friendUsername, tempArray);
         }
         return ret;
@@ -106,6 +106,10 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
     @Override
     public void addChat(String friendUsername, Chat chat) {
         chatList.put(friendUsername, chat);
+    }
+
+    public Chat getChat(String friendName) {
+        return chatList.get(friendName);
     }
 
 }

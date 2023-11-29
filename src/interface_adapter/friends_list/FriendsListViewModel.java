@@ -4,6 +4,7 @@ import interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.security.PublicKey;
 import java.util.HashMap;
 
 public class FriendsListViewModel extends ViewModel {

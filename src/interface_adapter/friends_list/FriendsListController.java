@@ -9,5 +9,7 @@ public class FriendsListController {
         this.friendsListInteractor = friendsListInteractor;
     }
 
-    public void execute() { friendsListInteractor.execute(); }
+    public void execute() {
+        friendsListInteractor.execute();
+    }
 }

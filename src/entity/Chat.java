@@ -9,4 +9,6 @@ public interface Chat {
     String getName();
 
     Message getLastMessage();
+
+    ArrayList<ArrayList<Object>> getMessages();
 }
