@@ -190,7 +190,8 @@ public class FriendsListView extends JPanel{
             friendpanel.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-//                    TODO: go to inchat
+                    createChatController.execute(friend); // checking if the chat already exists, if not exist then create new one, do nothing otherwise
+                    inChatPrivateController.execute(friend);
                 }
 
                 @Override
