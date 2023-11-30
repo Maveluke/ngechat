@@ -30,7 +30,7 @@ public class AddContactInteractorTest {
 
             @Override
             public void prepareFailView(String error) {
-                System.out.println();
+                System.out.println("Failed to add contact. ");
             }
         };
         AddContactInteractor addContactInteractor = new AddContactInteractor(addContactPresenter, userDataAccessObject);
