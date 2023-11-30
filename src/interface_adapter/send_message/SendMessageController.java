@@ -13,8 +13,8 @@ public class SendMessageController {
         this.sendMessageInteractor = sendMessageInteractor;
     }
 
-    public void execute(String messageText, String sender, String binID) {
-        SendMessageInputData sendMessageInputData = new SendMessageInputData(messageText, sender, binID);
+    public void execute(String messageText, String sender, String friendName) {
+        SendMessageInputData sendMessageInputData = new SendMessageInputData(messageText, sender, friendName);
 
         sendMessageInteractor.execute(sendMessageInputData);
 

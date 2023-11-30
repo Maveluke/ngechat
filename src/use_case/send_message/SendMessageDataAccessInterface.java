@@ -9,5 +9,6 @@ public interface SendMessageDataAccessInterface {
     public Message createMessage(String messageText, String sender);
 
     public void sendMessage(Message message, String bindID);
+    String getBinID(String friendUsername);
 
 }

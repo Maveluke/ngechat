@@ -19,7 +19,7 @@ public class SendMessagePresenter implements SendMessageOutputBoundary {
     public void prepareSuccessView(SendMessageOutputData sendMessageOutputData) {
 
         SendMessageState sendMessageState = sendMessageViewModel.getState();
-        sendMessageState.setMessage(sendMessageState.getMessage());
+        sendMessageState.setMessage("");
 
         sendMessageState.setSender(sendMessageState.getSender());
         sendMessageState.setDateTime(sendMessageOutputData.getDatetime());

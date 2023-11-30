@@ -6,17 +6,15 @@ public class SendMessageInputData {
 
     private String sender;
 
-    private String binID;
+    private String friendName;
 
-    public SendMessageInputData(String messageText, String sender, String binID) {
+
+    public SendMessageInputData(String messageText, String sender, String friendName) {
         this.messageText = messageText;
         this.sender = sender;
-        this.binID = binID;
+        this.friendName = friendName;
     }
 
-    public String getBinID() {
-        return binID;
-    }
 
     public String getMessageText() {
         return messageText;
@@ -24,5 +22,9 @@ public class SendMessageInputData {
 
     public String getSender() {
         return sender;
+    }
+
+    public String getFriendName() {
+        return friendName;
     }
 }
