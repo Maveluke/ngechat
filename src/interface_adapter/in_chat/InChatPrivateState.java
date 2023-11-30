@@ -18,6 +18,8 @@ public class InChatPrivateState {
         this.sender = copy.sender;
     }
 
+    public InChatPrivateState(){};
+
     public ArrayList<ArrayList<Object>> getMessages() {
         return messages;
     }
