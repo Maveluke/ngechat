@@ -3,10 +3,13 @@ package view.contacts_list;
 import interface_adapter.add_contact.AddContactController;
 import interface_adapter.add_contact.AddContactViewModel;
 import interface_adapter.chat_list.ChatListController;
+import interface_adapter.create_chat.CreateChatController;
 import interface_adapter.friends_list.FriendsListController;
 import interface_adapter.friends_list.FriendsListViewModel;
 import interface_adapter.block_contact.BlockContactController;
 import interface_adapter.block_contact.BlockContactViewModel;
+import interface_adapter.in_chat.InChatPrivateController;
+import interface_adapter.in_chat.InChatPrivateViewModel;
 import interface_adapter.switch_view.SwitchViewController;
 
 import javax.swing.*;
@@ -25,14 +28,24 @@ public class FriendsListView extends JPanel{
     private final BlockContactController blockContactController;
     private final FriendsListViewModel friendsListViewModel;
     private final BlockContactViewModel blockContactViewModel;
+
+    private final CreateChatController createChatController;
+
+    private final InChatPrivateController inChatPrivateController;
+    private final InChatPrivateViewModel inChatPrivateViewModel;
+
     public FriendsListView(FriendsListController controller, FriendsListViewModel friendsListViewModel,
                            ChatListController chatListController, SwitchViewController switchViewController,
-                           BlockContactController blockContactController, BlockContactViewModel blockContactViewModel) {
+                           BlockContactController blockContactController, BlockContactViewModel blockContactViewModel,
+                           InChatPrivateController inChatPrivateController, InChatPrivateViewModel inChatPrivateViewModel, CreateChatController createChatController) {
         this.friendsListController = controller;
         this.chatListController = chatListController;
         this.blockContactController = blockContactController;
         this.friendsListViewModel = friendsListViewModel;
         this.blockContactViewModel = blockContactViewModel;
+        this.createChatController = createChatController;
+        this.inChatPrivateController = inChatPrivateController;
+        this.inChatPrivateViewModel = inChatPrivateViewModel;
 
         HashMap<String, String> friendslist = friendsListViewModel.getFriendslist();
         ArrayList<JPanel> friendsListPanels = new ArrayList<JPanel>();
