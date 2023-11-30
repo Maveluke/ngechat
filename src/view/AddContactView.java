@@ -3,6 +3,7 @@ package view;
 import interface_adapter.add_contact.AddContactController;
 import interface_adapter.add_contact.AddContactState;
 import interface_adapter.add_contact.AddContactViewModel;
+import interface_adapter.friends_list.FriendsListController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,6 +18,7 @@ public class AddContactView extends JPanel implements ActionListener, PropertyCh
     public final String viewName = "add contact";
 
     private final AddContactViewModel addContactViewModel;
+    private final FriendsListController friendsListController;
 
     final JTextField usernameInputField = new JTextField(15);
 
@@ -24,8 +26,9 @@ public class AddContactView extends JPanel implements ActionListener, PropertyCh
 
     final JButton add;
     private final AddContactController addContactController;
-    public AddContactView(AddContactViewModel addContactViewModel, AddContactController addContactController){
+    public AddContactView(AddContactViewModel addContactViewModel, FriendsListController friendsListController, AddContactController addContactController){
         this.addContactViewModel = addContactViewModel;
+        this.friendsListController = friendsListController;
         this.addContactController = addContactController;
         this.addContactViewModel.addPropertyChangeListener(this);
 
@@ -49,6 +52,7 @@ public class AddContactView extends JPanel implements ActionListener, PropertyCh
                             addContactController.execute(
                                     currentState.getUsername()
                             );
+                            friendsListController.execute();
                         }
                     }
                 }
