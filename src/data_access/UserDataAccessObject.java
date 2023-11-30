@@ -34,9 +34,10 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
     public UserDataAccessObject(String masterKey, UserFactory userFactory){
         this.masterKey = masterKey;
         this.userFactory = userFactory;
+        // Locally add user
         User admin = userFactory.create("admin", "admin");
         accounts.put("admin", admin);
-//        updateLocalUsers();
+        updateLocalUsers();
     }
     private JSONArray getUsersListRemote(){
         try{
@@ -49,8 +50,8 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
                     .build();
 
             Response response = client.newCall(request).execute();
-//            String tempString = response.body().string();
-            return new JSONObject(response.body().string()).getJSONArray("users");
+            String tempString = response.body().string();
+            return new JSONObject(tempString).getJSONArray("users");
         }catch (IOException e){
             System.out.println("Fail to download users from API! with the error" + e);
         }
@@ -67,15 +68,17 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
                     User user = userFactory.create(userJSON.getString("username"), userJSON.getString("password"));
                     accounts.put(userJSON.getString("username"), user);
                 }
-                System.out.println(this);
-                System.out.println();
             }
+            System.out.println(this);
+            System.out.println();
             // Update each user's friends list
             for (int i = 0; i < usersList.length(); i++) {
                 JSONObject userJSON = usersList.getJSONObject(i);
                 User user = get(userJSON.getString("username"));
                 updateFriendsLocal(user, userJSON.getJSONArray("friends"));
             }
+            System.out.println(this);
+            System.out.println();
         }
     }
 
@@ -159,8 +162,8 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
 
     // Create a new bin for user and friend to chat
     private String createBinID(){
-        JSONArray messagesInfoJSON = new JSONArray();
-        messagesInfoJSON.put(new JSONObject());
+        JSONObject messagesInfoJSON = new JSONObject();
+        messagesInfoJSON.put("messages", new JSONArray());
         RequestBody body = RequestBody.create(messagesInfoJSON.toString(), mediaType);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -261,7 +264,7 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
                 JSONArray oldFriendsList = currentUserJSON.getJSONArray("friends");
 
                 for (int j = 0; j < oldFriendsList.length(); j++) {
-                    JSONObject friendJSON = usersRemote.getJSONObject(i);
+                    JSONObject friendJSON = oldFriendsList.getJSONObject(j);
                     if (friendJSON.getString("username").equals(friendUsername)) {
                         oldFriendsList.remove(j);
                     }
@@ -274,7 +277,7 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
                 JSONArray oldFriendsList = currentUserJSON.getJSONArray("friends");
 
                 for (int j = 0; j < oldFriendsList.length(); j++) {
-                    JSONObject friendJSON = usersRemote.getJSONObject(i);
+                    JSONObject friendJSON = oldFriendsList.getJSONObject(j);
                     if (friendJSON.getString("username").equals(username)) {
                         oldFriendsList.remove(j);
                     }
@@ -302,10 +305,13 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
     }
 
     @Override
-    public HashMap<String, String> getFriends(){
-        // TODO : Implement this
-
-        return null;
+    public ArrayList<String> getFriends(){
+        ArrayList<String> ret = new ArrayList<>();
+        for (User friend:
+        accounts.get(currentUsername).getFriendToBinMap().keySet()) {
+            ret.add(friend.getName());
+        }
+        return ret;
     }
 
     @Override

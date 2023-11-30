@@ -10,6 +10,7 @@ import use_case.signup.SignupOutputData;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FriendsListPresenter implements FriendsListOutputBoundary {
@@ -27,9 +28,10 @@ public class FriendsListPresenter implements FriendsListOutputBoundary {
     public void prepareSuccessView(FriendsListOutputData response) {
 
 
-        HashMap<String, String> friendsList = response.getFriends();
-
-        this.friendsListViewModel.setFriendslist(friendsList);
+        ArrayList<String> friendsList = response.getFriends();
+        FriendsListState newState = new FriendsListState();
+        newState.setFriendsList(friendsList);
+        friendsListViewModel.setFriendsListState(newState);
 
         friendsListViewModel.firePropertyChanged();
 

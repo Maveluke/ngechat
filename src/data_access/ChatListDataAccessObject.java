@@ -20,7 +20,7 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
 
     private static final MediaType mediaType = MediaType.parse("application/json");
     private final String masterKey;
-    private HashMap<String, String> friendTobinID; // friend username to binId
+    private HashMap<String, String> friendTobinID = new HashMap<>(); // friend username to binId
     private HashMap<String, Chat> chatList = new HashMap<>(); // Friend username to Chat
     private CommonChatFactory chatFactory;
     private static final String API_URL = "https://api.jsonbin.io/v3/b";
@@ -61,12 +61,20 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
                     .build();
 
             Response response = client.newCall(request).execute();
-            JSONObject responseJSON = new JSONObject(response.body().string());
+
+            String tempString = response.body().string();
+            JSONObject responseJSON = new JSONObject(tempString);
+
             return responseJSON.getJSONArray("messages");
         } catch (IOException e){
             System.out.println("Fail to download chat from API! with the error: " + e);
         }
         return null;
+    }
+
+    @Override
+    public Message createMessage(String text, String sender) {
+        return new CommonMessage(text, LocalDateTime.now(), sender);
     }
 
     @Override

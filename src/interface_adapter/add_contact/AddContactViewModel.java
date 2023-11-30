@@ -11,6 +11,7 @@ public class AddContactViewModel extends ViewModel {
     public final static String USERNAME_LABEL = "Enter your friend's username";
 
     public static final String ADD_BUTTON_LABEL = "Add";
+    public static final String CANCEL_BUTTON_LABEL = "Cancel";
 
     private AddContactState state = new AddContactState();
 
