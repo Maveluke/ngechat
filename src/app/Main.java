@@ -75,7 +75,7 @@ public class Main {
         ChatListView chatListView = ChatListUseCaseFactory.create(viewManagerModel, chatListViewModel, friendsListViewModel, chatListDataAccessObject, userDataAccessObject);
         views.add(chatListView, chatListView.viewName);
 
-        FriendsListView friendsListView = FriendsListUseCaseFactory.create(viewManagerModel, friendsListViewModel, chatListViewModel, chatListDataAccessObject, blockContactViewModel, userDataAccessObject);
+        FriendsListView friendsListView = FriendsListUseCaseFactory.create(viewManagerModel, friendsListViewModel, chatListViewModel, chatListDataAccessObject, blockContactViewModel, userDataAccessObject, inChatPrivateViewModel);
         views.add(friendsListView, friendsListView.viewName);
 
         InChatPrivateView inChatPrivateView = InChatUseCaseFactory.create(viewManagerModel, inChatPrivateViewModel, sendMessageViewModel, chatListViewModel, chatListDataAccessObject, userDataAccessObject);
