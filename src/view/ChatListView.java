@@ -1,8 +1,8 @@
 package view;
 
-import entity.Chat;
 import interface_adapter.chat_list.ChatListController;
 import interface_adapter.chat_list.ChatListViewModel;
+import interface_adapter.friends_list.FriendsListController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,13 +20,13 @@ public class ChatListView extends JPanel implements ActionListener, PropertyChan
     public final String viewName = "chat list";
     private final ChatListController chatListController;
     private final ChatListViewModel chatListViewModel;
-    public ChatListView(ChatListController controller, ChatListViewModel chatlistViewModel){
-        
+    private final FriendsListController friendsListController;
+    public ChatListView(ChatListController controller, ChatListViewModel chatlistViewModel, FriendsListController friendsListController){
+
         this.chatListController = controller;
         this.chatListViewModel = chatlistViewModel;
-        
-        JFrame chatframe = new JFrame("ngechat");
-        chatframe.setLayout(new BoxLayout(chatframe.getContentPane(), BoxLayout.Y_AXIS));
+        this.friendsListController = friendsListController;
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JPanel header = new JPanel();
         header.setLayout(new BorderLayout());
 
@@ -77,7 +77,7 @@ public class ChatListView extends JPanel implements ActionListener, PropertyChan
         addicon.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-//              TODO: implement add chat
+                friendsListController.execute();
             }
 
             @Override
@@ -137,7 +137,7 @@ public class ChatListView extends JPanel implements ActionListener, PropertyChan
 
         header.add(buttons, BorderLayout.EAST);
 
-        chatframe.add(header);
+        this.add(header);
 
         HashMap<String, ArrayList<String>> chatlist = chatlistViewModel.getState().getChatList();
         for (String person: chatlist.keySet()) {
@@ -166,7 +166,7 @@ public class ChatListView extends JPanel implements ActionListener, PropertyChan
             _chatpanel.add(message);
 
             chatpanel.add(_chatpanel);
-            chatframe.add(chatpanel);
+            this.add(chatpanel);
 
             chatpanel.addMouseListener(new MouseListener() {
                 @Override

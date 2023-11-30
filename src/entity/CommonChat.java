@@ -55,5 +55,16 @@ public class CommonChat implements Chat{
         return new_array;
     }
 
+
+    @Override
+    public String toString(){
+        String ret = "";
+        for (ArrayList<Object> pair :
+                messages) {
+            ret += String.format("%s : %s", pair.get(0));
+            ret += String.format("%s : %s", pair.get(1));
+        }
+        return ret;
+    }
 }
 

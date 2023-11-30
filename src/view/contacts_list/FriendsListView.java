@@ -1,10 +1,13 @@
 package view.contacts_list;
 
-import interface_adapter.block_contact.BlockContactState;
+import interface_adapter.add_contact.AddContactController;
+import interface_adapter.add_contact.AddContactViewModel;
+import interface_adapter.chat_list.ChatListController;
 import interface_adapter.friends_list.FriendsListController;
 import interface_adapter.friends_list.FriendsListViewModel;
 import interface_adapter.block_contact.BlockContactController;
 import interface_adapter.block_contact.BlockContactViewModel;
+import interface_adapter.switch_view.SwitchViewController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,17 +19,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FriendsListView extends JPanel{
-
     public final String viewName = "friends list";
     private final FriendsListController friendsListController;
-    private final FriendsListViewModel friendsListViewModel;
+    private final ChatListController chatListController;
     private final BlockContactController blockContactController;
+    private final FriendsListViewModel friendsListViewModel;
     private final BlockContactViewModel blockContactViewModel;
     public FriendsListView(FriendsListController controller, FriendsListViewModel friendsListViewModel,
-                    BlockContactController blockContactController, BlockContactViewModel blockContactViewModel) {
+                           ChatListController chatListController, SwitchViewController switchViewController,
+                           BlockContactController blockContactController, BlockContactViewModel blockContactViewModel) {
         this.friendsListController = controller;
-        this.friendsListViewModel = friendsListViewModel;
+        this.chatListController = chatListController;
         this.blockContactController = blockContactController;
+        this.friendsListViewModel = friendsListViewModel;
         this.blockContactViewModel = blockContactViewModel;
 
         HashMap<String, String> friendslist = friendsListViewModel.getFriendslist();
@@ -52,7 +57,7 @@ public class FriendsListView extends JPanel{
         addIcon.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-//              TODO: implement add friend
+                switchViewController.execute("add contact");
             }
 
             @Override
@@ -118,7 +123,7 @@ public class FriendsListView extends JPanel{
         backIcon.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-//              TODO: implement back (go back to chatlist)
+                chatListController.execute();
             }
 
             @Override
