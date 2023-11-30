@@ -21,6 +21,8 @@ public class InChatPrivatePresenter implements InchatOutputBoundary {
         InChatPrivateState inChatPrivateState = inChatPrivateViewModel.getState();
         inChatPrivateState.setMessages(inchatOutputData.getMessages());
 
+        inChatPrivateState.setFriendName(inchatOutputData.getFriendName());
+
         this.inChatPrivateViewModel.setState(inChatPrivateState);
         this.inChatPrivateViewModel.firePropertyChanged();
 

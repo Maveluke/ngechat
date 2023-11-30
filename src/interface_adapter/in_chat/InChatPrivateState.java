@@ -8,8 +8,11 @@ public class InChatPrivateState {
 
     ArrayList<ArrayList<Object>> messages;
 
+    String friendName;
+
     public InChatPrivateState(InChatPrivateState copy) {
         this.messages = copy.messages;
+        this.friendName = copy.friendName;
     }
 
     public ArrayList<ArrayList<Object>> getMessages() {
@@ -20,7 +23,11 @@ public class InChatPrivateState {
         this.messages = messages;
     }
 
+    public String getFriendName() {
+        return friendName;
+    }
 
-
-
+    public void setFriendName(String friendName) {
+        this.friendName = friendName;
+    }
 }

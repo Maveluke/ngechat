@@ -29,7 +29,7 @@ public class InChatInteractor implements InChatInputBoundary {
         String friendName = inChatInputData.getFriendName();
         ArrayList<ArrayList<Object>> messages = inChatDataAccessObject.getChat(friendName).getMessages();
 
-        InchatOutputData inchatOutputData = new InchatOutputData(messages);
+        InchatOutputData inchatOutputData = new InchatOutputData(messages, friendName);
 
         inChatPresenter.prepareSuccessView(inchatOutputData);
 

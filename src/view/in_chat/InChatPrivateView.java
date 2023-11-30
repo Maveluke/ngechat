@@ -1,5 +1,7 @@
 package view.in_chat;
 
+import interface_adapter.chat_list.ChatListController;
+import interface_adapter.chat_list.ChatListViewModel;
 import interface_adapter.in_chat.InChatPrivateController;
 import interface_adapter.in_chat.InChatPrivateViewModel;
 
@@ -11,9 +13,16 @@ import java.awt.event.MouseListener;
 public class InChatPrivateView extends JPanel{
     private final InChatPrivateController inChatPrivateController;
     private final InChatPrivateViewModel inChatPrivateViewModel;
-    InChatPrivateView(InChatPrivateController controller, InChatPrivateViewModel inChatPrivateViewModel) {
+
+    private final ChatListViewModel chatListViewModel;
+
+    private final ChatListController chatListController;
+
+    InChatPrivateView(InChatPrivateController controller, InChatPrivateViewModel inChatPrivateViewModel, ChatListViewModel chatListViewModel, ChatListController chatListController) {
         this.inChatPrivateController = controller;
         this.inChatPrivateViewModel = inChatPrivateViewModel;
+        this.chatListViewModel = chatListViewModel;
+        this.chatListController = chatListController;
 
 //        JFrame inchatframe = new JFrame("ngechat");
 //        inchatframe.setLayout(new BoxLayout(inchatframe.getContentPane(), BoxLayout.Y_AXIS));
@@ -22,8 +31,9 @@ public class InChatPrivateView extends JPanel{
         JPanel header = new JPanel();
         header.setLayout(new BorderLayout());
 
-        JLabel friend  = new JLabel("Name");
-//      TODO: change Name to actual username of the friend
+        String friendName = inChatPrivateViewModel.getState().getFriendName();
+        
+        JLabel friend  = new JLabel(friendName);
         header.add(friend);
 
         ImageIcon back = new ImageIcon("src/view/Photos/Return.png");
@@ -35,7 +45,9 @@ public class InChatPrivateView extends JPanel{
         backicon.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-//              TODO: implement back (go back to chatlist)
+//
+                chatListController.execute();
+
             }
 
             @Override
