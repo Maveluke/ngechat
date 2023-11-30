@@ -23,7 +23,7 @@ public class SendMessageInteractor implements SendMessageInputBoundary {
 
 
         // 1. Make the message
-        Message message = sendMessageDataAccessObject.createMessage();
+        Message message = sendMessageDataAccessObject.createMessage(sendMessageInputData.getUsername(), sendMessageDataAccessObject.getBinID(sendMessageInputData.getFriendName()));
 
         // 2. Store the message in the API
         String binID = sendMessageInputData.getBinID();
