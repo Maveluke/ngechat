@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import use_case.chat_list.ChatListDataAccessInterface;
 import use_case.create_chat.CreateChatDataAccessInterface;
+import use_case.in_chat.InChatDataAccessInterface;
 
 import java.io.IOException;
 import java.time.DateTimeException;
@@ -13,9 +14,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 
-public class ChatListDataAccessObject implements ChatListDataAccessInterface, CreateChatDataAccessInterface {
+public class ChatListDataAccessObject implements ChatListDataAccessInterface, CreateChatDataAccessInterface, InChatDataAccessInterface {
 
     private static final MediaType mediaType = MediaType.parse("application/json");
     private final String masterKey;
@@ -118,10 +118,10 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
                 chatList.keySet()) {
             ArrayList<String> tempArray = new ArrayList<>();
             Chat currentChat = chatList.get(friendUsername);
-            Message lastMessage = currentChat.getLastMessage();
-            tempArray.add(lastMessage.getMessage());
-            tempArray.add(lastMessage.getTimeSent().toString());
-            tempArray.add(lastMessage.getSender());
+            Message lastCommonMessage = currentChat.getLastMessage();
+            tempArray.add(lastCommonMessage.getMessage());
+            tempArray.add(lastCommonMessage.getTimeSent().toString());
+            tempArray.add(lastCommonMessage.getSender());
             ret.put(friendUsername, tempArray);
         }
         return ret;
@@ -168,6 +168,10 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
             ret += String.format("%s\n", chatList.get(friendUsername).toString());
         }
         return ret;
+    }
+
+    public Chat getChat(String friendName) {
+        return chatList.get(friendName);
     }
 
 }

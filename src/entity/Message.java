@@ -2,25 +2,12 @@ package entity;
 
 import java.time.LocalDateTime;
 
-public class Message {
-    private final String message;
-    private final LocalDateTime timeSent;
-    private final String senderUsername;
-    public Message(String message, LocalDateTime timeSent, String senderUsername){
-        this.message = message;
-        this.timeSent = timeSent;
-        this.senderUsername = senderUsername;
-    }
+public interface Message {
 
-    public String getMessage() {
-        return message;
-    }
+    public String getMessage();
 
-    public LocalDateTime getTimeSent() {
-        return timeSent;
-    }
+    public LocalDateTime getTimeSent();
 
-    public String getSender() {
-        return this.senderUsername;
-    }
+    public String getSender();
+
 }

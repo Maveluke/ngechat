@@ -7,6 +7,7 @@ import entity.CommonUserFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_contact.AddContactViewModel;
+import interface_adapter.block_contact.BlockContactViewModel;
 import interface_adapter.chat_list.ChatListViewModel;
 import interface_adapter.friends_list.FriendsListViewModel;
 import interface_adapter.login.LoginViewModel;
@@ -36,6 +37,7 @@ public class Main {
         AddContactViewModel addContactViewModel = new AddContactViewModel();
         FriendsListViewModel friendsListViewModel = new FriendsListViewModel();
         ChatListViewModel chatListViewModel = new ChatListViewModel();
+        BlockContactViewModel blockContactViewModel = new BlockContactViewModel();
 
         String masterKey = "$2a$10$xfVheBzZjicxu..Dy7zLHeBNVrrPWZ/jEK/qfX7nTY.WKY/Tx9LM2";
         UserFactory userFactory = new CommonUserFactory();
@@ -69,7 +71,7 @@ public class Main {
         ChatListView chatListView = ChatListUseCaseFactory.create(viewManagerModel, chatListViewModel, friendsListViewModel, chatListDataAccessObject, userDataAccessObject);
         views.add(chatListView, chatListView.viewName);
 
-        FriendsListView friendsListView = FriendsListUseCaseFactory.create(viewManagerModel, friendsListViewModel, chatListViewModel, chatListDataAccessObject, userDataAccessObject);
+        FriendsListView friendsListView = FriendsListUseCaseFactory.create(viewManagerModel, friendsListViewModel, chatListViewModel, chatListDataAccessObject, blockContactViewModel, userDataAccessObject);
         views.add(friendsListView, friendsListView.viewName);
 
         viewManagerModel.setActiveView(signupView.viewName);

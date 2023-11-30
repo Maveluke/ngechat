@@ -1,7 +1,36 @@
 package interface_adapter.in_chat;
 
-import javax.swing.*;
+import interface_adapter.ViewModel;
 
-public class InChatPrivateViewModel {
+import javax.swing.*;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
+public class InChatPrivateViewModel extends ViewModel {
     JFrame privatechatframe = new JFrame("ngechat");
+
+    InChatPrivateState state;
+
+    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+    public InChatPrivateViewModel(){
+        super("in chat");
+    };
+
+    @Override
+    public void firePropertyChanged() {
+        support.firePropertyChange("state", null, this.state);
+    }
+
+    @Override
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+        support.addPropertyChangeListener(listener);
+    }
+
+    public InChatPrivateState getState() {
+        return state;
+    }
+
+    public void setState(InChatPrivateState newState) {
+        this.state = newState;
+    }
 }

@@ -11,6 +11,9 @@ import interface_adapter.add_contact.AddContactViewModel;
 import interface_adapter.chat_list.ChatListController;
 import interface_adapter.chat_list.ChatListPresenter;
 import interface_adapter.chat_list.ChatListViewModel;
+import interface_adapter.block_contact.BlockContactController;
+import interface_adapter.block_contact.BlockContactPresenter;
+import interface_adapter.block_contact.BlockContactViewModel;
 import interface_adapter.friends_list.FriendsListController;
 import interface_adapter.friends_list.FriendsListPresenter;
 import interface_adapter.friends_list.FriendsListViewModel;
@@ -18,6 +21,10 @@ import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import use_case.block_contact.BlockContactDataAccessInterface;
+import use_case.block_contact.BlockContactInputBoundary;
+import use_case.block_contact.BlockContactInteractor;
+import use_case.block_contact.BlockContactOutputBoundary;
 import use_case.add_contact.AddContactDataAccessInterface;
 import use_case.add_contact.AddContactInputBoundary;
 import use_case.add_contact.AddContactInteractor;
@@ -46,12 +53,13 @@ public class FriendsListUseCaseFactory {
     public static FriendsListView create(
             ViewManagerModel viewManagerModel, FriendsListViewModel friendsListViewModel,
             ChatListViewModel chatListViewModel,
-            ChatListDataAccessObject chatListDataAccessObject, UserDataAccessObject userDataAccessObject) {
+            ChatListDataAccessObject chatListDataAccessObject, BlockContactViewModel blockContactViewModel, UserDataAccessObject userDataAccessObject) {
 
         try {
             FriendsListController friendsListController = createFriendsListController(viewManagerModel, friendsListViewModel, userDataAccessObject);
             ChatListController chatListController = createChatListController(viewManagerModel, chatListViewModel, chatListDataAccessObject, userDataAccessObject);
-            return new FriendsListView(friendsListController, friendsListViewModel, chatListController, SwitchViewUseCaseFactory.createSwitchViewUseCase(viewManagerModel));
+            BlockContactController blockContactController = createBlockContactController(viewManagerModel, friendsListViewModel, blockContactViewModel, userDataAccessObject);
+            return new FriendsListView(friendsListController, friendsListViewModel, chatListController, SwitchViewUseCaseFactory.createSwitchViewUseCase(viewManagerModel), blockContactController, blockContactViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Something's wrong. Please Try Again");
         }
@@ -81,6 +89,17 @@ public class FriendsListUseCaseFactory {
         ChatListInputBoundary chatListInteractor = new ChatListInteractor(userDataAccessObject, chatListDataAccessObject, chatListOutputBoundary);
 
         return new ChatListController(chatListInteractor);
+    }
+
+    private static BlockContactController createBlockContactController(ViewManagerModel viewManagerModel, FriendsListViewModel friendsListViewModel, BlockContactViewModel blockContactViewModel, BlockContactDataAccessInterface userDataAccessObject) throws IOException {
+
+        // Notice how we pass this method's parameters to the Presenter.
+        BlockContactOutputBoundary blockContactOutputBoundary = new BlockContactPresenter(viewManagerModel, friendsListViewModel, blockContactViewModel);
+
+        BlockContactInputBoundary blockContactInteractor = new BlockContactInteractor(
+                 blockContactOutputBoundary, userDataAccessObject);
+
+        return new BlockContactController(blockContactInteractor);
     }
 }
 
