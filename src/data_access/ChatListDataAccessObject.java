@@ -61,8 +61,10 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
                     .build();
 
             Response response = client.newCall(request).execute();
+
             String tempString = response.body().string();
             JSONObject responseJSON = new JSONObject(tempString);
+
             return responseJSON.getJSONArray("messages");
         } catch (IOException e){
             System.out.println("Fail to download chat from API! with the error: " + e);

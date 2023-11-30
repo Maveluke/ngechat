@@ -18,6 +18,7 @@ public class AddContactView extends JPanel implements ActionListener, PropertyCh
     public final String viewName = "add contact";
 
     private final AddContactViewModel addContactViewModel;
+    private final FriendsListController friendsListController;
 
     final JTextField usernameInputField = new JTextField(15);
 
@@ -27,6 +28,7 @@ public class AddContactView extends JPanel implements ActionListener, PropertyCh
     final JButton cancel;
     private final AddContactController addContactController;
     private final FriendsListController friendsListController;
+
     public AddContactView(AddContactViewModel addContactViewModel, FriendsListController friendsListController, AddContactController addContactController){
         this.addContactViewModel = addContactViewModel;
         this.friendsListController = friendsListController;
