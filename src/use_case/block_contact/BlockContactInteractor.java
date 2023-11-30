@@ -16,7 +16,7 @@ public class BlockContactInteractor implements BlockContactInputBoundary{
             String friendUsername = blockContactInputData.getFriendUsername();
 
             if (userDataAccessObject.blockFriend(username, friendUsername)) {
-                blockContactPresenter.prepareSuccessView();
+                blockContactPresenter.prepareSuccessView(friendUsername);
             }
             else {
                 blockContactPresenter.prepareFailView("Fail to block friend");
