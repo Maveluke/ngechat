@@ -7,7 +7,6 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class InChatPrivateViewModel extends ViewModel {
-    JFrame privatechatframe = new JFrame("ngechat");
 
     InChatPrivateState state;
 
