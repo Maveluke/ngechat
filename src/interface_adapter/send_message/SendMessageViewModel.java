@@ -10,7 +10,7 @@ import java.beans.PropertyChangeSupport;
 public class SendMessageViewModel extends ViewModel {
 
 
-    SendMessageState state;
+    SendMessageState state = new SendMessageState();
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     public SendMessageViewModel(){

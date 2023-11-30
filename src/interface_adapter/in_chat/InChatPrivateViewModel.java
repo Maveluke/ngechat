@@ -8,7 +8,7 @@ import java.beans.PropertyChangeSupport;
 
 public class InChatPrivateViewModel extends ViewModel {
 
-    InChatPrivateState state;
+    InChatPrivateState state = new InChatPrivateState();
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     public InChatPrivateViewModel(){

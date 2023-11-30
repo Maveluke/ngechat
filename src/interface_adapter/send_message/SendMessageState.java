@@ -19,6 +19,8 @@ public class SendMessageState {
         this.sender = copy.sender;
     }
 
+    public SendMessageState(){}
+
     public String getMessage() {
         return message;
     }
