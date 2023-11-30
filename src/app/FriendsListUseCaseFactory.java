@@ -4,6 +4,9 @@ import data_access.UserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.block_contact.BlockContactController;
+import interface_adapter.block_contact.BlockContactPresenter;
+import interface_adapter.block_contact.BlockContactViewModel;
 import interface_adapter.friends_list.FriendsListController;
 import interface_adapter.friends_list.FriendsListPresenter;
 import interface_adapter.friends_list.FriendsListViewModel;
@@ -11,6 +14,10 @@ import interface_adapter.login.LoginViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import use_case.block_contact.BlockContactDataAccessInterface;
+import use_case.block_contact.BlockContactInputBoundary;
+import use_case.block_contact.BlockContactInteractor;
+import use_case.block_contact.BlockContactOutputBoundary;
 import use_case.friends_list.FriendsListDataAccessInterface;
 import use_case.friends_list.FriendsListInputBoundary;
 import use_case.friends_list.FriendsListInteractor;
@@ -28,11 +35,12 @@ import java.io.IOException;
 public class FriendsListUseCaseFactory {
 
     public static FriendsListView create(
-            ViewManagerModel viewManagerModel, FriendsListViewModel friendsListViewModel, UserDataAccessObject userDataAccessObject) {
+            ViewManagerModel viewManagerModel, FriendsListViewModel friendsListViewModel, BlockContactViewModel blockContactViewModel, UserDataAccessObject userDataAccessObject) {
 
         try {
             FriendsListController friendsListController = createFriendsListController(viewManagerModel, friendsListViewModel, userDataAccessObject);
-            return new FriendsListView(friendsListController, friendsListViewModel);
+            BlockContactController blockContactController = createBlockContactController(viewManagerModel, friendsListViewModel, blockContactViewModel, userDataAccessObject);
+            return new FriendsListView(friendsListController, friendsListViewModel, blockContactController, blockContactViewModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Something's wrong. Please Try Again");
         }
@@ -49,6 +57,17 @@ public class FriendsListUseCaseFactory {
                 userDataAccessObject, friendsListOutputBoundary);
 
         return new FriendsListController(friendsListInteractor);
+    }
+
+    private static BlockContactController createBlockContactController(ViewManagerModel viewManagerModel, FriendsListViewModel friendsListViewModel, BlockContactViewModel blockContactViewModel, BlockContactDataAccessInterface userDataAccessObject) throws IOException {
+
+        // Notice how we pass this method's parameters to the Presenter.
+        BlockContactOutputBoundary blockContactOutputBoundary = new BlockContactPresenter(viewManagerModel, friendsListViewModel, blockContactViewModel);
+
+        BlockContactInputBoundary blockContactInteractor = new BlockContactInteractor(
+                 blockContactOutputBoundary, userDataAccessObject);
+
+        return new BlockContactController(blockContactInteractor);
     }
 }
 
