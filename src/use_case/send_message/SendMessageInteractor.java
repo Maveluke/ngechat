@@ -22,8 +22,14 @@ public class SendMessageInteractor implements SendMessageInputBoundary {
     public void execute(SendMessageInputData sendMessageInputData) {
 
 
+        String messageText = sendMessageInputData.getMessageText();
+        String sender = sendMessageInputData.getSender();
+
+        // Info :
+        // The sender must be the currentUser
+
         // 1. Make the message
-        Message message = sendMessageDataAccessObject.createMessage();
+        Message message = sendMessageDataAccessObject.createMessage(messageText, sender);
 
         // 2. Store the message in the API
         String binID = sendMessageInputData.getBinID();
@@ -31,7 +37,6 @@ public class SendMessageInteractor implements SendMessageInputBoundary {
         // 3. Store the message in the DAO
         sendMessageDataAccessObject.sendMessage(message, binID);
 
-        String sender = message.getSender();
         LocalDateTime datetime = message.getTimeSent();
         String text = message.getMessage();
 

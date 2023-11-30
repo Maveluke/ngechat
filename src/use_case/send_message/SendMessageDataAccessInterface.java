@@ -6,7 +6,7 @@ import entity.Message;
 public interface SendMessageDataAccessInterface {
 
 
-    public Message createMessage();
+    public Message createMessage(String messageText, String sender);
 
     public void sendMessage(Message message, String bindID);
 

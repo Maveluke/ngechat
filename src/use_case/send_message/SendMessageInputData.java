@@ -2,15 +2,15 @@ package use_case.send_message;
 
 public class SendMessageInputData {
 
-    private String friendName;
+    private String messageText;
 
-    private String username;
+    private String sender;
 
     private String binID;
 
-    public SendMessageInputData(String friendName, String username, String binID) {
-        this.friendName = friendName;
-        this.username = username;
+    public SendMessageInputData(String messageText, String sender, String binID) {
+        this.messageText = messageText;
+        this.sender = sender;
         this.binID = binID;
     }
 
@@ -18,11 +18,11 @@ public class SendMessageInputData {
         return binID;
     }
 
-    public String getFriendName() {
-        return friendName;
+    public String getMessageText() {
+        return messageText;
     }
 
-    public String getUsername() {
-        return username;
+    public String getSender() {
+        return sender;
     }
 }
