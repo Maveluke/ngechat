@@ -1,16 +1,23 @@
-package view.in_chat;
+package view;
 
 import interface_adapter.chat_list.ChatListController;
 import interface_adapter.chat_list.ChatListViewModel;
 import interface_adapter.in_chat.InChatPrivateController;
 import interface_adapter.in_chat.InChatPrivateViewModel;
+import interface_adapter.signup.SignupViewModel;
+import view.LabelTextPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 
-public class InChatPrivateView extends JPanel{
+public class InChatPrivateView extends JPanel implements ActionListener, PropertyChangeListener {
     private final InChatPrivateController inChatPrivateController;
     private final InChatPrivateViewModel inChatPrivateViewModel;
 
@@ -18,7 +25,12 @@ public class InChatPrivateView extends JPanel{
 
     private final ChatListController chatListController;
 
-    InChatPrivateView(InChatPrivateController controller, InChatPrivateViewModel inChatPrivateViewModel, ChatListViewModel chatListViewModel, ChatListController chatListController) {
+
+    // features : panels and buttons:
+
+    private final JTextField textInputField = new JTextField(40);
+
+    public InChatPrivateView(InChatPrivateController controller, InChatPrivateViewModel inChatPrivateViewModel, ChatListViewModel chatListViewModel, ChatListController chatListController) {
         this.inChatPrivateController = controller;
         this.inChatPrivateViewModel = inChatPrivateViewModel;
         this.chatListViewModel = chatListViewModel;
@@ -32,9 +44,12 @@ public class InChatPrivateView extends JPanel{
         header.setLayout(new BorderLayout());
 
         String friendName = inChatPrivateViewModel.getState().getFriendName();
-        
+
         JLabel friend  = new JLabel(friendName);
         header.add(friend);
+
+        LabelTextPanel textInput = new LabelTextPanel(
+                new JLabel(SignupViewModel.USERNAME_LABEL), textInputField);
 
         ImageIcon back = new ImageIcon("src/view/Photos/Return.png");
 //      TODO: change to the actual profpic
@@ -73,5 +88,40 @@ public class InChatPrivateView extends JPanel{
         header.add(backicon, BorderLayout.EAST);
 
         this.add(header);
+
+        ArrayList<ArrayList<Object>> allMessages = inChatPrivateViewModel.getState().getMessages();
+        for (ArrayList<Object> messages : allMessages) {
+            String sender = (String) messages.get(0);
+            ArrayList<String> singleMessage = (ArrayList<String>) messages.get(1);
+
+            String messageText = singleMessage.get(0);
+            String dateTime = singleMessage.get(1);
+
+            JPanel messagePanel = new JPanel();
+            messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
+
+            JLabel senderLabel = new JLabel(sender);
+            JLabel messageLabel = new JLabel("<html><b>Message:</b> " + messageText + "</html>");
+            JLabel dateTimeLabel = new JLabel("Date: " + dateTime);
+
+            this.add(messagePanel);
+            this.add(Box.createVerticalStrut(10));
+
+
+
+        }
+    }
+
+
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
     }
 }
