@@ -4,6 +4,8 @@ import interface_adapter.chat_list.ChatListController;
 import interface_adapter.chat_list.ChatListViewModel;
 import interface_adapter.in_chat.InChatPrivateController;
 import interface_adapter.in_chat.InChatPrivateViewModel;
+import interface_adapter.send_message.SendMessageController;
+import interface_adapter.send_message.SendMessageViewModel;
 import interface_adapter.signup.SignupViewModel;
 import view.LabelTextPanel;
 
@@ -18,23 +20,31 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 
 public class InChatPrivateView extends JPanel implements ActionListener, PropertyChangeListener {
-    private final InChatPrivateController inChatPrivateController;
+
+    public final String viewName = "in chat";
+     private final InChatPrivateController inChatPrivateController;
     private final InChatPrivateViewModel inChatPrivateViewModel;
 
     private final ChatListViewModel chatListViewModel;
 
     private final ChatListController chatListController;
 
+    private final SendMessageController sendMessageController;
+    private final SendMessageViewModel sendMessageViewModel;
+
 
     // features : panels and buttons:
 
     private final JTextField textInputField = new JTextField(40);
 
-    public InChatPrivateView(InChatPrivateController controller, InChatPrivateViewModel inChatPrivateViewModel, ChatListViewModel chatListViewModel, ChatListController chatListController) {
+    public InChatPrivateView(InChatPrivateController controller, InChatPrivateViewModel inChatPrivateViewModel, SendMessageViewModel sendMessageViewModel, SendMessageController sendMessageController,
+                ChatListController chatListController, ChatListViewModel chatListViewModel) {
         this.inChatPrivateController = controller;
         this.inChatPrivateViewModel = inChatPrivateViewModel;
         this.chatListViewModel = chatListViewModel;
         this.chatListController = chatListController;
+        this.sendMessageController = sendMessageController;
+        this.sendMessageViewModel = sendMessageViewModel;
 
 //        JFrame inchatframe = new JFrame("ngechat");
 //        inchatframe.setLayout(new BoxLayout(inchatframe.getContentPane(), BoxLayout.Y_AXIS));
