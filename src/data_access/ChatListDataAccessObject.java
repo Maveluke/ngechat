@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import use_case.chat_list.ChatListDataAccessInterface;
 import use_case.create_chat.CreateChatDataAccessInterface;
 import use_case.in_chat.InChatDataAccessInterface;
+import use_case.send_message.SendMessageDataAccessInterface;
 
 import java.io.IOException;
 import java.time.DateTimeException;
@@ -15,7 +16,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ChatListDataAccessObject implements ChatListDataAccessInterface, CreateChatDataAccessInterface, InChatDataAccessInterface {
+public class ChatListDataAccessObject implements ChatListDataAccessInterface, CreateChatDataAccessInterface, InChatDataAccessInterface, SendMessageDataAccessInterface {
 
     private static final MediaType mediaType = MediaType.parse("application/json");
     private final String masterKey;
@@ -37,7 +38,7 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
             ArrayList<Object> senderToMessage = new ArrayList<>();
 
             LocalDateTime timeSent = LocalDateTime.parse(singleMessageInfo.getString("timeSent"));
-            Message tempMessage = new Message(singleMessageInfo.getString("message"), timeSent, singleMessageInfo.getString("sender"));
+            Message tempMessage = new CommonMessage(singleMessageInfo.getString("message"), timeSent, singleMessageInfo.getString("sender"));
 
             senderToMessage.add(singleMessageInfo.getString("sender"));
             senderToMessage.add(tempMessage);
@@ -67,7 +68,8 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
         }
         return null;
     }
-    // TODO: This should be a method of inChatDAI
+
+    @Override
     public void sendMessage(Message message, String binID){
         String contentMessage = message.getMessage();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy, hh:mm:ss:SS");
