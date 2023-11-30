@@ -70,6 +70,11 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
     }
 
     @Override
+    public Message createMessage() {
+        return null;
+    }
+
+    @Override
     public void sendMessage(Message message, String binID){
         String contentMessage = message.getMessage();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy, hh:mm:ss:SS");

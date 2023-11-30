@@ -36,7 +36,7 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
         this.userFactory = userFactory;
         User admin = userFactory.create("admin", "admin");
         accounts.put("admin", admin);
-//        updateLocalUsers();
+        updateLocalUsers();
     }
     private JSONArray getUsersListRemote(){
         try{
@@ -261,7 +261,7 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
                 JSONArray oldFriendsList = currentUserJSON.getJSONArray("friends");
 
                 for (int j = 0; j < oldFriendsList.length(); j++) {
-                    JSONObject friendJSON = usersRemote.getJSONObject(i);
+                    JSONObject friendJSON = oldFriendsList.getJSONObject(j);
                     if (friendJSON.getString("username").equals(friendUsername)) {
                         oldFriendsList.remove(j);
                     }
@@ -274,7 +274,7 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
                 JSONArray oldFriendsList = currentUserJSON.getJSONArray("friends");
 
                 for (int j = 0; j < oldFriendsList.length(); j++) {
-                    JSONObject friendJSON = usersRemote.getJSONObject(i);
+                    JSONObject friendJSON = oldFriendsList.getJSONObject(j);
                     if (friendJSON.getString("username").equals(username)) {
                         oldFriendsList.remove(j);
                     }
