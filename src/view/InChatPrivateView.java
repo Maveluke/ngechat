@@ -5,16 +5,15 @@ import interface_adapter.chat_list.ChatListViewModel;
 import interface_adapter.in_chat.InChatPrivateController;
 import interface_adapter.in_chat.InChatPrivateViewModel;
 import interface_adapter.send_message.SendMessageController;
+import interface_adapter.send_message.SendMessageState;
 import interface_adapter.send_message.SendMessageViewModel;
+import interface_adapter.signup.SignupState;
 import interface_adapter.signup.SignupViewModel;
 import view.LabelTextPanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.lang.reflect.Array;
@@ -50,8 +49,11 @@ public class InChatPrivateView extends JPanel implements ActionListener, Propert
 //        JFrame inchatframe = new JFrame("ngechat");
 //        inchatframe.setLayout(new BoxLayout(inchatframe.getContentPane(), BoxLayout.Y_AXIS));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
         JPanel header = new JPanel();
         header.setLayout(new BorderLayout());
+
+        header.setBackground(Color.yellow);
 
         String friendName = inChatPrivateViewModel.getState().getFriendName();
 
@@ -59,7 +61,7 @@ public class InChatPrivateView extends JPanel implements ActionListener, Propert
         header.add(friend);
 
         LabelTextPanel textInput = new LabelTextPanel(
-                new JLabel(SignupViewModel.USERNAME_LABEL), textInputField);
+                new JLabel("Message"), textInputField);
 
         ImageIcon profpic = new ImageIcon("src/View/Photos/GenericPP.jpg");
 //      TODO: change profpic filename to the actual profpic file name
@@ -104,9 +106,16 @@ public class InChatPrivateView extends JPanel implements ActionListener, Propert
             }
         });
         header.add(backicon, BorderLayout.EAST);
+
         header.add(_profpic, BorderLayout.WEST);
 
+ //       JLabel username = new JLabel(inChatPrivateViewModel.getState().getFriendName());
+            JLabel username = new JLabel("   Friend's name");
+
+        header.add(username, BorderLayout.CENTER);
+
         this.add(header);
+
 
 
         ArrayList<ArrayList<Object>> allMessages = new ArrayList<>();
@@ -170,31 +179,17 @@ public class InChatPrivateView extends JPanel implements ActionListener, Propert
 
             messageLabel.setFont(customFont);
 
-//            if (inChatPrivateViewModel.getState().getSender().equals(sender)) {
-            if ("benny".equals(sender)) {
-                setAlignmentX(Component.RIGHT_ALIGNMENT);
+            setAlignmentX(Component.LEFT_ALIGNMENT);
 
-                senderLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
-                messageLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
-                dateTimeLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+            senderLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+            messageLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+            dateTimeLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-                messageLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-            } else {
-                setAlignmentX(Component.LEFT_ALIGNMENT);
+            messageLabel.setHorizontalAlignment(SwingConstants.LEFT);
 
-                senderLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-                messageLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-                dateTimeLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-                messageLabel.setHorizontalAlignment(SwingConstants.LEFT);
-            }
 
             setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
-
-//            senderLabel.setAlignmentY(Component.LEFT_ALIGNMENT);
-//            messageLabel.setAlignmentY(Component.LEFT_ALIGNMENT);
-//            dateTimeLabel.setAlignmentY(Component.LEFT_ALIGNMENT);
-
 
 
             messagePanel.add(senderLabel);
@@ -207,8 +202,43 @@ public class InChatPrivateView extends JPanel implements ActionListener, Propert
             finalPanel.add(messagePanel);
             this.add(finalPanel);
 
-            this.add(Box.createRigidArea(new Dimension(40, 0))); // Adjust the width as needed
         }
+
+        textInputField.addKeyListener(
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+//                        SendMessageState currentState = signupViewModel.getState();
+//                        currentState.setPassword(passwordInputField.getText() + e.getKeyChar());
+//                        signupViewModel.setState(currentState);
+
+
+
+
+
+
+
+
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                        if (e.getKeyCode() == KeyEvent.VK_ENTER){
+                            sendMessageController.execute(textInputField.getText(),
+                                    inChatPrivateViewModel.getState().getSender(), inChatPrivateViewModel.getState().getFriendName());
+                            inChatPrivateController.execute(friendName);
+                        }
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+
+                    }
+                }
+        );
+
+        this.add(textInput);
+
     }
     /*
     Helper method to set out the colour of the text
@@ -225,6 +255,11 @@ public class InChatPrivateView extends JPanel implements ActionListener, Propert
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        for (Component component :
+                this.getComponents()) {
+            if (component instanceof JTextField) {
+                ((JTextField) component).setText("");
+            }
+        }
     }
 }

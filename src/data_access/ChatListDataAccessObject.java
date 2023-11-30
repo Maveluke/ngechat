@@ -36,8 +36,8 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
             JSONObject singleMessageInfo = messages.getJSONObject(i);
 
             ArrayList<Object> senderToMessage = new ArrayList<>();
-
-            LocalDateTime timeSent = LocalDateTime.parse(singleMessageInfo.getString("timeSent"));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime timeSent = LocalDateTime.parse(singleMessageInfo.getString("timeSent"), formatter);
             Message tempMessage = new CommonMessage(singleMessageInfo.getString("message"), timeSent, singleMessageInfo.getString("sender"));
 
             senderToMessage.add(singleMessageInfo.getString("sender"));
@@ -77,7 +77,7 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
     @Override
     public void sendMessage(Message message, String binID){
         String contentMessage = message.getMessage();
-        String timeSent = message.getTimeSent().format("dd-MM-yyyy, hh:mm:ss:SS");
+        String timeSent = message.getTimeSent().format("yyyy-MM-dd HH:mm:ss");
         String sender = message.getSender();
 
         // Update Chat locally
