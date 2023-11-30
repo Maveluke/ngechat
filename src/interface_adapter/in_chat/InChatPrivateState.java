@@ -10,6 +10,8 @@ public class InChatPrivateState {
 
     String friendName;
 
+    String sender;
+
     public InChatPrivateState(InChatPrivateState copy) {
         this.messages = copy.messages;
         this.friendName = copy.friendName;
@@ -30,4 +32,13 @@ public class InChatPrivateState {
     public void setFriendName(String friendName) {
         this.friendName = friendName;
     }
+
+    public String getSender() {
+        return sender;
+    }
+
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
+
 }
