@@ -15,6 +15,7 @@ public class InChatPrivateState {
     public InChatPrivateState(InChatPrivateState copy) {
         this.messages = copy.messages;
         this.friendName = copy.friendName;
+        this.sender = copy.sender;
     }
 
     public ArrayList<ArrayList<Object>> getMessages() {
