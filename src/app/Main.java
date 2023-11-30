@@ -65,17 +65,16 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, chatListViewModel, userDataAccessObject);
         views.add(loginView, loginView.viewName);
 
-
         AddContactView addContactView = AddContactViewFactory.create(viewManagerModel, addContactViewModel, friendsListViewModel, userDataAccessObject);
         views.add(addContactView, addContactView.viewName);
 
-        ChatListView chatListView = ChatListUseCaseFactory.create(viewManagerModel, chatListViewModel, chatListDataAccessObject, userDataAccessObject);
+        ChatListView chatListView = ChatListUseCaseFactory.create(viewManagerModel, chatListViewModel, friendsListViewModel, chatListDataAccessObject, userDataAccessObject);
         views.add(chatListView, chatListView.viewName);
 
-        FriendsListView friendsListView = FriendsListUseCaseFactory.create(viewManagerModel, friendsListViewModel, blockContactViewModel, userDataAccessObject);
+        FriendsListView friendsListView = FriendsListUseCaseFactory.create(viewManagerModel, friendsListViewModel, chatListViewModel, chatListDataAccessObject, blockContactViewModel, userDataAccessObject);
         views.add(friendsListView, friendsListView.viewName);
 
-        viewManagerModel.setActiveView(friendsListView.viewName);
+        viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();

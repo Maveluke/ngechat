@@ -26,7 +26,7 @@ public class ChatListInteractor implements ChatListInputBoundary{
             HashMap<User, String> userFriendTobinID = userDataAccessObject.getCurrentUser().getFriendToBinMap();
             for (User friendUser :
                     userFriendTobinID.keySet()) {
-                chatListDataAccessObject.addFriendTobinID(friendUser.getName(), userFriendTobinID.get(friendUser));
+                chatListDataAccessObject.updateChatWithBinID(friendUser.getName(), userFriendTobinID.get(friendUser));
             }
             HashMap<String, ArrayList<String>> chatList = chatListDataAccessObject.getChats();
             ChatListOutputData chatListOutputData = new ChatListOutputData(chatList);

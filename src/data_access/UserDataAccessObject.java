@@ -34,7 +34,9 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
     public UserDataAccessObject(String masterKey, UserFactory userFactory){
         this.masterKey = masterKey;
         this.userFactory = userFactory;
-        updateLocalUsers();
+        User admin = userFactory.create("admin", "admin");
+        accounts.put("admin", admin);
+//        updateLocalUsers();
     }
     private JSONArray getUsersListRemote(){
         try{
@@ -152,22 +154,7 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
                 usersRemote.put(i, currentUserJSON);
             }
         }
-        JSONObject body = new JSONObject();
-        body.put("users", usersRemote);
-        RequestBody updateBody = RequestBody.create(body.toString(), mediaType);
-        OkHttpClient client = new OkHttpClient();
-        Request uploadRequest = new Request.Builder()
-                .url(API_URL + "/" + USER_BIN_ID)
-                .put(updateBody)
-                .addHeader("Content-Type", "application/json")
-                .addHeader("X-Master-Key", this.masterKey)
-                .build();
-
-        try{
-            Response updateResponse = client.newCall(uploadRequest).execute();
-        }catch (Exception e){
-            System.out.println("Fail to get response when uploading users");
-        }
+        updateRemoteUsers(usersRemote);
     }
 
     // Create a new bin for user and friend to chat
@@ -199,9 +186,6 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
 
     @Override
     public void save(User user) {
-        MediaType mediaType = MediaType.parse("application/json");
-        DateTimeFormatter myFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss:SS");
-
         JSONObject userToSave = new JSONObject();
         userToSave.put("username", user.getName());
         userToSave.put("password", user.getPassword());
@@ -218,7 +202,7 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
                 .build();
         try{
             Response downloadResponse = client.newCall(downloadRequest).execute();
-            JSONArray usersList = new JSONArray(downloadResponse.body().string());
+            JSONArray usersList = new JSONObject(downloadResponse.body().string()).getJSONArray("users");
             // Update locally
             accounts.put(user.getName(), user);
             // Update remotely
@@ -344,5 +328,4 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
         }
         return ret;
     }
-
 }
