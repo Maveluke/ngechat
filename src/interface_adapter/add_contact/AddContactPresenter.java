@@ -24,14 +24,8 @@ public class AddContactPresenter implements AddContactOutputBoundary {
     @Override
     public void prepareSuccessView() {
         // On success, switch to friend list view.
-        // TODO: implement FriendsListView first
-
-//        FriendsListState friendsListState = friendsListViewModel.getState();
-//        this.friendsListViewModel.setState(friendsListState);
-//        this.loggedInViewModel.firePropertyChanged();
-//
-//        this.viewManagerModel.setActiveView(loggedInViewModel.getViewName());
-//        this.viewManagerModel.firePropertyChanged();
+        this.viewManagerModel.setActiveView(friendsListViewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
     }
 
     @Override
