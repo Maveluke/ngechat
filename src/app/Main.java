@@ -10,7 +10,9 @@ import interface_adapter.add_contact.AddContactViewModel;
 import interface_adapter.block_contact.BlockContactViewModel;
 import interface_adapter.chat_list.ChatListViewModel;
 import interface_adapter.friends_list.FriendsListViewModel;
+import interface_adapter.in_chat.InChatPrivateViewModel;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.send_message.SendMessageViewModel;
 import interface_adapter.signup.SignupViewModel;
 import view.*;
 import view.contacts_list.FriendsListView;
@@ -38,6 +40,8 @@ public class Main {
         FriendsListViewModel friendsListViewModel = new FriendsListViewModel();
         ChatListViewModel chatListViewModel = new ChatListViewModel();
         BlockContactViewModel blockContactViewModel = new BlockContactViewModel();
+        SendMessageViewModel sendMessageViewModel = new SendMessageViewModel();
+        InChatPrivateViewModel inChatPrivateViewModel = new InChatPrivateViewModel();
 
         String masterKey = "$2a$10$xfVheBzZjicxu..Dy7zLHeBNVrrPWZ/jEK/qfX7nTY.WKY/Tx9LM2";
         UserFactory userFactory = new CommonUserFactory();
@@ -74,7 +78,10 @@ public class Main {
         FriendsListView friendsListView = FriendsListUseCaseFactory.create(viewManagerModel, friendsListViewModel, chatListViewModel, chatListDataAccessObject, blockContactViewModel, userDataAccessObject);
         views.add(friendsListView, friendsListView.viewName);
 
-        viewManagerModel.setActiveView(signupView.viewName);
+        InChatPrivateView inChatPrivateView = InChatUseCaseFactory.create(viewManagerModel, inChatPrivateViewModel, sendMessageViewModel, chatListViewModel, chatListDataAccessObject, userDataAccessObject);
+        views.add(inChatPrivateView, inChatPrivateView.viewName);
+
+        viewManagerModel.setActiveView(inChatPrivateView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
