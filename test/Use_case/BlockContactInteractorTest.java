@@ -23,7 +23,7 @@ public class BlockContactInteractorTest {
         userDataAccessObject.save(user1);
         userDataAccessObject.save(user2);
 
-        userDataAccessObject.addFriend("user1", "user2");
+        userDataAccessObject.addFriend(user1.getName(), user2.getName());
 
         BlockContactInputData blockContactInputData = new BlockContactInputData(user2.getName());
 
