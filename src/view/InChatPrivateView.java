@@ -17,6 +17,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class InChatPrivateView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -49,7 +50,6 @@ public class InChatPrivateView extends JPanel implements ActionListener, Propert
 //        JFrame inchatframe = new JFrame("ngechat");
 //        inchatframe.setLayout(new BoxLayout(inchatframe.getContentPane(), BoxLayout.Y_AXIS));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
         JPanel header = new JPanel();
         header.setLayout(new BorderLayout());
 
@@ -60,6 +60,14 @@ public class InChatPrivateView extends JPanel implements ActionListener, Propert
 
         LabelTextPanel textInput = new LabelTextPanel(
                 new JLabel(SignupViewModel.USERNAME_LABEL), textInputField);
+
+        ImageIcon profpic = new ImageIcon("src/View/Photos/GenericPP.jpg");
+//      TODO: change profpic filename to the actual profpic file name
+        Image image = profpic.getImage();
+        Image newimg = image.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
+        profpic = new ImageIcon(newimg);
+        JLabel _profpic = new JLabel(profpic);
+
 
         ImageIcon back = new ImageIcon("src/view/Photos/Return.png");
 //      TODO: change to the actual profpic
@@ -96,11 +104,43 @@ public class InChatPrivateView extends JPanel implements ActionListener, Propert
             }
         });
         header.add(backicon, BorderLayout.EAST);
+        header.add(_profpic, BorderLayout.WEST);
 
         this.add(header);
 
-        ArrayList<ArrayList<Object>> allMessages = inChatPrivateViewModel.getState().getMessages();
+
+        ArrayList<ArrayList<Object>> allMessages = new ArrayList<>();
+        ArrayList<Object> inner = new ArrayList<>();
+        ArrayList<Object> inner_inner = new ArrayList<>();
+
+        inner_inner.add(0, "Hi, ajfhajkghajg agbjakhgjkahg agbjkahgjkaeg");
+        inner_inner.add(1, "date");
+        inner_inner.add(2, "benny");
+
+        inner.add(0, "benny");
+        inner.add(1, inner_inner);
+
+        allMessages.add(0, inner);
+
+        ArrayList<Object> inner2 = new ArrayList<>();
+        ArrayList<Object> inner_inner2 = new ArrayList<>();
+
+        inner_inner2.add(0, "How are you doing? akfajkhfjkagjkang akjfbajkgjkagkjag agbajkbgkjabgk");
+        inner_inner2.add(1, "date");
+        inner_inner2.add(2, "wisnu");
+
+        inner2.add(0, "wisnu");
+        inner2.add(1, inner_inner2);
+
+        allMessages.add(inner2);
+
+        // ArrayList<ArrayList<Object>> allMessages = inChatPrivateViewModel.getState().getMessages();
         for (ArrayList<Object> messages : allMessages) {
+
+            JPanel finalPanel = new JPanel();
+            finalPanel.setLayout(new BoxLayout(finalPanel, BoxLayout.Y_AXIS));
+
+
             String sender = (String) messages.get(0);
             ArrayList<String> singleMessage = (ArrayList<String>) messages.get(1);
 
@@ -110,19 +150,72 @@ public class InChatPrivateView extends JPanel implements ActionListener, Propert
             JPanel messagePanel = new JPanel();
             messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
 
+
+            // Create a custom Font with a larger size
+            Font customFont = new Font("Times New Roman", Font.BOLD, 16);
+
+            //  Create a custom color (for example, red)
+            Color customColor;
+
+            if ("benny".equals(sender)) {
+                customColor = Color.RED;
+
+            } else{
+                customColor = Color.DARK_GRAY.brighter();
+            }
+
             JLabel senderLabel = new JLabel(sender);
-            JLabel messageLabel = new JLabel("<html><b>Message:</b> " + messageText + "</html>");
+            JLabel messageLabel = new JLabel("<html><b><font size='5' color='" + getColorHex(customColor) + "'>" + messageText + "</html>");
             JLabel dateTimeLabel = new JLabel("Date: " + dateTime);
 
-            this.add(messagePanel);
-            this.add(Box.createVerticalStrut(10));
+            messageLabel.setFont(customFont);
+
+//            if (inChatPrivateViewModel.getState().getSender().equals(sender)) {
+            if ("benny".equals(sender)) {
+                setAlignmentX(Component.RIGHT_ALIGNMENT);
+
+                senderLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+                messageLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+                dateTimeLabel.setAlignmentX(Component.RIGHT_ALIGNMENT);
+
+                messageLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+            } else {
+                setAlignmentX(Component.LEFT_ALIGNMENT);
+
+                senderLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+                messageLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+                dateTimeLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+                messageLabel.setHorizontalAlignment(SwingConstants.LEFT);
+            }
+
+            setBorder(BorderFactory.createEmptyBorder(0, 0, 10, 0));
+
+//            senderLabel.setAlignmentY(Component.LEFT_ALIGNMENT);
+//            messageLabel.setAlignmentY(Component.LEFT_ALIGNMENT);
+//            dateTimeLabel.setAlignmentY(Component.LEFT_ALIGNMENT);
 
 
 
+            messagePanel.add(senderLabel);
+            messagePanel.add(messageLabel);
+            messagePanel.add(dateTimeLabel);
+
+            // Add vertical spacing between messages using Box.createVerticalStrut
+            add(Box.createVerticalStrut(10));
+
+            finalPanel.add(messagePanel);
+            this.add(finalPanel);
+
+            this.add(Box.createRigidArea(new Dimension(40, 0))); // Adjust the width as needed
         }
     }
-
-
+    /*
+    Helper method to set out the colour of the text
+     */
+    private String getColorHex(Color color) {
+        return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
+    }
 
 
     @Override
