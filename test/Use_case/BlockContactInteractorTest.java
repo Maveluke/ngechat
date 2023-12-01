@@ -33,7 +33,8 @@ public class BlockContactInteractorTest {
 
             @Override
             public void prepareFailView(String error) {
-                System.out.println("Fail to block friend" + error);
+
+                System.out.println("Use case failure is unexpected." + error);
             }
         };
         BlockContactInteractor blockContactInteractor = new BlockContactInteractor(blockContactPresenter, userDataAccessObject);

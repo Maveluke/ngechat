@@ -25,7 +25,7 @@ public class SignupInteractorTest {
 
             @Override
             public void prepareFailView(String error) {
-                System.out.println("Failed to sign up.");
+                System.out.println("Use case failure is unexpected. " + error);
             }
         };
         SignupInteractor signupInteractor = new SignupInteractor(userDataAccessObject, signupOutputBoundary, commonUserFactory);
