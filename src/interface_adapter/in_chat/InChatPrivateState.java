@@ -6,7 +6,7 @@ public class InChatPrivateState {
 
     // Don't forget to turn the message into something non-entity
 
-    ArrayList<ArrayList<Object>> messages;
+    ArrayList<ArrayList<Object>> messages = new ArrayList<>();
 
     String friendName;
 

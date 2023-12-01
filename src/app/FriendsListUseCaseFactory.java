@@ -70,7 +70,7 @@ public class FriendsListUseCaseFactory {
 
         try {
             InChatPrivateController inChatPrivateController = createInChatController(viewManagerModel, inChatPrivateViewModel, chatListDataAccessObject, chatListDataAccessObject);
-            CreateChatController createChatController = createCreateChatController(viewManagerModel, inChatPrivateViewModel, chatListDataAccessObject);
+            CreateChatController createChatController = createCreateChatController(viewManagerModel, inChatPrivateViewModel, chatListDataAccessObject, userDataAccessObject);
             FriendsListController friendsListController = createFriendsListController(viewManagerModel, friendsListViewModel, userDataAccessObject);
             ChatListController chatListController = createChatListController(viewManagerModel, chatListViewModel, chatListDataAccessObject, userDataAccessObject);
             BlockContactController blockContactController = createBlockContactController(viewManagerModel, friendsListViewModel, blockContactViewModel, userDataAccessObject);
@@ -93,14 +93,14 @@ public class FriendsListUseCaseFactory {
         return new FriendsListController(friendsListInteractor);
     }
 
-    private static CreateChatController createCreateChatController(ViewManagerModel viewManagerModel, InChatPrivateViewModel inChatPrivateViewModel, ChatListDataAccessObject chatListDataAccessObject) throws IOException {
+    private static CreateChatController createCreateChatController(ViewManagerModel viewManagerModel, InChatPrivateViewModel inChatPrivateViewModel, ChatListDataAccessObject chatListDataAccessObject, UserDataAccessObject userDataAccessObject) throws IOException {
 
         // Notice how we pass this method's parameters to the Presenter.
         CreateChatOutputBoundary createChatPresenter = new CreateChatPresenter(inChatPrivateViewModel,viewManagerModel );
         CommonChatFactory chatFactory = new CommonChatFactory();
 
         CreateChatInputBoundary createChatInteractor = new CreateChatInteractor(
-                chatListDataAccessObject, createChatPresenter, chatFactory);
+                chatListDataAccessObject, userDataAccessObject, createChatPresenter, chatFactory);
 
         return new CreateChatController(createChatInteractor);
     }

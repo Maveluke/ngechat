@@ -37,7 +37,8 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
 
             ArrayList<Object> senderToMessage = new ArrayList<>();
 
-            LocalDateTime timeSent = LocalDateTime.parse(singleMessageInfo.getString("timeSent"));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime timeSent = LocalDateTime.parse(singleMessageInfo.getString("timeSent"), formatter);
             Message tempMessage = new CommonMessage(singleMessageInfo.getString("message"), timeSent, singleMessageInfo.getString("sender"));
 
             senderToMessage.add(singleMessageInfo.getString("sender"));
@@ -78,14 +79,14 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
     }
 
     @Override
-    public void sendMessage(Message message, String binID){
+    public void sendMessage(Message message, String binID, String friendName){
         String contentMessage = message.getMessage();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy, hh:mm:ss:SS");
-        String timeSent = message.getTimeSent().format(formatter);
+        String timeSent = message.getTimeSent();
         String sender = message.getSender();
 
         // Update Chat locally
-        // TODO: Implement after inChatPrivate is implemented
+        Chat localChat = chatList.get(friendName);
+        localChat.addMessage(sender, message);
         // Update Chat remotely
          JSONObject singleMessageInfo = new JSONObject();
          singleMessageInfo.put("sender", sender);
@@ -181,6 +182,7 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
     }
 
     public Chat getChat(String friendName) {
+        System.out.println(this);
         return chatList.get(friendName);
     }
 

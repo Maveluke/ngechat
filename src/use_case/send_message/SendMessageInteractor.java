@@ -35,7 +35,7 @@ public class SendMessageInteractor implements SendMessageInputBoundary {
         String binID = sendMessageDataAccessObject.getBinID(sendMessageInputData.getFriendName());
 
         // 3. Store the message in the DAO
-        sendMessageDataAccessObject.sendMessage(message, binID);
+        sendMessageDataAccessObject.sendMessage(message, binID, sendMessageInputData.getFriendName());
 
         String datetime = message.getTimeSent();
         String text = message.getMessage();

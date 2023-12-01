@@ -3,11 +3,14 @@ package view.contacts_list;
 import interface_adapter.add_contact.AddContactController;
 import interface_adapter.add_contact.AddContactViewModel;
 import interface_adapter.chat_list.ChatListController;
+import interface_adapter.create_chat.CreateChatController;
 import interface_adapter.friends_list.FriendsListController;
 import interface_adapter.friends_list.FriendsListState;
 import interface_adapter.friends_list.FriendsListViewModel;
 import interface_adapter.block_contact.BlockContactController;
 import interface_adapter.block_contact.BlockContactViewModel;
+import interface_adapter.in_chat.InChatPrivateController;
+import interface_adapter.in_chat.InChatPrivateViewModel;
 import interface_adapter.switch_view.SwitchViewController;
 
 import javax.print.attribute.HashPrintJobAttributeSet;
@@ -31,15 +34,26 @@ public class FriendsListView extends JPanel implements PropertyChangeListener {
     private final FriendsListViewModel friendsListViewModel;
     private final BlockContactViewModel blockContactViewModel;
     private HashMap<String, JPanel> friendsListPanels = new HashMap<>();
+
+
+
+    private InChatPrivateController inChatPrivateController;
+    private InChatPrivateViewModel inChatPrivateViewModel;
+    private CreateChatController createChatController;
+
     public FriendsListView(FriendsListController controller, FriendsListViewModel friendsListViewModel,
                            ChatListController chatListController, SwitchViewController switchViewController,
-                           BlockContactController blockContactController, BlockContactViewModel blockContactViewModel) {
+                           BlockContactController blockContactController, BlockContactViewModel blockContactViewModel,
+                           InChatPrivateController inChatPrivateController, InChatPrivateViewModel inChatPrivateViewModel,
+                           CreateChatController createChatController) {
         this.friendsListController = controller;
         this.chatListController = chatListController;
         this.blockContactController = blockContactController;
         this.friendsListViewModel = friendsListViewModel;
         this.blockContactViewModel = blockContactViewModel;
-
+        this.inChatPrivateViewModel = inChatPrivateViewModel;
+        this.inChatPrivateController = inChatPrivateController;
+        this.createChatController = createChatController;
         this.friendsListViewModel.addPropertyChangeListener(this);
 
 
@@ -190,7 +204,8 @@ public class FriendsListView extends JPanel implements PropertyChangeListener {
                 friendpanel.addMouseListener(new MouseListener() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-//                    TODO: go to inchat
+                        createChatController.execute(friend);
+                        inChatPrivateController.execute(friend);
                     }
 
                     @Override
@@ -318,7 +333,33 @@ public class FriendsListView extends JPanel implements PropertyChangeListener {
                 JPanel newFriendPanel = new JPanel();
                 JLabel newFriendName = new JLabel(friend);
                 newFriendPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
+                newFriendPanel.addMouseListener(new MouseListener() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        createChatController.execute(friend);
+                        inChatPrivateController.execute(friend);
+                    }
 
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+
+                    }
+                });
                 newFriendName.setName("Username");
                 ImageIcon profPic = new ImageIcon("src/view/Photos/GenericPP.jpg");
 //            TODO: replace with actual profpic

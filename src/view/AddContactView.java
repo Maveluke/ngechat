@@ -27,7 +27,6 @@ public class AddContactView extends JPanel implements ActionListener, PropertyCh
     final JButton add;
     final JButton cancel;
     private final AddContactController addContactController;
-    private final FriendsListController friendsListController;
 
     public AddContactView(AddContactViewModel addContactViewModel, FriendsListController friendsListController, AddContactController addContactController){
         this.addContactViewModel = addContactViewModel;

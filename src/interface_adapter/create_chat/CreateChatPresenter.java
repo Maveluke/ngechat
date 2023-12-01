@@ -22,6 +22,7 @@ public class CreateChatPresenter implements CreateChatOutputBoundary {
     public void prepareSuccessView(CreateChatOutputData createChatOutputData) {
 
         InChatPrivateState inChatPrivateState = inChatPrivateViewModel.getState();
+        inChatPrivateState.setSender(createChatOutputData.getSender());
         inChatPrivateState.setFriendName(createChatOutputData.getUserToChat());
 
         this.inChatPrivateViewModel.setState(inChatPrivateState);

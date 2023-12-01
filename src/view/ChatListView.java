@@ -279,7 +279,7 @@ public class ChatListView extends JPanel implements ActionListener, PropertyChan
             chatpanel.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-//              TODO: go to inchat
+
                 }
 
                 @Override
