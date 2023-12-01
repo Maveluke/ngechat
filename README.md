@@ -5,10 +5,8 @@ A chat system is a software or service that enables users to communicate with ea
 
 
 Software Specification: 
--	Send messages, stickers, emojis, photos and files 
--	Make account with profile (name, profile picture, etc.) 
+-	Send messages
+-	Make account with profile (name and profile picture) 
 -	Add contacts  
 -	Block contacts 
--	Create groups (with admins and members) 
 -	View chat history 
--	View app notifications (incoming messages, requesting to add friend) 
