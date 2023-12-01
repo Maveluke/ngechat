@@ -8,6 +8,7 @@ import use_case.add_contact.AddContactInteractor;
 import use_case.add_contact.AddContactOutputBoundary;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class AddContactInteractorTest {
     @Test
@@ -30,7 +31,7 @@ public class AddContactInteractorTest {
 
             @Override
             public void prepareFailView(String error) {
-                System.out.println("Use case failure is unexpected. " + error);
+                fail("Use case failure is unexpected. ");
             }
         };
         AddContactInteractor addContactInteractor = new AddContactInteractor(addContactPresenter, userDataAccessObject);

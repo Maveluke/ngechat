@@ -6,6 +6,7 @@ import org.junit.Test;
 import use_case.signup.*;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 public class SignupInteractorTest {
 
@@ -25,7 +26,7 @@ public class SignupInteractorTest {
 
             @Override
             public void prepareFailView(String error) {
-                System.out.println("Use case failure is unexpected. " + error);
+                fail("Use case failure is unexpected. ");
             }
         };
         SignupInteractor signupInteractor = new SignupInteractor(userDataAccessObject, signupOutputBoundary, commonUserFactory);

@@ -8,6 +8,7 @@ import use_case.block_contact.BlockContactInteractor;
 import use_case.block_contact.BlockContactOutputBoundary;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.fail;
 
 public class BlockContactInteractorTest {
 
@@ -33,8 +34,7 @@ public class BlockContactInteractorTest {
 
             @Override
             public void prepareFailView(String error) {
-
-                System.out.println("Use case failure is unexpected." + error);
+                fail("Use case failure is unexpected. ");
             }
         };
         BlockContactInteractor blockContactInteractor = new BlockContactInteractor(blockContactPresenter, userDataAccessObject);
