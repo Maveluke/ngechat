@@ -252,7 +252,7 @@ public class ChatListView extends JPanel implements ActionListener, PropertyChan
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         HashMap<String, ArrayList<String>> chatlist = chatListViewModel.getState().getChatList();
-
+        if(chatListViewModel.getState().isUpdated()) JOptionPane.showMessageDialog(this, "You have new messages");
         for (Component component:
              this.getComponents()) {
             if(component.getName() != null && component.getName().equals("Chat Panel")){
@@ -315,6 +315,10 @@ public class ChatListView extends JPanel implements ActionListener, PropertyChan
 
                 }
             });
+            chatpanel.revalidate();
+            chatpanel.repaint();
+            this.revalidate();
+            this.repaint();
         }
     }
 }

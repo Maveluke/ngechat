@@ -9,6 +9,7 @@ import use_case.create_chat.CreateChatDataAccessInterface;
 import use_case.in_chat.InChatDataAccessInterface;
 import use_case.send_message.SendMessageDataAccessInterface;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
@@ -116,10 +117,21 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
         }
     }
     @Override
-    public void updateChatWithBinID(String friendUsername, String binID) {
+    public boolean updateChatWithBinID(String friendUsername, String binID) {
         this.friendTobinID.put(friendUsername, binID);
-        Chat existingChat = getChatRemote(binID);
-        if (existingChat != null) chatList.put(friendUsername, existingChat);
+        Chat existingChatRemote = getChatRemote(binID);
+        if (existingChatRemote != null) {
+            if(!chatExist(friendUsername)){
+                chatList.put(friendUsername, existingChatRemote);
+                return false;
+            }
+            if(existingChatRemote.getMessages().size() > chatList.get(friendUsername).getMessages().size()){
+                chatList.put(friendUsername, existingChatRemote);
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 
     @Override

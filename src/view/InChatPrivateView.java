@@ -81,6 +81,7 @@ public class InChatPrivateView extends JPanel implements ActionListener, Propert
         Image newback = _back.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         back = new ImageIcon(newback);
         JLabel backicon = new JLabel(back);
+
         backicon.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {

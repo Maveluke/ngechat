@@ -2,6 +2,7 @@ package app;
 
 import data_access.ChatListDataAccessObject;
 import data_access.UserDataAccessObject;
+import entity.Chat;
 import entity.CommonChatFactory;
 import entity.CommonUserFactory;
 import entity.UserFactory;
@@ -10,6 +11,7 @@ import interface_adapter.add_contact.AddContactViewModel;
 import interface_adapter.block_contact.BlockContactViewModel;
 import interface_adapter.chat_list.ChatListViewModel;
 import interface_adapter.friends_list.FriendsListViewModel;
+import interface_adapter.in_chat.InChatPrivateState;
 import interface_adapter.in_chat.InChatPrivateViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.send_message.SendMessageViewModel;
@@ -86,5 +88,25 @@ public class Main {
 
         application.pack();
         application.setVisible(true);
+        while(true){
+            try{
+                for (String friendUsername :
+                        chatListDataAccessObject.getChats().keySet()) {
+                    String binID = chatListDataAccessObject.getBinID(friendUsername);
+                    chatListViewModel.getState().setUpdated(chatListDataAccessObject.updateChatWithBinID(friendUsername, binID));
+                    chatListViewModel.getState().setChatList(chatListDataAccessObject.getChats());
+                    chatListViewModel.firePropertyChanged();
+                    InChatPrivateState inChatPrivateState = inChatPrivateViewModel.getState();
+                    inChatPrivateState.setMessages(chatListDataAccessObject.getChat(friendUsername).getMessages());
+
+                    inChatPrivateState.setFriendName(friendUsername);
+                    inChatPrivateState.setSender(userDataAccessObject.getCurrentUser().getName());
+                    inChatPrivateViewModel.firePropertyChanged();
+                }
+                Thread.sleep(5000);
+            }catch (Exception e){
+                System.out.println("error happened with: " + e.getMessage());
+            }
+        }
     }
 }
