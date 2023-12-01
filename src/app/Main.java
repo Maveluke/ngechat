@@ -72,7 +72,7 @@ public class Main {
         AddContactView addContactView = AddContactViewFactory.create(viewManagerModel, addContactViewModel, friendsListViewModel, userDataAccessObject);
         views.add(addContactView, addContactView.viewName);
 
-        ChatListView chatListView = ChatListUseCaseFactory.create(viewManagerModel, chatListViewModel, friendsListViewModel, chatListDataAccessObject, userDataAccessObject);
+        ChatListView chatListView = ChatListUseCaseFactory.create(viewManagerModel, chatListViewModel, friendsListViewModel, inChatPrivateViewModel, chatListDataAccessObject, userDataAccessObject);
         views.add(chatListView, chatListView.viewName);
 
         FriendsListView friendsListView = FriendsListUseCaseFactory.create(viewManagerModel, friendsListViewModel, chatListViewModel, chatListDataAccessObject, blockContactViewModel, userDataAccessObject, inChatPrivateViewModel);

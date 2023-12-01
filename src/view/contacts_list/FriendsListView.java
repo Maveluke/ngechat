@@ -205,7 +205,7 @@ public class FriendsListView extends JPanel implements PropertyChangeListener {
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         createChatController.execute(friend);
-                        inChatPrivateController.execute(friend);
+                        inChatPrivateController.execute(friend, inChatPrivateViewModel.getState().getSender());
                     }
 
                     @Override
@@ -337,7 +337,7 @@ public class FriendsListView extends JPanel implements PropertyChangeListener {
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         createChatController.execute(friend);
-                        inChatPrivateController.execute(friend);
+                        inChatPrivateController.execute(friend, inChatPrivateViewModel.getState().getSender());
                     }
 
                     @Override

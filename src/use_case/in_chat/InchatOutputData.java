@@ -9,9 +9,12 @@ public class InchatOutputData {
 
     private String friendName;
 
-    public InchatOutputData(ArrayList<ArrayList<Object>> messages, String friendName) {
+    private String username;
+
+    public InchatOutputData(ArrayList<ArrayList<Object>> messages, String friendName, String username) {
         this.messages = messages;
         this.friendName = friendName;
+        this.username = username;
     }
 
     public ArrayList<ArrayList<Object>> getMessages() {
@@ -20,5 +23,9 @@ public class InchatOutputData {
 
     public String getFriendName() {
         return friendName;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

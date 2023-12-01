@@ -54,7 +54,9 @@ public class InChatPrivateView extends JPanel implements ActionListener, Propert
         JPanel header = new JPanel();
         header.setName("Header");
         header.setLayout(new BorderLayout());
+
         inChatPrivateViewModel.addPropertyChangeListener(this);
+
         header.setBackground(Color.yellow);
 
         String friendName = inChatPrivateViewModel.getState().getFriendName();
@@ -206,7 +208,14 @@ public class InChatPrivateView extends JPanel implements ActionListener, Propert
             finalPanel.add(messagePanel);
             messagesPanel.add(finalPanel);
         }
-        this.add(messagesPanel);
+
+        // Create a JScrollPane and add the panel to it
+        JScrollPane scrollPane = new JScrollPane(messagesPanel);
+
+        // Set the preferred size of the scroll pane (optional)
+        scrollPane.setPreferredSize(new Dimension(380, 250));
+
+        this.add(scrollPane);
         textInputField.addKeyListener(
                 new KeyListener() {
                     @Override
@@ -223,7 +232,7 @@ public class InChatPrivateView extends JPanel implements ActionListener, Propert
                         if (e.getKeyCode() == KeyEvent.VK_ENTER){
                             sendMessageController.execute(textInputField.getText(),
                                     inChatPrivateViewModel.getState().getSender(), inChatPrivateViewModel.getState().getFriendName());
-                            inChatPrivateController.execute(inChatPrivateViewModel.getState().getFriendName());
+                            inChatPrivateController.execute(inChatPrivateViewModel.getState().getFriendName(), inChatPrivateViewModel.getState().getSender());
                         }
                     }
 
@@ -278,8 +287,9 @@ public class InChatPrivateView extends JPanel implements ActionListener, Propert
                 }
             }
 
-            if (component.getName() != null && component.getName().equals("Messages Panel")){
-                messagesPanel = (JPanel) component;
+            if (component instanceof JScrollPane){
+               JViewport tempViewPort  = ((JScrollPane) component).getViewport();
+               messagesPanel = (JPanel) tempViewPort.getComponent(0);
             }
         }
         messagesPanel.removeAll();

@@ -3,6 +3,8 @@ package view;
 import interface_adapter.chat_list.ChatListController;
 import interface_adapter.chat_list.ChatListViewModel;
 import interface_adapter.friends_list.FriendsListController;
+import interface_adapter.in_chat.InChatPrivateController;
+import interface_adapter.in_chat.InChatPrivateViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,11 +23,22 @@ public class ChatListView extends JPanel implements ActionListener, PropertyChan
     private final ChatListController chatListController;
     private final ChatListViewModel chatListViewModel;
     private final FriendsListController friendsListController;
-    public ChatListView(ChatListController controller, ChatListViewModel chatlistViewModel, FriendsListController friendsListController){
+
+    private final InChatPrivateController inChatPrivateController;
+
+    private final InChatPrivateViewModel inChatPrivateViewModel;
+
+    public ChatListView(ChatListController controller, ChatListViewModel chatlistViewModel, FriendsListController friendsListController
+            ,InChatPrivateController inChatPrivateController, InChatPrivateViewModel inChatPrivateViewModel){
 
         this.chatListController = controller;
         this.chatListViewModel = chatlistViewModel;
         this.friendsListController = friendsListController;
+        this.inChatPrivateController = inChatPrivateController;
+        this.inChatPrivateViewModel = inChatPrivateViewModel;
+
+
+
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JPanel header = new JPanel();
         header.setBackground(Color.gray);
@@ -174,12 +187,12 @@ public class ChatListView extends JPanel implements ActionListener, PropertyChan
             chatpanel.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-//              TODO: go to inchat
+
                 }
 
                 @Override
                 public void mousePressed(MouseEvent e) {
-
+                    inChatPrivateController.execute(person, chatListViewModel.getState().getUsername());
                 }
 
                 @Override
@@ -284,7 +297,7 @@ public class ChatListView extends JPanel implements ActionListener, PropertyChan
 
                 @Override
                 public void mousePressed(MouseEvent e) {
-
+                    inChatPrivateController.execute(person, chatListViewModel.getState().getUsername());
                 }
 
                 @Override
