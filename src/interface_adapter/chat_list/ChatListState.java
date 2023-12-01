@@ -7,6 +7,7 @@ public class ChatListState {
     private String username = "Username";
 
     private HashMap<String, ArrayList<String>> chatList = new HashMap<String, ArrayList<String>>();
+    private boolean updated = false;
 
     public ChatListState(){};
 
@@ -16,6 +17,14 @@ public class ChatListState {
 
     public HashMap<String, ArrayList<String>> getChatList() {
         return chatList;
+    }
+
+    public boolean isUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(boolean updated) {
+        this.updated = updated;
     }
 
     public void setUsername(String username) {

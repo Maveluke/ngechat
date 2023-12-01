@@ -21,11 +21,13 @@ public class ChatListInteractor implements ChatListInputBoundary{
     @Override
     public void execute() {
         HashMap<User, String> userFriendTobinID = userDataAccessObject.getCurrentUser().getFriendToBinMap();
+        boolean updated = false;
         for (User friendUser :
                 userFriendTobinID.keySet()) {
+            updated = chatListDataAccessObject.updateChatWithBinID(friendUser.getName(), userFriendTobinID.get(friendUser));
         }
         HashMap<String, ArrayList<String>> chatList = chatListDataAccessObject.getChats();
-        ChatListOutputData chatListOutputData = new ChatListOutputData(chatList);
+        ChatListOutputData chatListOutputData = new ChatListOutputData(chatList, updated);
         chatListPresenter.prepareSuccessView(chatListOutputData);
     }
 }

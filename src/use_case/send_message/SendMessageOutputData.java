@@ -6,11 +6,11 @@ public class SendMessageOutputData {
 
     private String sender;
 
-    private LocalDateTime datetime;
+    private String datetime;
 
     private String text;
 
-    public SendMessageOutputData(String text, LocalDateTime datetime, String sender) {
+    public SendMessageOutputData(String text, String datetime, String sender) {
         this.text = text;
         this.sender = sender;
         this.datetime = datetime;
@@ -24,7 +24,7 @@ public class SendMessageOutputData {
         return text;
     }
 
-    public LocalDateTime getDatetime() {
+    public String getDatetime() {
         return datetime;
     }
 }

@@ -9,6 +9,7 @@ import use_case.add_contact.AddContactDataAccessInterface;
 import use_case.block_contact.BlockContactDataAccessInterface;
 import use_case.chat_list.ChatListDataAccessInterface;
 import use_case.create_chat.CreateChatDataAccessInterface;
+import use_case.create_chat.CreateChatUserDataAccessInterface;
 import use_case.friends_list.FriendsListDataAccessInterface;
 import use_case.login.LoginDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
@@ -21,7 +22,7 @@ import java.util.Map;
 
 public class UserDataAccessObject implements SignupUserDataAccessInterface,
         AddContactDataAccessInterface, LoginDataAccessInterface,
-        FriendsListDataAccessInterface, BlockContactDataAccessInterface {
+        FriendsListDataAccessInterface, BlockContactDataAccessInterface, CreateChatUserDataAccessInterface {
 
     private static final String USER_BIN_ID = "65642e610574da7622cc9825";
     private static final MediaType mediaType = MediaType.parse("application/json");
