@@ -60,5 +60,4 @@ public class AddContactInteractorTest {
     public void tearDown() {
         userDataAccessObject.blockFriend(currentUser.getName(), friend.getName());
     }
-
 }
