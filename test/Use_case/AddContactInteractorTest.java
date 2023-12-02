@@ -1,42 +1,63 @@
 package Use_case;
 
-import org.junit.Test;
+import data_access.ChatListDataAccessObject;
 import data_access.UserDataAccessObject;
+import entity.CommonChatFactory;
 import entity.CommonUserFactory;
+import entity.User;
+import interface_adapter.add_contact.AddContactViewModel;
+import interface_adapter.friends_list.FriendsListViewModel;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import use_case.add_contact.AddContactInputData;
 import use_case.add_contact.AddContactInteractor;
 import use_case.add_contact.AddContactOutputBoundary;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class AddContactInteractorTest {
-    @Test
-    public void successTest() {
-        CommonUserFactory commonUserFactory = new CommonUserFactory();
 
+    private UserDataAccessObject userDataAccessObject;
+    private ChatListDataAccessObject chatListDataAccessObject;
+    private FriendsListViewModel friendsListViewModel;
+    private AddContactViewModel addContactViewModel;
+    private User currentUser;
+    private User friend;
+    @BeforeEach
+    public void init() {
         String masterKey = "$2a$10$xfVheBzZjicxu..Dy7zLHeBNVrrPWZ/jEK/qfX7nTY.WKY/Tx9LM2";
-        UserDataAccessObject userDataAccessObject = new UserDataAccessObject(masterKey, commonUserFactory);
-
+        CommonUserFactory userFactory = new CommonUserFactory();
+        this.userDataAccessObject = new UserDataAccessObject(masterKey, userFactory);
+        CommonChatFactory commonChatFactory = new CommonChatFactory();
         userDataAccessObject.setCurrentUsername("admin");
+        this.currentUser = userDataAccessObject.get("admin");
+        this.friend = userDataAccessObject.get("admin3");
+    }
 
-        AddContactInputData addContactInputData = new AddContactInputData("admin3");
-
-        AddContactOutputBoundary addContactPresenter = new AddContactOutputBoundary() {
+    @Test
+    public void testAddContactInteractor() {
+        init();
+        AddContactOutputBoundary successPresenter = new AddContactOutputBoundary() {
             @Override
             public void prepareSuccessView() {
-                assertTrue(userDataAccessObject.get("admin").isFriendWith("admin3"));
-                assertTrue(userDataAccessObject.get("admin3").isFriendWith("admin"));
+                assert(currentUser.isFriendWith("admin3"));
+                assert(friend.isFriendWith("admin"));
             }
 
             @Override
             public void prepareFailView(String error) {
-                fail("Use case failure is unexpected. ");
+                fail("Use case failure is unexpected.");
             }
         };
-        AddContactInteractor addContactInteractor = new AddContactInteractor(addContactPresenter, userDataAccessObject);
+        AddContactInteractor addContactInteractor = new AddContactInteractor(successPresenter, userDataAccessObject);
+        AddContactInputData addContactInputData = new AddContactInputData("admin3");
         addContactInteractor.execute(addContactInputData);
-
-        userDataAccessObject.blockFriend("admin", "admin3");
+        tearDown();
+    }
+    @AfterEach
+    public void tearDown() {
+        userDataAccessObject.blockFriend(currentUser.getName(), friend.getName());
     }
 }

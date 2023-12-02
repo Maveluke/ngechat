@@ -1,5 +1,6 @@
 package entity;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class CommonChat implements Chat{
@@ -18,6 +19,9 @@ public class CommonChat implements Chat{
 
     @Override
     public Message getLastMessage() {
+        if(messages.isEmpty()){
+            return new CommonMessage("Start chatting with me!", LocalDateTime.now(), "system");
+        }
         return (Message) messages.get(messages.size() - 1).get(1);
     }
     @Override

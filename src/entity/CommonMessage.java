@@ -4,9 +4,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class CommonMessage implements Message{
+    /***
+     * This class represents a message.
+     */
     private final String message;
     private final LocalDateTime timeSent;
     private final String senderUsername;
+
     public CommonMessage(String message, LocalDateTime timeSent, String senderUsername){
         this.message = message;
         this.timeSent = timeSent;
