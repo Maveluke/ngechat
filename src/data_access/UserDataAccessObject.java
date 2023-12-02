@@ -67,16 +67,12 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
                     accounts.put(userJSON.getString("username"), user);
                 }
             }
-            System.out.println(this);
-            System.out.println();
             // Update each user's friends list
             for (int i = 0; i < usersList.length(); i++) {
                 JSONObject userJSON = usersList.getJSONObject(i);
                 User user = get(userJSON.getString("username"));
                 updateFriendsLocal(user, userJSON.getJSONArray("friends"));
             }
-            System.out.println(this);
-            System.out.println();
         }
     }
 
@@ -209,7 +205,6 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
             // Update remotely
             usersList.put(userToSave);
             updateRemoteUsers(usersList);
-            System.out.println(this);
         }catch (Exception e){
             System.out.println("Fail to get response when downloading users");
         }

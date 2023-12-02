@@ -194,7 +194,6 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
     }
 
     public Chat getChat(String friendName) {
-        System.out.println(this);
         return chatList.get(friendName);
     }
 
