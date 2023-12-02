@@ -50,9 +50,6 @@ public class Main {
         UserDataAccessObject userDataAccessObject;
         try{
             userDataAccessObject = new UserDataAccessObject(masterKey, userFactory);
-            // TODO: Delete later
-            userDataAccessObject.setCurrentUsername("admin");
-            //
         }catch (Exception e){
             System.out.println("The creation of User Data Access Object is unsuccessful with error: " + e.getMessage());
             throw new IOException();
@@ -96,10 +93,16 @@ public class Main {
                     chatListViewModel.getState().setUpdated(chatListDataAccessObject.updateChatWithBinID(friendUsername, binID));
                     chatListViewModel.getState().setChatList(chatListDataAccessObject.getChats());
                     chatListViewModel.firePropertyChanged();
+                    userDataAccessObject.updateLocalUsers();
+                    friendsListViewModel.getFriendsListState().setFriendsList(userDataAccessObject.getFriends());
+                    friendsListViewModel.firePropertyChanged();
                     InChatPrivateState inChatPrivateState = inChatPrivateViewModel.getState();
-                    inChatPrivateState.setMessages(chatListDataAccessObject.getChat(friendUsername).getMessages());
 
-                    inChatPrivateState.setFriendName(friendUsername);
+                    if (inChatPrivateState.getFriendName() != null){
+                        inChatPrivateState.setMessages(chatListDataAccessObject.getChat(inChatPrivateState.getFriendName()).getMessages());
+                    }
+
+//                    inChatPrivateState.setFriendName(friendUsername);
                     inChatPrivateState.setSender(userDataAccessObject.getCurrentUser().getName());
                     inChatPrivateViewModel.firePropertyChanged();
                 }

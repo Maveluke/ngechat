@@ -6,8 +6,6 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class AddContactViewModel extends ViewModel {
-
-    public final static String TITLE_LABEL = "Add Contact View";
     public final static String USERNAME_LABEL = "Enter your friend's username";
 
     public static final String ADD_BUTTON_LABEL = "Add";
