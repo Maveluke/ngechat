@@ -12,6 +12,4 @@ public interface SendMessageDataAccessInterface{
 
     String getBinID(String friendUsername);
 
-    String getBinID(String friendUsername);
-
 }

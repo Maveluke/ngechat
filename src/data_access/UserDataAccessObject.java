@@ -35,9 +35,6 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
     public UserDataAccessObject(String masterKey, UserFactory userFactory){
         this.masterKey = masterKey;
         this.userFactory = userFactory;
-        // Locally add user
-        User admin = userFactory.create("admin", "admin");
-        accounts.put("admin", admin);
         updateLocalUsers();
     }
     private JSONArray getUsersListRemote(){
@@ -58,7 +55,7 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
         }
         return null;
     }
-    private void updateLocalUsers(){
+    public void updateLocalUsers(){
         JSONArray usersList = getUsersListRemote();
         if (usersList != null){
             // Adding all users to local
