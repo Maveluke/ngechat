@@ -4,6 +4,8 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.friends_list.FriendsListViewModel;
 import use_case.block_contact.BlockContactOutputBoundary;
 
+import java.util.ArrayList;
+
 public class BlockContactPresenter implements BlockContactOutputBoundary {
 
     private final BlockContactViewModel blockContactViewModel;
@@ -18,8 +20,10 @@ public class BlockContactPresenter implements BlockContactOutputBoundary {
         this.blockContactViewModel = blockContactViewModel;
     }
     @Override
-    public void prepareSuccessView() {
-
+    public void prepareSuccessView(String friendUsername) {
+        ArrayList<String> friendsList = friendsListViewModel.getFriendsListState().getFriendsList();
+        friendsList.remove(friendUsername);
+        friendsListViewModel.firePropertyChanged();
     }
 
     @Override

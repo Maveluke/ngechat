@@ -1,5 +1,6 @@
 package use_case.create_chat;
 
+import data_access.UserDataAccessObject;
 import entity.Chat;
 import entity.CommonChatFactory;
 
@@ -8,15 +9,17 @@ import java.util.ArrayList;
 public class CreateChatInteractor implements CreateChatInputBoundary{
 
     private CreateChatDataAccessInterface createChatDataAccessObject;
+    private CreateChatUserDataAccessInterface userDataAccessObject;
     private CreateChatOutputBoundary createChatPresenter;
 
     private CommonChatFactory commonChatFactory;
 
 
-    public CreateChatInteractor(CreateChatDataAccessInterface createChatDataAccessObject, CreateChatOutputBoundary createChatPresenter, CommonChatFactory commonChatFactory) {
+    public CreateChatInteractor(CreateChatDataAccessInterface createChatDataAccessObject, CreateChatUserDataAccessInterface userDataAccessObject, CreateChatOutputBoundary createChatPresenter, CommonChatFactory commonChatFactory) {
         this.createChatDataAccessObject = createChatDataAccessObject;
         this.createChatPresenter = createChatPresenter;
         this.commonChatFactory = commonChatFactory;
+        this.userDataAccessObject = userDataAccessObject;
     }
 
     @Override
@@ -27,7 +30,7 @@ public class CreateChatInteractor implements CreateChatInputBoundary{
 
         if (createChatDataAccessObject.chatExist(userToChat)) {
 
-            CreateChatOutputData createChatOutputData = new CreateChatOutputData(userToChat);
+            CreateChatOutputData createChatOutputData = new CreateChatOutputData(userToChat, userDataAccessObject.getCurrentUser().getName());
 
             createChatPresenter.prepareSuccessView(createChatOutputData);
             // it will send the name of the friend we want to chat
@@ -38,7 +41,7 @@ public class CreateChatInteractor implements CreateChatInputBoundary{
             Chat newChat = commonChatFactory.create(newMessageInfo, createChatDataAccessObject.getBinID(userToChat));
             createChatDataAccessObject.addChat(userToChat, newChat);
 
-            CreateChatOutputData createChatOutputData = new CreateChatOutputData(userToChat);
+            CreateChatOutputData createChatOutputData = new CreateChatOutputData(userToChat, userDataAccessObject.getCurrentUser().getName());
 
             createChatPresenter.prepareSuccessView(createChatOutputData);
         }

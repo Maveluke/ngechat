@@ -1,18 +1,20 @@
-package interface_adapter.in_chat;
+package interface_adapter.send_message;
 
 import interface_adapter.ViewModel;
+import interface_adapter.in_chat.InChatPrivateState;
 
-import javax.swing.*;
+import javax.swing.text.View;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class InChatPrivateViewModel extends ViewModel {
+public class SendMessageViewModel extends ViewModel {
 
-    InChatPrivateState state = new InChatPrivateState();
+
+    SendMessageState state = new SendMessageState();
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
-    public InChatPrivateViewModel(){
-        super("in chat");
+    public SendMessageViewModel(){
+        super("send message");
     };
 
     @Override
@@ -25,11 +27,12 @@ public class InChatPrivateViewModel extends ViewModel {
         support.addPropertyChangeListener(listener);
     }
 
-    public InChatPrivateState getState() {
+    public SendMessageState getState() {
         return state;
     }
 
-    public void setState(InChatPrivateState newState) {
+    public void setState(SendMessageState newState) {
         this.state = newState;
     }
+
 }

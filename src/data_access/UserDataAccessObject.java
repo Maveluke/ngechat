@@ -9,6 +9,7 @@ import use_case.add_contact.AddContactDataAccessInterface;
 import use_case.block_contact.BlockContactDataAccessInterface;
 import use_case.chat_list.ChatListDataAccessInterface;
 import use_case.create_chat.CreateChatDataAccessInterface;
+import use_case.create_chat.CreateChatUserDataAccessInterface;
 import use_case.friends_list.FriendsListDataAccessInterface;
 import use_case.login.LoginDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
@@ -21,7 +22,7 @@ import java.util.Map;
 
 public class UserDataAccessObject implements SignupUserDataAccessInterface,
         AddContactDataAccessInterface, LoginDataAccessInterface,
-        FriendsListDataAccessInterface, BlockContactDataAccessInterface {
+        FriendsListDataAccessInterface, BlockContactDataAccessInterface, CreateChatUserDataAccessInterface {
 
     private static final String USER_BIN_ID = "65642e610574da7622cc9825";
     private static final MediaType mediaType = MediaType.parse("application/json");
@@ -34,6 +35,7 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
     public UserDataAccessObject(String masterKey, UserFactory userFactory){
         this.masterKey = masterKey;
         this.userFactory = userFactory;
+        // Locally add user
         User admin = userFactory.create("admin", "admin");
         accounts.put("admin", admin);
         updateLocalUsers();
@@ -49,8 +51,8 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
                     .build();
 
             Response response = client.newCall(request).execute();
-//            String tempString = response.body().string();
-            return new JSONObject(response.body().string()).getJSONArray("users");
+            String tempString = response.body().string();
+            return new JSONObject(tempString).getJSONArray("users");
         }catch (IOException e){
             System.out.println("Fail to download users from API! with the error" + e);
         }
@@ -67,15 +69,17 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
                     User user = userFactory.create(userJSON.getString("username"), userJSON.getString("password"));
                     accounts.put(userJSON.getString("username"), user);
                 }
-                System.out.println(this);
-                System.out.println();
             }
+            System.out.println(this);
+            System.out.println();
             // Update each user's friends list
             for (int i = 0; i < usersList.length(); i++) {
                 JSONObject userJSON = usersList.getJSONObject(i);
                 User user = get(userJSON.getString("username"));
                 updateFriendsLocal(user, userJSON.getJSONArray("friends"));
             }
+            System.out.println(this);
+            System.out.println();
         }
     }
 
@@ -159,8 +163,8 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
 
     // Create a new bin for user and friend to chat
     private String createBinID(){
-        JSONArray messagesInfoJSON = new JSONArray();
-        messagesInfoJSON.put(new JSONObject());
+        JSONObject messagesInfoJSON = new JSONObject();
+        messagesInfoJSON.put("messages", new JSONArray());
         RequestBody body = RequestBody.create(messagesInfoJSON.toString(), mediaType);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -302,10 +306,13 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
     }
 
     @Override
-    public HashMap<String, String> getFriends(){
-        // TODO : Implement this
-
-        return null;
+    public ArrayList<String> getFriends(){
+        ArrayList<String> ret = new ArrayList<>();
+        for (User friend:
+        accounts.get(currentUsername).getFriendToBinMap().keySet()) {
+            ret.add(friend.getName());
+        }
+        return ret;
     }
 
     @Override

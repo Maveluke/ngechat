@@ -17,6 +17,7 @@ public class ChatListPresenter implements ChatListOutputBoundary {
     @Override
     public void prepareSuccessView(ChatListOutputData chatListOutputData) {
         ChatListState currentState = chatlistViewModel.getState();
+        currentState.setUpdated(chatListOutputData.isUpdated());
         currentState.setChatList(chatListOutputData.getChatList());
         chatlistViewModel.firePropertyChanged();
         viewManagerModel.setActiveView(chatlistViewModel.getViewName());

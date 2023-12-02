@@ -20,17 +20,14 @@ public class ChatListInteractor implements ChatListInputBoundary{
 
     @Override
     public void execute() {
-        if (chatListDataAccessObject.chatIsEmpty()) {
-            chatListPresenter.prepareFailView("No chat available");
-        } else {
-            HashMap<User, String> userFriendTobinID = userDataAccessObject.getCurrentUser().getFriendToBinMap();
-            for (User friendUser :
-                    userFriendTobinID.keySet()) {
-                chatListDataAccessObject.updateChatWithBinID(friendUser.getName(), userFriendTobinID.get(friendUser));
-            }
-            HashMap<String, ArrayList<String>> chatList = chatListDataAccessObject.getChats();
-            ChatListOutputData chatListOutputData = new ChatListOutputData(chatList);
-            chatListPresenter.prepareSuccessView(chatListOutputData);
+        HashMap<User, String> userFriendTobinID = userDataAccessObject.getCurrentUser().getFriendToBinMap();
+        boolean updated = false;
+        for (User friendUser :
+                userFriendTobinID.keySet()) {
+            updated = chatListDataAccessObject.updateChatWithBinID(friendUser.getName(), userFriendTobinID.get(friendUser));
         }
+        HashMap<String, ArrayList<String>> chatList = chatListDataAccessObject.getChats();
+        ChatListOutputData chatListOutputData = new ChatListOutputData(chatList, updated);
+        chatListPresenter.prepareSuccessView(chatListOutputData);
     }
 }

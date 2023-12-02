@@ -9,6 +9,7 @@ import use_case.create_chat.CreateChatDataAccessInterface;
 import use_case.in_chat.InChatDataAccessInterface;
 import use_case.send_message.SendMessageDataAccessInterface;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
@@ -20,7 +21,7 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
 
     private static final MediaType mediaType = MediaType.parse("application/json");
     private final String masterKey;
-    private HashMap<String, String> friendTobinID; // friend username to binId
+    private HashMap<String, String> friendTobinID = new HashMap<>(); // friend username to binId
     private HashMap<String, Chat> chatList = new HashMap<>(); // Friend username to Chat
     private CommonChatFactory chatFactory;
     private static final String API_URL = "https://api.jsonbin.io/v3/b";
@@ -37,7 +38,8 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
 
             ArrayList<Object> senderToMessage = new ArrayList<>();
 
-            LocalDateTime timeSent = LocalDateTime.parse(singleMessageInfo.getString("timeSent"));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime timeSent = LocalDateTime.parse(singleMessageInfo.getString("timeSent"), formatter);
             Message tempMessage = new CommonMessage(singleMessageInfo.getString("message"), timeSent, singleMessageInfo.getString("sender"));
 
             senderToMessage.add(singleMessageInfo.getString("sender"));
@@ -61,7 +63,10 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
                     .build();
 
             Response response = client.newCall(request).execute();
-            JSONObject responseJSON = new JSONObject(response.body().string());
+
+            String tempString = response.body().string();
+            JSONObject responseJSON = new JSONObject(tempString);
+
             return responseJSON.getJSONArray("messages");
         } catch (IOException e){
             System.out.println("Fail to download chat from API! with the error: " + e);
@@ -70,19 +75,19 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
     }
 
     @Override
-    public Message createMessage() {
-        return null;
+    public Message createMessage(String text, String sender) {
+        return new CommonMessage(text, LocalDateTime.now(), sender);
     }
 
     @Override
-    public void sendMessage(Message message, String binID){
+    public void sendMessage(Message message, String binID, String friendName){
         String contentMessage = message.getMessage();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy, hh:mm:ss:SS");
-        String timeSent = message.getTimeSent().format(formatter);
+        String timeSent = message.getTimeSent();
         String sender = message.getSender();
 
         // Update Chat locally
-        // TODO: Implement after inChatPrivate is implemented
+        Chat localChat = chatList.get(friendName);
+        localChat.addMessage(sender, message);
         // Update Chat remotely
          JSONObject singleMessageInfo = new JSONObject();
          singleMessageInfo.put("sender", sender);
@@ -112,10 +117,21 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
         }
     }
     @Override
-    public void updateChatWithBinID(String friendUsername, String binID) {
+    public boolean updateChatWithBinID(String friendUsername, String binID) {
         this.friendTobinID.put(friendUsername, binID);
-        Chat existingChat = getChatRemote(binID);
-        if (existingChat != null) chatList.put(friendUsername, existingChat);
+        Chat existingChatRemote = getChatRemote(binID);
+        if (existingChatRemote != null) {
+            if(!chatExist(friendUsername)){
+                chatList.put(friendUsername, existingChatRemote);
+                return false;
+            }
+            if(existingChatRemote.getMessages().size() > chatList.get(friendUsername).getMessages().size()){
+                chatList.put(friendUsername, existingChatRemote);
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 
     @Override
@@ -178,6 +194,7 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
     }
 
     public Chat getChat(String friendName) {
+        System.out.println(this);
         return chatList.get(friendName);
     }
 

@@ -20,8 +20,8 @@ public class CommonChat implements Chat{
     public Message getLastMessage() {
         return (Message) messages.get(messages.size() - 1).get(1);
     }
-
-    public void addMessage(String senderUsername, CommonMessage commonMessage){
+    @Override
+    public void addMessage(String senderUsername, Message commonMessage){
         ArrayList<Object> newMessage = new ArrayList<>();
         newMessage.add(senderUsername);
         newMessage.add(commonMessage);
@@ -42,14 +42,14 @@ public class CommonChat implements Chat{
             ArrayList<Object> inner_inner_array = new ArrayList<>();
 
             // inserting all the attributes of message to the inner_inner_array
-            inner_inner_array.set(0, message.getMessage());
-            inner_inner_array.set(1, message.getTimeSent());
-            inner_inner_array.set(2, message.getSender());
+            inner_inner_array.add(message.getMessage());
+            inner_inner_array.add(message.getTimeSent());
+            inner_inner_array.add(message.getSender());
 
-            inner_array.set(0, sender);
-            inner_array.set(1, inner_inner_array);
+            inner_array.add(sender);
+            inner_array.add(inner_inner_array);
 
-            new_array.set(i, inner_array);
+            new_array.add(inner_array);
         }
 
         return new_array;
@@ -61,8 +61,8 @@ public class CommonChat implements Chat{
         String ret = "";
         for (ArrayList<Object> pair :
                 messages) {
-            ret += String.format("%s : %s", pair.get(0));
-            ret += String.format("%s : %s", pair.get(1));
+            ret += String.format("sender : %s\n", pair.get(0));
+            ret += String.format("message : %s\n", pair.get(1));
         }
         return ret;
     }
