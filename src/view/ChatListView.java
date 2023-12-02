@@ -3,6 +3,8 @@ package view;
 import interface_adapter.chat_list.ChatListController;
 import interface_adapter.chat_list.ChatListViewModel;
 import interface_adapter.friends_list.FriendsListController;
+import interface_adapter.in_chat.InChatPrivateController;
+import interface_adapter.in_chat.InChatPrivateViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,15 +23,28 @@ public class ChatListView extends JPanel implements ActionListener, PropertyChan
     private final ChatListController chatListController;
     private final ChatListViewModel chatListViewModel;
     private final FriendsListController friendsListController;
-    public ChatListView(ChatListController controller, ChatListViewModel chatlistViewModel, FriendsListController friendsListController){
+
+    private final InChatPrivateController inChatPrivateController;
+
+    private final InChatPrivateViewModel inChatPrivateViewModel;
+
+    public ChatListView(ChatListController controller, ChatListViewModel chatlistViewModel, FriendsListController friendsListController
+            ,InChatPrivateController inChatPrivateController, InChatPrivateViewModel inChatPrivateViewModel){
 
         this.chatListController = controller;
         this.chatListViewModel = chatlistViewModel;
         this.friendsListController = friendsListController;
+        this.inChatPrivateController = inChatPrivateController;
+        this.inChatPrivateViewModel = inChatPrivateViewModel;
+
+
+
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JPanel header = new JPanel();
+        header.setBackground(Color.gray);
         header.setLayout(new BorderLayout());
-
+        header.setMaximumSize(new Dimension(Integer.MAX_VALUE, 70));
+        this.chatListViewModel.addPropertyChangeListener(this);
         ImageIcon profpic = new ImageIcon("src/View/Photos/GenericPP.jpg");
 //      TODO: change profpic filename to the actual profpic file name
         Image image = profpic.getImage();
@@ -101,7 +116,7 @@ public class ChatListView extends JPanel implements ActionListener, PropertyChan
             }
         });
         buttons.add(addicon, BorderLayout.EAST);
-
+        buttons.setBackground(Color.gray);
         ImageIcon delete = new ImageIcon("src/view/Photos/Delete.png");
         Image _delete = delete.getImage();
         Image newdelete = _delete.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
@@ -144,6 +159,7 @@ public class ChatListView extends JPanel implements ActionListener, PropertyChan
             JPanel chatpanel = new JPanel();
             chatpanel.setLayout(new BoxLayout(chatpanel, BoxLayout.Y_AXIS));
 
+            chatpanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
             ImageIcon pic = new ImageIcon("src/View/Photos/GenericPP2.jpg");
 //          TODO: change profpic filename to the actual profpic file name
             Image _image = pic.getImage();
@@ -171,12 +187,12 @@ public class ChatListView extends JPanel implements ActionListener, PropertyChan
             chatpanel.addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-//              TODO: go to inchat
+
                 }
 
                 @Override
                 public void mousePressed(MouseEvent e) {
-
+                    inChatPrivateController.execute(person, chatListViewModel.getState().getUsername());
                 }
 
                 @Override
@@ -235,6 +251,74 @@ public class ChatListView extends JPanel implements ActionListener, PropertyChan
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // TODO
+        HashMap<String, ArrayList<String>> chatlist = chatListViewModel.getState().getChatList();
+        if(chatListViewModel.getState().isUpdated()) JOptionPane.showMessageDialog(this, "You have new messages");
+        for (Component component:
+             this.getComponents()) {
+            if(component.getName() != null && component.getName().equals("Chat Panel")){
+                this.remove(component);
+            }
+        }
+        for (String person: chatlist.keySet()) {
+            JPanel chatpanel = new JPanel();
+            chatpanel.setName("Chat Panel");
+            chatpanel.setBackground(Color.GRAY);
+            chatpanel.setLayout(new BoxLayout(chatpanel, BoxLayout.X_AXIS));
+
+            ImageIcon pic = new ImageIcon("src/View/Photos/GenericPP2.jpg");
+//          TODO: change profpic filename to the actual profpic file name
+            Image _image = pic.getImage();
+            Image _newimg = _image.getScaledInstance(50, 50,  java.awt.Image.SCALE_SMOOTH);
+            pic = new ImageIcon(_newimg);
+            JLabel _pic = new JLabel(pic);
+            chatpanel.add(_pic);
+
+            JPanel _chatpanel = new JPanel();
+            _chatpanel.setLayout(new BoxLayout(_chatpanel, BoxLayout.Y_AXIS));
+
+            JLabel name = new JLabel(person);
+            name.setAlignmentX(Component.LEFT_ALIGNMENT);
+            _chatpanel.add(name);
+
+            JLabel message = new JLabel(chatlist.get(person).get(2) + ": " +
+                    chatlist.get(person).get(0) + " (" +
+                    chatlist.get(person).get(1) + ")");
+            message.setAlignmentX(Component.LEFT_ALIGNMENT);
+            _chatpanel.add(message);
+
+            chatpanel.add(_chatpanel);
+            this.add(chatpanel);
+
+            chatpanel.addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    inChatPrivateController.execute(person, chatListViewModel.getState().getUsername());
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+
+                }
+            });
+            chatpanel.revalidate();
+            chatpanel.repaint();
+            this.revalidate();
+            this.repaint();
+        }
     }
 }

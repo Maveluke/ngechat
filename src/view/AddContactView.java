@@ -25,7 +25,9 @@ public class AddContactView extends JPanel implements ActionListener, PropertyCh
     private final JLabel usernameErrorField = new JLabel();
 
     final JButton add;
+    final JButton cancel;
     private final AddContactController addContactController;
+
     public AddContactView(AddContactViewModel addContactViewModel, FriendsListController friendsListController, AddContactController addContactController){
         this.addContactViewModel = addContactViewModel;
         this.friendsListController = friendsListController;
@@ -37,23 +39,36 @@ public class AddContactView extends JPanel implements ActionListener, PropertyCh
 
         LabelTextPanel usernameInfo = new LabelTextPanel(
                 new JLabel(AddContactViewModel.USERNAME_LABEL), usernameInputField);
-
+        usernameInfo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
         JPanel buttons = new JPanel();
+        buttons.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
         add = new JButton(AddContactViewModel.ADD_BUTTON_LABEL);
+        cancel = new JButton(AddContactViewModel.CANCEL_BUTTON_LABEL);
+
         buttons.add(add);
+        buttons.add(cancel);
 
         add.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(add)) {
-                            interface_adapter.add_contact.AddContactState currentState = addContactViewModel.getState();
+                            AddContactState currentState = addContactViewModel.getState();
 
                             addContactController.execute(
                                     currentState.getUsername()
                             );
-                            friendsListController.execute();
+                            currentState = addContactViewModel.getState();
+                            if (currentState.getUsernameError() == null) friendsListController.execute();
                         }
+                    }
+                }
+        );
+        cancel.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        friendsListController.execute();
                     }
                 }
         );
@@ -62,7 +77,7 @@ public class AddContactView extends JPanel implements ActionListener, PropertyCh
                 new KeyListener() {
                     @Override
                     public void keyTyped(KeyEvent e) {
-                        interface_adapter.add_contact.AddContactState currentState = addContactViewModel.getState();
+                        AddContactState currentState = addContactViewModel.getState();
                         currentState.setUsername(usernameInputField.getText() + e.getKeyChar());
                         addContactViewModel.setState(currentState);
                     }
@@ -78,10 +93,11 @@ public class AddContactView extends JPanel implements ActionListener, PropertyCh
                     }
                 }
         );
+
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
         this.add(usernameInfo);
-        this.add(add);
+        this.add(buttons);
     }
 
     @Override

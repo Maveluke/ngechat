@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.chat_list.ChatListController;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
@@ -26,11 +27,13 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
 
     final JButton logIn;
     private final LoginController loginController;
+    private final ChatListController chatListController;
 
-    public LoginView(LoginViewModel loginViewModel, LoginController controller) {
+    public LoginView(LoginViewModel loginViewModel, LoginController controller, ChatListController chatListController) {
 
         this.loginController = controller;
         this.loginViewModel = loginViewModel;
+        this.chatListController = chatListController;
         this.loginViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel("Login Screen");
@@ -55,6 +58,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                                     currentState.getUsername(),
                                     currentState.getPassword()
                             );
+                            if(currentState.getUsernameError() == null) chatListController.execute();
                         }
                     }
                 }
