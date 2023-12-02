@@ -35,9 +35,6 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
     public UserDataAccessObject(String masterKey, UserFactory userFactory){
         this.masterKey = masterKey;
         this.userFactory = userFactory;
-        // Locally add user
-        User admin = userFactory.create("admin", "admin");
-        accounts.put("admin", admin);
         updateLocalUsers();
     }
     private JSONArray getUsersListRemote(){
@@ -58,7 +55,7 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
         }
         return null;
     }
-    private void updateLocalUsers(){
+    public void updateLocalUsers(){
         JSONArray usersList = getUsersListRemote();
         if (usersList != null){
             // Adding all users to local
@@ -70,16 +67,12 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
                     accounts.put(userJSON.getString("username"), user);
                 }
             }
-            System.out.println(this);
-            System.out.println();
             // Update each user's friends list
             for (int i = 0; i < usersList.length(); i++) {
                 JSONObject userJSON = usersList.getJSONObject(i);
                 User user = get(userJSON.getString("username"));
                 updateFriendsLocal(user, userJSON.getJSONArray("friends"));
             }
-            System.out.println(this);
-            System.out.println();
         }
     }
 
@@ -212,7 +205,6 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
             // Update remotely
             usersList.put(userToSave);
             updateRemoteUsers(usersList);
-            System.out.println(this);
         }catch (Exception e){
             System.out.println("Fail to get response when downloading users");
         }
