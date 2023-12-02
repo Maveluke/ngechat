@@ -6,7 +6,7 @@ public interface Message {
 
     public String getMessage();
 
-    public LocalDateTime getTimeSent();
+    public String getTimeSent();
 
     public String getSender();
 

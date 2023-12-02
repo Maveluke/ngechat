@@ -28,8 +28,9 @@ public class InChatInteractor implements InChatInputBoundary {
 
         String friendName = inChatInputData.getFriendName();
         ArrayList<ArrayList<Object>> messages = inChatDataAccessObject.getChat(friendName).getMessages();
+        String username = inChatInputData.getUsername();
 
-        InchatOutputData inchatOutputData = new InchatOutputData(messages);
+        InchatOutputData inchatOutputData = new InchatOutputData(messages, friendName, username);
 
         inChatPresenter.prepareSuccessView(inchatOutputData);
 

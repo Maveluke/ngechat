@@ -2,27 +2,29 @@ package use_case.send_message;
 
 public class SendMessageInputData {
 
+    private String messageText;
+
+    private String sender;
+
     private String friendName;
 
-    private String username;
 
-    private String binID;
-
-    public SendMessageInputData(String friendName, String username, String binID) {
+    public SendMessageInputData(String messageText, String sender, String friendName) {
+        this.messageText = messageText;
+        this.sender = sender;
         this.friendName = friendName;
-        this.username = username;
-        this.binID = binID;
     }
 
-    public String getBinID() {
-        return binID;
+
+    public String getMessageText() {
+        return messageText;
+    }
+
+    public String getSender() {
+        return sender;
     }
 
     public String getFriendName() {
         return friendName;
-    }
-
-    public String getUsername() {
-        return username;
     }
 }

@@ -11,4 +11,6 @@ public interface Chat {
     Message getLastMessage();
 
     ArrayList<ArrayList<Object>> getMessages();
+
+    void addMessage(String senderUsername, Message commonMessage);
 }

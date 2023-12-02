@@ -15,8 +15,8 @@ public class InChatPrivateController {
 
     }
 
-    public void execute(String friendName) {
-        InChatInputData inChatInputData = new InChatInputData(friendName);
+    public void execute(String friendName, String username) {
+        InChatInputData inChatInputData = new InChatInputData(friendName, username);
 
         inChatInteractor.execute(inChatInputData);
 
