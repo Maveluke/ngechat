@@ -6,7 +6,9 @@ import entity.Message;
 import java.time.LocalDateTime;
 
 public class SendMessageInteractor implements SendMessageInputBoundary {
-
+    /**
+     * This class is used to send a message to a friend
+     */
     private final SendMessageDataAccessInterface sendMessageDataAccessObject;
 
     private final SendMessageOutputBoundary sendMessagePresenter;
@@ -20,7 +22,6 @@ public class SendMessageInteractor implements SendMessageInputBoundary {
 
     // we need Bin ID as part of the input data to call the s
     public void execute(SendMessageInputData sendMessageInputData) {
-
 
         String messageText = sendMessageInputData.getMessageText();
         String sender = sendMessageInputData.getSender();

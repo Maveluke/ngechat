@@ -5,7 +5,9 @@ import entity.User;
 import java.util.Objects;
 
 public class LoginInteractor implements LoginInputBoundary {
-
+    /**
+     * This class is used to log in
+     */
     private final LoginDataAccessInterface userDataAccessObject;
     private final LoginOutputBoundary loginPresenter;
 
@@ -16,6 +18,9 @@ public class LoginInteractor implements LoginInputBoundary {
     }
 
     public void execute(LoginInputData logInInputData) {
+        /**
+         * This method is used to log in
+         */
 
         String username = logInInputData.getUsername();
         String password = logInInputData.getPassword();

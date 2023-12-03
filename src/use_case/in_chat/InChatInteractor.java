@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class InChatInteractor implements InChatInputBoundary {
-
+    /**
+     * This class is used to get the chat of the current user's friend
+     */
     private InChatDataAccessInterface inChatDataAccessObject;
     private ChatListDataAccessInterface chatListDataAccessObject;
     private InchatOutputBoundary inChatPresenter;
@@ -24,7 +26,9 @@ public class InChatInteractor implements InChatInputBoundary {
 
     @Override
     public void execute(InChatInputData inChatInputData) {
-
+        /**
+         * This method is used to get the chat of the current user's friend
+         */
 
         String friendName = inChatInputData.getFriendName();
         ArrayList<ArrayList<Object>> messages = inChatDataAccessObject.getChat(friendName).getMessages();

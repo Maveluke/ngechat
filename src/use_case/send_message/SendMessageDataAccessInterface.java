@@ -6,9 +6,9 @@ import entity.Message;
 public interface SendMessageDataAccessInterface{
 
 
-    public Message createMessage(String text, String sender);
+    Message createMessage(String text, String sender);
 
-    public void sendMessage(Message message, String bindID, String friendName);
+    void sendMessage(Message message, String bindID, String friendName);
 
     String getBinID(String friendUsername);
 

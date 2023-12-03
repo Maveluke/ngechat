@@ -7,7 +7,9 @@ import entity.CommonChatFactory;
 import java.util.ArrayList;
 
 public class CreateChatInteractor implements CreateChatInputBoundary{
-
+    /**
+     * This class is used to create a new chat with a friend
+     */
     private CreateChatDataAccessInterface createChatDataAccessObject;
     private CreateChatUserDataAccessInterface userDataAccessObject;
     private CreateChatOutputBoundary createChatPresenter;
@@ -24,7 +26,9 @@ public class CreateChatInteractor implements CreateChatInputBoundary{
 
     @Override
     public void execute(CreateChatInputData createChatInputData) {
-            //implement the case where the chat already exists
+        /**
+         * This method is used to create a new chat with a friend
+         */
 
         String userToChat = createChatInputData.getUsername();
 

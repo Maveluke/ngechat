@@ -253,6 +253,7 @@ public class ChatListView extends JPanel implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         HashMap<String, ArrayList<String>> chatlist = chatListViewModel.getState().getChatList();
         // change the username in the first component in this.mainComponents
+        if(chatListViewModel.getState().isUpdated()) JOptionPane.showMessageDialog(this, "You have new messages");
         ((JLabel) this.mainComponents.get(0)).setText(chatListViewModel.getState().getUsername());
         for (String person : chatlist.keySet()) {
             // check and find the panel with the same name as person
