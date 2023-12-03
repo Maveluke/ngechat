@@ -31,7 +31,7 @@ public class AddContactTest {
         CommonChatFactory commonChatFactory = new CommonChatFactory();
         userDataAccessObject.setCurrentUsername("admin");
         this.currentUser = userDataAccessObject.get("admin");
-        this.friend = userDataAccessObject.get("admin3");
+        this.friend = userDataAccessObject.get("chris");
     }
 
     @Test
@@ -40,7 +40,7 @@ public class AddContactTest {
         AddContactOutputBoundary successPresenter = new AddContactOutputBoundary() {
             @Override
             public void prepareSuccessView() {
-                assert(currentUser.isFriendWith("admin3"));
+                assert(currentUser.isFriendWith("chris"));
                 assert(friend.isFriendWith("admin"));
             }
 
@@ -50,7 +50,7 @@ public class AddContactTest {
             }
         };
         AddContactInteractor addContactInteractor = new AddContactInteractor(successPresenter, userDataAccessObject);
-        AddContactInputData addContactInputData = new AddContactInputData("admin3");
+        AddContactInputData addContactInputData = new AddContactInputData("chris");
         addContactInteractor.execute(addContactInputData);
         tearDown();
     }

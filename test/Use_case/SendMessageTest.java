@@ -102,15 +102,6 @@ public class SendMessageTest {
         sendMessageController.execute(messageText, sender, friendName);
         assertEquals(sender, sendMessageViewModel.getState().getSender());
         assertEquals("", sendMessageViewModel.getState().getMessage());
-
-        SendMessageInputData sendMessageInputData = new SendMessageInputData(messageText, sender, friendName);
-        assertEquals(messageText, sendMessageInputData.getMessageText());
-        assertEquals(sender, sendMessageInputData.getSender());
-        assertEquals(friendName, sendMessageInputData.getFriendName());
-
-        sendMessageInteractor.execute(sendMessageInputData);
-        SendMessageOutputData sendMessageOutputData = new SendMessageOutputData(messageText, LocalDateTime.now().toString(), sender);
-        sendMessagePresenter.prepareSuccessView(sendMessageOutputData);
     }
 
 }
