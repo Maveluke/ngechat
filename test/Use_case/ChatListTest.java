@@ -1,5 +1,6 @@
 package Use_case;
 
+import app.ChatListUseCaseFactory;
 import data_access.ChatListDataAccessObject;
 import data_access.UserDataAccessObject;
 import entity.CommonChatFactory;
@@ -20,6 +21,7 @@ import org.junit.Test;
 import use_case.chat_list.ChatListInputBoundary;
 import use_case.chat_list.ChatListInteractor;
 import use_case.chat_list.ChatListOutputBoundary;
+import view.ChatListView;
 import view.ViewManager;
 
 import javax.swing.*;
@@ -69,6 +71,8 @@ public class ChatListTest {
             System.out.println("The creation of ChatListDAO is unsuccessful");
             throw new IOException();
         }
+        ChatListView chatListView = ChatListUseCaseFactory.create(viewManagerModel, chatListViewModel, friendsListViewModel, inChatPrivateViewModel, chatListDataAccessObject, userDataAccessObject);
+        views.add(chatListView, chatListView.viewName);
         userDataAccessObject.setCurrentUsername("admin");
         ChatListOutputBoundary chatListPresenter = new ChatListPresenter(chatListViewModel, viewManagerModel);
         ChatListInputBoundary chatListInteractor = new ChatListInteractor(userDataAccessObject, chatListDataAccessObject, chatListPresenter);

@@ -1,7 +1,6 @@
 package use_case.friends_list;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class FriendsListOutputData {
 
@@ -17,9 +16,4 @@ public class FriendsListOutputData {
     public ArrayList<String> getFriends() {
         return friendsList;
     }
-
-    public String getCurrentUserName(){
-        return currentUserName;
-    }
-
 }

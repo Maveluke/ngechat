@@ -17,8 +17,4 @@ public class CreateChatOutputData {
     public String getSender() {
         return sender;
     }
-
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
 }

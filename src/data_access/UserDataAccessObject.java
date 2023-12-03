@@ -307,24 +307,24 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
         return ret;
     }
 
-    @Override
-    public String toString(){
-        String ret = "";
-        if (this.currentUsername != null) ret += this.currentUsername;
-        else ret += "null";
-        ret += "\n";
-
-        for (String username :
-                accounts.keySet()) {
-            ret += String.format("username: %s\n", username);
-            User currentUser = accounts.get(username);
-            ret += String.format("password: %s\n", currentUser.getPassword());
-            ret += "friends: \n";
-            for (User friend:
-                 currentUser.getFriendToBinMap().keySet()) {
-                ret += String.format("- %s\n", friend.getName());
-            }
-        }
-        return ret;
-    }
+//    @Override
+//    public String toString(){
+//        String ret = "";
+//        if (this.currentUsername != null) ret += this.currentUsername;
+//        else ret += "null";
+//        ret += "\n";
+//
+//        for (String username :
+//                accounts.keySet()) {
+//            ret += String.format("username: %s\n", username);
+//            User currentUser = accounts.get(username);
+//            ret += String.format("password: %s\n", currentUser.getPassword());
+//            ret += "friends: \n";
+//            for (User friend:
+//                 currentUser.getFriendToBinMap().keySet()) {
+//                ret += String.format("- %s\n", friend.getName());
+//            }
+//        }
+//        return ret;
+//    }
 }

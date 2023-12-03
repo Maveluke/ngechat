@@ -1,11 +1,8 @@
 package interface_adapter.add_contact;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.friends_list.FriendsListState;
 import interface_adapter.friends_list.FriendsListViewModel;
 import use_case.add_contact.AddContactOutputBoundary;
-import use_case.add_contact.AddContactOutputData;
-import use_case.login.LoginOutputData;
 
 public class AddContactPresenter implements AddContactOutputBoundary {
 
