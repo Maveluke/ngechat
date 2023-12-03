@@ -6,6 +6,9 @@ import entity.UserFactory;
 import java.time.LocalDateTime;
 
 public class SignupInteractor implements SignupInputBoundary {
+    /**
+     * This class is used to sign up
+     */
     final SignupUserDataAccessInterface userDataAccessObject;
     final SignupOutputBoundary userPresenter;
     final UserFactory userFactory;
@@ -20,6 +23,10 @@ public class SignupInteractor implements SignupInputBoundary {
 
     @Override
     public void execute(SignupInputData signupInputData) {
+        /**
+         * This method is used to sign up
+         * @param signupInputData: the input data for signing up
+         */
         if (userDataAccessObject.existsByName(signupInputData.getUsername())) {
             userPresenter.prepareFailView("User already exists.");
         }

@@ -79,7 +79,7 @@ public class Main {
         InChatPrivateView inChatPrivateView = InChatUseCaseFactory.create(viewManagerModel, inChatPrivateViewModel, sendMessageViewModel, chatListViewModel, chatListDataAccessObject, userDataAccessObject);
         views.add(inChatPrivateView, inChatPrivateView.viewName);
 
-        viewManagerModel.setActiveView(loginView.viewName);
+        viewManagerModel.setActiveView(signupView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();

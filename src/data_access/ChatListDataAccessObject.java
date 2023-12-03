@@ -17,7 +17,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ChatListDataAccessObject implements ChatListDataAccessInterface, CreateChatDataAccessInterface, InChatDataAccessInterface, SendMessageDataAccessInterface {
-
+    /**
+     * This class is used to get and update the chat list of the current user
+     */
     private static final MediaType mediaType = MediaType.parse("application/json");
     private final String masterKey;
     private HashMap<String, String> friendTobinID = new HashMap<>(); // friend username to binId
@@ -29,6 +31,7 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
         this.chatFactory = chatFactory;
     }
     private Chat getChatRemote(String binID){
+        // Get the chat from the API
         JSONArray messages = getChatJSONRemotely(binID);
         ArrayList<ArrayList<Object>> messagesInfo = new ArrayList<>();
 
@@ -75,11 +78,17 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
 
     @Override
     public Message createMessage(String text, String sender) {
+        /**
+         * This method is used to create a message
+         */
         return new CommonMessage(text, LocalDateTime.now(), sender);
     }
 
     @Override
     public void sendMessage(Message message, String binID, String friendName){
+        /**
+         * This method is used to send a message to a friend
+         */
         String contentMessage = message.getMessage();
         String timeSent = message.getTimeSent();
         String sender = message.getSender();
@@ -98,6 +107,7 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
         updateChatRemote(retrievedMessages, binID);
     }
     private void updateChatRemote(JSONArray messages, String binID){
+        // Update the chat remotely
         JSONObject body = new JSONObject();
         body.put("messages", messages);
         RequestBody updateBody = RequestBody.create(body.toString(), mediaType);
@@ -117,6 +127,9 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
     }
     @Override
     public boolean updateChatWithBinID(String friendUsername, String binID) {
+        /**
+         * This method is used to update the chat list of the current user
+         */
         this.friendTobinID.put(friendUsername, binID);
         Chat existingChatRemote = getChatRemote(binID);
         if (existingChatRemote != null) {
@@ -135,6 +148,9 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
 
     @Override
     public HashMap<String, ArrayList<String>> getChats() { // Friend username to an array consists of last message, timeSent, sender, in the same order.
+        /**
+         * This method is used to get the chat list of the current user
+         */
         HashMap<String, ArrayList<String>> ret = new HashMap<>();
         for (String friendUsername :
                 chatList.keySet()) {

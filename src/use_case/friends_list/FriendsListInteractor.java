@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class FriendsListInteractor implements FriendsListInputBoundary {
-
+    /**
+     * This class is used to get the friends list of the current user
+     */
     private FriendsListDataAccessInterface friendsListDataAccessObject;
     private FriendsListOutputBoundary friendsListPresenter;
 
@@ -18,13 +20,15 @@ public class FriendsListInteractor implements FriendsListInputBoundary {
 
     @Override
     public void execute() {
+        /**
+         * This method is used to get the friends list of the current user
+         */
+        User currentUser = friendsListDataAccessObject.getCurrentUser();
+        String currentUserName = currentUser.getName();
+        ArrayList<String> friendsList = friendsListDataAccessObject.getFriends();
 
-            User currentUser = friendsListDataAccessObject.getCurrentUser();
-            String currentUserName = currentUser.getName();
-            ArrayList<String> friendsList = friendsListDataAccessObject.getFriends();
-
-            FriendsListOutputData friendsListOutputData = new FriendsListOutputData(friendsList, currentUserName);
-            friendsListPresenter.prepareSuccessView(friendsListOutputData);
+        FriendsListOutputData friendsListOutputData = new FriendsListOutputData(friendsList, currentUserName);
+        friendsListPresenter.prepareSuccessView(friendsListOutputData);
 
     }
 

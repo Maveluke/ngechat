@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ChatListInteractor implements ChatListInputBoundary{
-
+    /**
+     * This class is used to get the chat list of the current user
+     */
     private LoginDataAccessInterface userDataAccessObject;
     private ChatListDataAccessInterface chatListDataAccessObject;
     private ChatListOutputBoundary chatListPresenter;
@@ -20,6 +22,9 @@ public class ChatListInteractor implements ChatListInputBoundary{
 
     @Override
     public void execute() {
+        /**
+         * This method is used to get the chat list of the current user
+         */
         HashMap<User, String> userFriendTobinID = userDataAccessObject.getCurrentUser().getFriendToBinMap();
         boolean updated = false;
         for (User friendUser :
