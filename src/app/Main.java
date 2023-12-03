@@ -2,7 +2,6 @@ package app;
 
 import data_access.ChatListDataAccessObject;
 import data_access.UserDataAccessObject;
-import entity.Chat;
 import entity.CommonChatFactory;
 import entity.CommonUserFactory;
 import entity.UserFactory;
@@ -17,7 +16,7 @@ import interface_adapter.login.LoginViewModel;
 import interface_adapter.send_message.SendMessageViewModel;
 import interface_adapter.signup.SignupViewModel;
 import view.*;
-import view.contacts_list.FriendsListView;
+import view.FriendsListView;
 
 import javax.swing.*;
 import java.awt.*;

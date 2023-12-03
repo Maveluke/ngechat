@@ -60,15 +60,15 @@ public class CommonChat implements Chat{
     }
 
 
-    @Override
-    public String toString(){
-        String ret = "";
-        for (ArrayList<Object> pair :
-                messages) {
-            ret += String.format("sender : %s\n", pair.get(0));
-            ret += String.format("message : %s\n", pair.get(1));
-        }
-        return ret;
-    }
+//    @Override
+//    public String toString(){
+//        String ret = "";
+//        for (ArrayList<Object> pair :
+//                messages) {
+//            ret += String.format("sender : %s\n", pair.get(0));
+//            ret += String.format("message : %s\n", pair.get(1));
+//        }
+//        return ret;
+//    }
 }
 

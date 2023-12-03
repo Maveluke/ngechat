@@ -24,7 +24,7 @@ public class AddContactInteractorTest {
         this.userDataAccessObject = new UserDataAccessObject(masterKey, userFactory);
         userDataAccessObject.setCurrentUsername("admin");
         this.currentUser = userDataAccessObject.getCurrentUser();
-        this.friend = userDataAccessObject.get("user");
+        this.friend = userDataAccessObject.get("chris");
     }
 
     @Test
@@ -33,7 +33,7 @@ public class AddContactInteractorTest {
         AddContactOutputBoundary successPresenter = new AddContactOutputBoundary() {
             @Override
             public void prepareSuccessView() {
-                assert(currentUser.isFriendWith("user"));
+                assert(currentUser.isFriendWith("chris"));
                 assert(friend.isFriendWith("admin"));
             }
 
@@ -43,7 +43,7 @@ public class AddContactInteractorTest {
             }
         };
         AddContactInteractor addContactInteractor = new AddContactInteractor(successPresenter, userDataAccessObject);
-        AddContactInputData addContactInputData = new AddContactInputData("user");
+        AddContactInputData addContactInputData = new AddContactInputData("chris");
         addContactInteractor.execute(addContactInputData);
         tearDown();
     }

@@ -29,14 +29,14 @@ public class CommonMessage implements Message{
     public String getSender() {
         return this.senderUsername;
     }
-    @Override
-    public String toString(){
-        String ret = "";
-        ret += this.message;
-        ret += "\n";
-        ret += this.timeSent;
-        ret += "\n";
-        return ret;
-    }
+//    @Override
+//    public String toString(){
+//        String ret = "";
+//        ret += this.message;
+//        ret += "\n";
+//        ret += this.timeSent;
+//        ret += "\n";
+//        return ret;
+//    }
 }
 

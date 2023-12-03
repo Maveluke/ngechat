@@ -1,4 +1,4 @@
-package view.contacts_list;
+package view;
 
 import interface_adapter.add_contact.AddContactController;
 import interface_adapter.add_contact.AddContactViewModel;

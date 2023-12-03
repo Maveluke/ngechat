@@ -7,11 +7,6 @@ public class FriendsListState {
 
     private ArrayList<String> friendsList = new ArrayList<>();
 
-    public FriendsListState(FriendsListState copy) {
-        friendsList.clear();
-        friendsList.addAll(copy.friendsList);
-    }
-
     public FriendsListState() {
     }
 

@@ -1,10 +1,11 @@
 package Use_case;
 
-import app.ChatListUseCaseFactory;
+import app.InChatUseCaseFactory;
 import data_access.ChatListDataAccessObject;
 import data_access.UserDataAccessObject;
 import entity.CommonChatFactory;
 import entity.CommonUserFactory;
+import entity.User;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_contact.AddContactViewModel;
@@ -12,7 +13,10 @@ import interface_adapter.block_contact.BlockContactViewModel;
 import interface_adapter.chat_list.ChatListController;
 import interface_adapter.chat_list.ChatListPresenter;
 import interface_adapter.chat_list.ChatListViewModel;
+import interface_adapter.friends_list.FriendsListController;
 import interface_adapter.friends_list.FriendsListViewModel;
+import interface_adapter.in_chat.InChatPrivateController;
+import interface_adapter.in_chat.InChatPrivatePresenter;
 import interface_adapter.in_chat.InChatPrivateViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.send_message.SendMessageViewModel;
@@ -21,19 +25,27 @@ import org.junit.Test;
 import use_case.chat_list.ChatListInputBoundary;
 import use_case.chat_list.ChatListInteractor;
 import use_case.chat_list.ChatListOutputBoundary;
-import view.ChatListView;
+import use_case.friends_list.FriendsListInputBoundary;
+import use_case.friends_list.FriendsListInteractor;
+import use_case.friends_list.FriendsListOutputBoundary;
+import use_case.friends_list.FriendsListOutputData;
+import use_case.in_chat.*;
+import view.InChatPrivateView;
 import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
+import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
-public class ChatListTest {
+public class InChatTest {
+
 
     @Test
-    public void testChatList() throws IOException{
+    public void successTest() {
         JFrame application = new JFrame("ngechat");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -54,30 +66,48 @@ public class ChatListTest {
         SendMessageViewModel sendMessageViewModel = new SendMessageViewModel();
         InChatPrivateViewModel inChatPrivateViewModel = new InChatPrivateViewModel();
 
+        InChatInputData inChatInputData = new InChatInputData("budi", "chris");
         String masterKey = "$2a$10$xfVheBzZjicxu..Dy7zLHeBNVrrPWZ/jEK/qfX7nTY.WKY/Tx9LM2";
-        UserFactory userFactory = new CommonUserFactory();
-        UserDataAccessObject userDataAccessObject;
-        try{
-            userDataAccessObject = new UserDataAccessObject(masterKey, userFactory);
-        }catch (Exception e){
-            System.out.println("The creation of User Data Access Object is unsuccessful with error: " + e.getMessage());
-            throw new IOException();
-        }
         CommonChatFactory commonChatFactory = new CommonChatFactory();
-        ChatListDataAccessObject chatListDataAccessObject;
-        try {
-            chatListDataAccessObject = new ChatListDataAccessObject(masterKey, commonChatFactory);
-        }catch (Exception e){
-            System.out.println("The creation of ChatListDAO is unsuccessful");
-            throw new IOException();
-        }
-        ChatListView chatListView = ChatListUseCaseFactory.create(viewManagerModel, chatListViewModel, friendsListViewModel, inChatPrivateViewModel, chatListDataAccessObject, userDataAccessObject);
-        views.add(chatListView, chatListView.viewName);
-        userDataAccessObject.setCurrentUsername("admin");
+        ChatListDataAccessObject chatListDataAccessObject = new ChatListDataAccessObject(masterKey, commonChatFactory);
+
+        InchatOutputBoundary successPresenter = new InchatOutputBoundary() {
+            @Override
+            public void prepareSuccessView(InchatOutputData inchatOutputData) {
+
+                ArrayList<ArrayList<Object>> expectedArray = new ArrayList<>();
+
+                assertThat(inchatOutputData.getMessages(), is(equalTo(expectedArray)));
+
+                String expectedUsername = "chris";
+
+                assertThat(inchatOutputData.getUsername(), is(equalTo(expectedUsername)));
+
+                String expectedFriend = "budi";
+
+                assertThat(inchatOutputData.getFriendName(), is(equalTo(expectedFriend)));
+            }
+
+        };
+
+        UserFactory userFactory = new CommonUserFactory();
+        UserDataAccessObject userDataAccessObject = new UserDataAccessObject(masterKey, userFactory);
+        userDataAccessObject.setCurrentUsername("chris");
+        InChatPrivateView inChatPrivateView = InChatUseCaseFactory.create(viewManagerModel, inChatPrivateViewModel, sendMessageViewModel, chatListViewModel, chatListDataAccessObject, userDataAccessObject);
+        views.add(inChatPrivateView, inChatPrivateView.viewName);
+
         ChatListOutputBoundary chatListPresenter = new ChatListPresenter(chatListViewModel, viewManagerModel);
         ChatListInputBoundary chatListInteractor = new ChatListInteractor(userDataAccessObject, chatListDataAccessObject, chatListPresenter);
         ChatListController chatListController = new ChatListController(chatListInteractor);
         chatListController.execute();
-        assertEquals(chatListViewModel.getState().getChatList(), chatListDataAccessObject.getChats());
+
+        InchatOutputBoundary inChatPresenter = new InChatPrivatePresenter(inChatPrivateViewModel, viewManagerModel);
+        InChatInputBoundary interactor = new InChatInteractor(chatListDataAccessObject, chatListDataAccessObject, inChatPresenter);
+
+        interactor.execute(inChatInputData);
+
+        InChatPrivateController inChatPrivateController = new InChatPrivateController(interactor);
+        inChatPrivateController.execute(inChatInputData.getFriendName(), inChatInputData.getUsername());
     }
+
 }
