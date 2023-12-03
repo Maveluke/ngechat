@@ -1,16 +1,20 @@
-package Use_case;
+package data_access;
 
-import data_access.UserDataAccessObject;
 import entity.CommonUserFactory;
 import org.junit.Test;
+import use_case.create_chat.CreateChatInputData;
 import use_case.login.*;
-import use_case.signup.*;
 
 import static org.junit.Assert.*;
 
-public class LoginInteractorTest {
+public class ChatListDataAccessObjectTest {
+
     @Test
     public void successTest() {
+
+        CreateChatInputData createChatInputData = new CreateChatInputData("admin2");
+
+
         LoginInputData loginInputData = new LoginInputData("admin", "admin");
         String masterKey = "$2a$10$xfVheBzZjicxu..Dy7zLHeBNVrrPWZ/jEK/qfX7nTY.WKY/Tx9LM2";
         CommonUserFactory userFactory = new CommonUserFactory();
@@ -32,30 +36,5 @@ public class LoginInteractorTest {
         interactor.execute(loginInputData);
 
     }
-
-    @Test
-    public void failureTest() {
-        LoginInputData loginInputData = new LoginInputData("timothy", "admin");
-        String masterKey = "$2a$10$xfVheBzZjicxu..Dy7zLHeBNVrrPWZ/jEK/qfX7nTY.WKY/Tx9LM2";
-        CommonUserFactory userFactory = new CommonUserFactory();
-        LoginDataAccessInterface userRepository = new UserDataAccessObject(masterKey, userFactory);
-
-        LoginOutputBoundary successPresenter = new LoginOutputBoundary() {
-            @Override
-            public void prepareSuccessView(LoginOutputData user) {
-                fail("Use case success is unexpected.");
-            }
-
-            @Override
-            public void prepareFailView(String error)  {
-                assertEquals("Username does not exist!", error);
-
-            }
-        };
-        LoginInputBoundary interactor = new LoginInteractor(successPresenter, userRepository);
-        interactor.execute(loginInputData);
-
-    }
-
 
 }

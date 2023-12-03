@@ -1,5 +1,6 @@
 package Use_case;
 
+import interface_adapter.block_contact.BlockContactPresenter;
 import org.junit.Test;
 import entity.CommonUserFactory;
 import data_access.UserDataAccessObject;
@@ -26,7 +27,7 @@ public class BlockContactInteractorTest {
 
         BlockContactOutputBoundary blockContactPresenter = new BlockContactOutputBoundary() {
             @Override
-            public void prepareSuccessView() {
+            public void prepareSuccessView(String friendName) {
                 assertFalse(userDataAccessObject.get("admin").isFriendWith("admin3"));
                 assertFalse(userDataAccessObject.get("admin3").isFriendWith("admin"));
 
