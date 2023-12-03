@@ -5,6 +5,7 @@ import data_access.UserDataAccessObject;
 import entity.CommonChatFactory;
 import entity.CommonUserFactory;
 import entity.User;
+import interface_adapter.add_contact.AddContactController;
 import interface_adapter.add_contact.AddContactViewModel;
 import interface_adapter.friends_list.FriendsListViewModel;
 import org.junit.jupiter.api.Test;
@@ -53,7 +54,8 @@ public class AddContactInteractorTest {
         };
         AddContactInteractor addContactInteractor = new AddContactInteractor(successPresenter, userDataAccessObject);
         AddContactInputData addContactInputData = new AddContactInputData("admin3");
-        addContactInteractor.execute(addContactInputData);
+        AddContactController addContactController = new AddContactController(addContactInteractor);
+        addContactController.execute(addContactInputData.getFriendUsername());
         tearDown();
     }
     @AfterEach
