@@ -3,6 +3,7 @@ package Use_case;
 import data_access.UserDataAccessObject;
 import entity.CommonUserFactory;
 import entity.User;
+import interface_adapter.add_contact.AddContactController;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +13,7 @@ import use_case.add_contact.AddContactOutputBoundary;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class AddContactInteractorTest {
+public class AddContactTest {
 
     private UserDataAccessObject userDataAccessObject;
     private User currentUser;
@@ -28,7 +29,7 @@ public class AddContactInteractorTest {
     }
 
     @Test
-    public void testAddContactInteractor() {
+    public void testAddContact() {
         init();
         AddContactOutputBoundary successPresenter = new AddContactOutputBoundary() {
             @Override
@@ -44,7 +45,8 @@ public class AddContactInteractorTest {
         };
         AddContactInteractor addContactInteractor = new AddContactInteractor(successPresenter, userDataAccessObject);
         AddContactInputData addContactInputData = new AddContactInputData("user");
-        addContactInteractor.execute(addContactInputData);
+        AddContactController addContactController = new AddContactController(addContactInteractor);
+        addContactController.execute(addContactInputData.getFriendUsername());
         tearDown();
     }
     @AfterEach

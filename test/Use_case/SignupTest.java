@@ -2,6 +2,7 @@ package Use_case;
 
 import data_access.UserDataAccessObject;
 import entity.CommonUserFactory;
+import interface_adapter.signup.SignupController;
 import use_case.signup.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-public class SignupInteractorTest {
+public class SignupTest {
 
     private CommonUserFactory commonUserFactory;
     private UserDataAccessObject userDataAccessObject;
@@ -39,8 +40,9 @@ public class SignupInteractorTest {
             }
         };
         SignupInteractor signupInteractor = new SignupInteractor(userDataAccessObject, signupOutputBoundary, commonUserFactory);
+        SignupController signupController = new SignupController(signupInteractor);
 
-        signupInteractor.execute(signupInputData);
+        signupController.execute(signupInputData.getUsername(), signupInputData.getPassword(), signupInputData.getRepeatPassword());
     }
 
 }

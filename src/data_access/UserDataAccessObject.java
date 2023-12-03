@@ -24,7 +24,7 @@ public class UserDataAccessObject implements SignupUserDataAccessInterface,
         AddContactDataAccessInterface, LoginDataAccessInterface,
         FriendsListDataAccessInterface, BlockContactDataAccessInterface, CreateChatUserDataAccessInterface {
 
-    private static final String USER_BIN_ID = "65642e610574da7622cc9825";
+    private static final String USER_BIN_ID = "656bacf212a5d37659a23754";
     private static final MediaType mediaType = MediaType.parse("application/json");
     private final String masterKey;
     private static final String API_URL = "https://api.jsonbin.io/v3/b";
