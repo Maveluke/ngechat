@@ -112,7 +112,7 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
         try{
             Response updateResponse = client.newCall(uploadRequest).execute();
         }catch (Exception e){
-            System.out.println("Fail to get response when uploading users");
+            System.out.println("Fail to get response when uploading chat to API! with the error: " + e);
         }
     }
     @Override
