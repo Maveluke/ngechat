@@ -2,6 +2,7 @@ package Use_case;
 
 import data_access.UserDataAccessObject;
 import entity.CommonUserFactory;
+import interface_adapter.login.LoginController;
 import org.junit.Test;
 import use_case.login.*;
 
@@ -12,8 +13,6 @@ public class LoginTest {
     public void successTest() {
         LoginInputData loginInputData = new LoginInputData("admin", "admin");
         String masterKey = "$2a$10$xfVheBzZjicxu..Dy7zLHeBNVrrPWZ/jEK/qfX7nTY.WKY/Tx9LM2";
-        String uploadURL = "https://api.jsonbin.io/v3/b";
-        String downloadURL = "https://api.jsonbin.io/v3/b/653f1b8c54105e766fc8df34?meta=false";
         CommonUserFactory userFactory = new CommonUserFactory();
         LoginDataAccessInterface userRepository = new UserDataAccessObject(masterKey, userFactory);
 
@@ -30,16 +29,14 @@ public class LoginTest {
             }
         };
         LoginInputBoundary interactor = new LoginInteractor(successPresenter, userRepository);
-        interactor.execute(loginInputData);
-
+        LoginController loginController = new LoginController(interactor);
+        loginController.execute(loginInputData.getUsername(), loginInputData.getPassword());
     }
 
     @Test
     public void failureTest() {
         LoginInputData loginInputData = new LoginInputData("timothy", "admin");
         String masterKey = "$2a$10$xfVheBzZjicxu..Dy7zLHeBNVrrPWZ/jEK/qfX7nTY.WKY/Tx9LM2";
-        String uploadURL = "https://api.jsonbin.io/v3/b";
-        String downloadURL = "https://api.jsonbin.io/v3/b/653f1b8c54105e766fc8df34?meta=false";
         CommonUserFactory userFactory = new CommonUserFactory();
         LoginDataAccessInterface userRepository = new UserDataAccessObject(masterKey, userFactory);
 
@@ -56,9 +53,9 @@ public class LoginTest {
             }
         };
         LoginInputBoundary interactor = new LoginInteractor(successPresenter, userRepository);
+        LoginController loginController = new LoginController(interactor);
+        loginController.execute(loginInputData.getUsername(), loginInputData.getPassword());
         interactor.execute(loginInputData);
-
     }
-
 
 }
