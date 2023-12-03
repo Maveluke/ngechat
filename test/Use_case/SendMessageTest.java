@@ -28,14 +28,13 @@ import use_case.create_chat.CreateChatInputBoundary;
 import use_case.create_chat.CreateChatInteractor;
 import use_case.create_chat.CreateChatOutputBoundary;
 import use_case.create_chat.CreateChatOutputData;
-import use_case.send_message.SendMessageInputBoundary;
-import use_case.send_message.SendMessageInteractor;
-import use_case.send_message.SendMessageOutputBoundary;
+import use_case.send_message.*;
 import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -102,6 +101,16 @@ public class SendMessageTest {
         SendMessageController sendMessageController = new SendMessageController(sendMessageInteractor);
         sendMessageController.execute(messageText, sender, friendName);
         assertEquals(sender, sendMessageViewModel.getState().getSender());
-        assertEquals("", sendMessageViewModel.getState().getMessage());}
+        assertEquals("", sendMessageViewModel.getState().getMessage());
+
+        SendMessageInputData sendMessageInputData = new SendMessageInputData(messageText, sender, friendName);
+        assertEquals(messageText, sendMessageInputData.getMessageText());
+        assertEquals(sender, sendMessageInputData.getSender());
+        assertEquals(friendName, sendMessageInputData.getFriendName());
+
+        sendMessageInteractor.execute(sendMessageInputData);
+        SendMessageOutputData sendMessageOutputData = new SendMessageOutputData(messageText, LocalDateTime.now().toString(), sender);
+        sendMessagePresenter.prepareSuccessView(sendMessageOutputData);
+    }
 
 }
