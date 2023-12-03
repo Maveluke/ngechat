@@ -47,6 +47,7 @@ public class AddContactTest {
         AddContactInputData addContactInputData = new AddContactInputData("user");
         AddContactController addContactController = new AddContactController(addContactInteractor);
         addContactController.execute(addContactInputData.getFriendUsername());
+        addContactInteractor.execute(addContactInputData);
         tearDown();
     }
     @AfterEach

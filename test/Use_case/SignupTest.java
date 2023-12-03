@@ -43,6 +43,7 @@ public class SignupTest {
         SignupController signupController = new SignupController(signupInteractor);
 
         signupController.execute(signupInputData.getUsername(), signupInputData.getPassword(), signupInputData.getRepeatPassword());
+        signupInteractor.execute(signupInputData);
     }
 
 }

@@ -55,6 +55,7 @@ public class LoginTest {
         LoginInputBoundary interactor = new LoginInteractor(successPresenter, userRepository);
         LoginController loginController = new LoginController(interactor);
         loginController.execute(loginInputData.getUsername(), loginInputData.getPassword());
+        interactor.execute(loginInputData);
     }
 
 }

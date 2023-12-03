@@ -59,6 +59,7 @@ public class BlockContactTest {
         ArrayList friendUsernames = new ArrayList<String>();
         friendUsernames.add(blockContactInputData.getFriendUsername());
         blockContactController.execute(friendUsernames);
+        blockContactInteractor.execute(blockContactInputData);
         tearDown();
     }
 
