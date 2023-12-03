@@ -30,11 +30,18 @@ public class AddContactTest {
 
     @Test
     public void testAddContact() {
+        userDataAccessObject.setCurrentUsername("admin");
+        this.currentUser = userDataAccessObject.get("admin");
+        this.friend = userDataAccessObject.get("chris");
+    }
+
+    @Test
+    public void testAddContactInteractor() {
         init();
         AddContactOutputBoundary successPresenter = new AddContactOutputBoundary() {
             @Override
             public void prepareSuccessView() {
-                assert(currentUser.isFriendWith("user"));
+                assert(currentUser.isFriendWith("chris"));
                 assert(friend.isFriendWith("admin"));
             }
 
