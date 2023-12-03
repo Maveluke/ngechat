@@ -24,8 +24,8 @@ public class AddContactTest {
         CommonUserFactory userFactory = new CommonUserFactory();
         this.userDataAccessObject = new UserDataAccessObject(masterKey, userFactory);
         userDataAccessObject.setCurrentUsername("admin");
-        this.currentUser = userDataAccessObject.get("admin");
-        this.friend = userDataAccessObject.get("admin3");
+        this.currentUser = userDataAccessObject.getCurrentUser();
+        this.friend = userDataAccessObject.get("user");
     }
 
     @Test
@@ -34,7 +34,7 @@ public class AddContactTest {
         AddContactOutputBoundary successPresenter = new AddContactOutputBoundary() {
             @Override
             public void prepareSuccessView() {
-                assert(currentUser.isFriendWith("admin3"));
+                assert(currentUser.isFriendWith("user"));
                 assert(friend.isFriendWith("admin"));
             }
 
@@ -44,7 +44,7 @@ public class AddContactTest {
             }
         };
         AddContactInteractor addContactInteractor = new AddContactInteractor(successPresenter, userDataAccessObject);
-        AddContactInputData addContactInputData = new AddContactInputData("admin3");
+        AddContactInputData addContactInputData = new AddContactInputData("user");
         AddContactController addContactController = new AddContactController(addContactInteractor);
         addContactController.execute(addContactInputData.getFriendUsername());
         tearDown();
