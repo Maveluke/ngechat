@@ -11,27 +11,40 @@ import interface_adapter.block_contact.BlockContactViewModel;
 import interface_adapter.chat_list.ChatListController;
 import interface_adapter.chat_list.ChatListPresenter;
 import interface_adapter.chat_list.ChatListViewModel;
+import interface_adapter.create_chat.CreateChatController;
+import interface_adapter.create_chat.CreateChatPresenter;
 import interface_adapter.friends_list.FriendsListViewModel;
 import interface_adapter.in_chat.InChatPrivateViewModel;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.send_message.SendMessageController;
+import interface_adapter.send_message.SendMessagePresenter;
 import interface_adapter.send_message.SendMessageViewModel;
 import interface_adapter.signup.SignupViewModel;
 import org.junit.Test;
 import use_case.chat_list.ChatListInputBoundary;
 import use_case.chat_list.ChatListInteractor;
 import use_case.chat_list.ChatListOutputBoundary;
+import use_case.create_chat.CreateChatInputBoundary;
+import use_case.create_chat.CreateChatInteractor;
+import use_case.create_chat.CreateChatOutputBoundary;
+import use_case.create_chat.CreateChatOutputData;
+import use_case.send_message.*;
 import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ChatListTest {
-
+public class SendMessageTest {
     @Test
-    public void testChatList() throws IOException{
+    public void testSendMessage() throws IOException{
+        String messageText = "Hello";
+        String sender = "admin";
+        String friendName = "budi";
+
         JFrame application = new JFrame("ngechat");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -69,11 +82,26 @@ public class ChatListTest {
             System.out.println("The creation of ChatListDAO is unsuccessful");
             throw new IOException();
         }
+
         userDataAccessObject.setCurrentUsername("admin");
+
         ChatListOutputBoundary chatListPresenter = new ChatListPresenter(chatListViewModel, viewManagerModel);
         ChatListInputBoundary chatListInteractor = new ChatListInteractor(userDataAccessObject, chatListDataAccessObject, chatListPresenter);
         ChatListController chatListController = new ChatListController(chatListInteractor);
         chatListController.execute();
-        assertEquals(chatListViewModel.getState().getChatList(), chatListDataAccessObject.getChats());
+
+        CreateChatOutputBoundary createChatPresenter = new CreateChatPresenter(inChatPrivateViewModel, viewManagerModel);
+        CreateChatInputBoundary createChatInteractor = new CreateChatInteractor(chatListDataAccessObject, userDataAccessObject, createChatPresenter, commonChatFactory);
+        CreateChatController createChatController = new CreateChatController(createChatInteractor);
+        createChatController.execute("budi");
+
+
+        SendMessageOutputBoundary sendMessagePresenter = new SendMessagePresenter(sendMessageViewModel, viewManagerModel);
+        SendMessageInputBoundary sendMessageInteractor = new SendMessageInteractor(chatListDataAccessObject, sendMessagePresenter);
+        SendMessageController sendMessageController = new SendMessageController(sendMessageInteractor);
+        sendMessageController.execute(messageText, sender, friendName);
+        assertEquals(sender, sendMessageViewModel.getState().getSender());
+        assertEquals("", sendMessageViewModel.getState().getMessage());
     }
+
 }

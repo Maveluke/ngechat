@@ -17,11 +17,5 @@ public class SendMessageController {
         SendMessageInputData sendMessageInputData = new SendMessageInputData(messageText, sender, friendName);
 
         sendMessageInteractor.execute(sendMessageInputData);
-
-
     }
-
-
-
-
 }
