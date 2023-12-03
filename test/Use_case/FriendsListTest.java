@@ -9,12 +9,14 @@ public class FriendsListTest {
 //        UserDataAccessObject userRepository = new UserDataAccessObject(masterKey, userFactory);
 //        userRepository.addFriend("admin", "admin2");
 //
+//        userRepository.setCurrentUsername("admin2");
+//
 //        FriendsListOutputBoundary successPresenter = new FriendsListOutputBoundary() {
 //            @Override
 //            public void prepareSuccessView(FriendsListOutputData friendsListOutputData) {
 //
-//                HashMap<String, User> expectedMap = new HashMap<>();
-//                expectedMap.put("admin2", aFriend);
+//                HashMap<String, String> expectedMap = new HashMap<>();
+//                expectedMap.put("admin2", "admin");
 //
 //                System.out.println(expectedMap);
 //                System.out.println(friendsListOutputData.getFriends());

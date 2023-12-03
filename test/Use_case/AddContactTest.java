@@ -58,5 +58,4 @@ public class AddContactTest {
     public void tearDown() {
         userDataAccessObject.blockFriend(currentUser.getName(), friend.getName());
     }
-
 }
