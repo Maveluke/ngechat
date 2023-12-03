@@ -18,7 +18,7 @@ import interface_adapter.signup.SignupViewModel;
 import interface_adapter.switch_view.SwitchViewController;
 import org.junit.Test;
 import view.*;
-import view.contacts_list.FriendsListView;
+import view.FriendsListView;
 
 import javax.swing.*;
 import java.awt.*;

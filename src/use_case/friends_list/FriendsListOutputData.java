@@ -16,9 +16,4 @@ public class FriendsListOutputData {
     public ArrayList<String> getFriends() {
         return friendsList;
     }
-
-    public String getCurrentUserName(){
-        return currentUserName;
-    }
-
 }
