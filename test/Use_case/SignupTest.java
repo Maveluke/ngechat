@@ -8,7 +8,7 @@ import use_case.signup.*;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-public class SignupInteractorTest {
+public class SignupTest {
 
     @Test
     public void successTest() {

@@ -18,7 +18,7 @@ import use_case.add_contact.AddContactOutputBoundary;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class AddContactInteractorTest {
+public class AddContactTest {
 
     private UserDataAccessObject userDataAccessObject;
     private ChatListDataAccessObject chatListDataAccessObject;

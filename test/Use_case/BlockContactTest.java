@@ -1,6 +1,5 @@
 package Use_case;
 
-import interface_adapter.block_contact.BlockContactPresenter;
 import org.junit.Test;
 import entity.CommonUserFactory;
 import data_access.UserDataAccessObject;
@@ -11,7 +10,7 @@ import use_case.block_contact.BlockContactOutputBoundary;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
-public class BlockContactInteractorTest {
+public class BlockContactTest {
 
     @Test
     public void successTest() {

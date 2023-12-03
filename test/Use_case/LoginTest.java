@@ -4,11 +4,10 @@ import data_access.UserDataAccessObject;
 import entity.CommonUserFactory;
 import org.junit.Test;
 import use_case.login.*;
-import use_case.signup.*;
 
 import static org.junit.Assert.*;
 
-public class LoginInteractorTest {
+public class LoginTest {
     @Test
     public void successTest() {
         LoginInputData loginInputData = new LoginInputData("admin", "admin");

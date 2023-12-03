@@ -6,14 +6,12 @@ import entity.CommonChatFactory;
 import entity.CommonUserFactory;
 import interface_adapter.create_chat.CreateChatController;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import use_case.create_chat.*;
-import use_case.login.*;
 
 import static org.junit.Assert.*;
 
-public class CreateChatInteractorTest {
+public class CreateChatTest {
 
     CreateChatInputData createChatInputData;
     UserDataAccessObject userRepository;
