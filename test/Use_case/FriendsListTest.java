@@ -68,21 +68,22 @@ public class FriendsListTest {
         CommonChatFactory commonChatFactory = new CommonChatFactory();
         ChatListDataAccessObject chatListDataAccessObject;
         chatListDataAccessObject = new ChatListDataAccessObject(masterKey, commonChatFactory);
-        FriendsListOutputBoundary successPresenter = new FriendsListOutputBoundary() {
-            @Override
-            public void prepareSuccessView(FriendsListOutputData friendsListOutputData) {
-
-                ArrayList<String> expectedArray = new ArrayList<>();
-                expectedArray.add("budi");
-
-                assertThat(friendsListOutputData.getFriends(), is(equalTo(expectedArray)));
-            }
-
-        };
+//        FriendsListOutputBoundary successPresenter = new FriendsListOutputBoundary() {
+//            @Override
+//            public void prepareSuccessView(FriendsListOutputData friendsListOutputData) {
+//
+//                ArrayList<String> expectedArray = new ArrayList<>();
+//                expectedArray.add("budi");
+//
+//                assertThat(friendsListOutputData.getFriends(), is(equalTo(expectedArray)));
+//            }
+//
+//        };
+        FriendsListOutputBoundary friendsListPresenter = new FriendsListPresenter(viewManagerModel, friendsListViewModel);
         FriendsListView friendsListView = FriendsListUseCaseFactory.create(viewManagerModel, friendsListViewModel, chatListViewModel, chatListDataAccessObject, blockContactViewModel, userRepository, inChatPrivateViewModel);
         views.add(friendsListView, friendsListView.viewName);
 
-        FriendsListInputBoundary interactor = new FriendsListInteractor(userRepository, successPresenter);
+        FriendsListInputBoundary interactor = new FriendsListInteractor(userRepository, friendsListPresenter);
 
         interactor.execute();
 

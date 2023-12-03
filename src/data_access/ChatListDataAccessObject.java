@@ -177,20 +177,20 @@ public class ChatListDataAccessObject implements ChatListDataAccessInterface, Cr
     public void addChat(String friendUsername, Chat chat) {
         chatList.put(friendUsername, chat);
     }
-    @Override
-    public String toString(){
-        String ret = "friends: \n";
-        for (String friendUsername :
-                friendTobinID.keySet()) {
-            ret += String.format("%s : %s\n", friendUsername, friendTobinID.get(friendUsername));
-        }
-        ret += "Chats: \n";
-        for (String friendUsername :
-                chatList.keySet()) {
-            ret += String.format("%s\n", chatList.get(friendUsername).toString());
-        }
-        return ret;
-    }
+//    @Override
+//    public String toString(){
+//        String ret = "friends: \n";
+//        for (String friendUsername :
+//                friendTobinID.keySet()) {
+//            ret += String.format("%s : %s\n", friendUsername, friendTobinID.get(friendUsername));
+//        }
+//        ret += "Chats: \n";
+//        for (String friendUsername :
+//                chatList.keySet()) {
+//            ret += String.format("%s\n", chatList.get(friendUsername).toString());
+//        }
+//        return ret;
+//    }
 
     public Chat getChat(String friendName) {
         return chatList.get(friendName);
