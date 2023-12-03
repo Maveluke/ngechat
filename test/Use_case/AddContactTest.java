@@ -5,7 +5,6 @@ import data_access.UserDataAccessObject;
 import entity.CommonChatFactory;
 import entity.CommonUserFactory;
 import entity.User;
-import interface_adapter.add_contact.AddContactViewModel;
 import interface_adapter.friends_list.FriendsListViewModel;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
@@ -17,12 +16,11 @@ import use_case.add_contact.AddContactOutputBoundary;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class AddContactInteractorTest {
+public class AddContactTest {
 
     private UserDataAccessObject userDataAccessObject;
     private ChatListDataAccessObject chatListDataAccessObject;
     private FriendsListViewModel friendsListViewModel;
-    private AddContactViewModel addContactViewModel;
     private User currentUser;
     private User friend;
     @BeforeEach

@@ -1,19 +1,6 @@
 package Use_case;
 
-import data_access.UserDataAccessObject;
-import entity.CommonUserFactory;
-import entity.User;
-import org.junit.Test;
-import use_case.add_contact.AddContactDataAccessInterface;
-import use_case.friends_list.*;
-import use_case.login.*;
-import use_case.signup.*;
-
-import java.util.HashMap;
-
-import static org.junit.Assert.*;
-
-public class FriendsListInteractorTest {
+public class FriendsListTest {
 
 //    @Test
 //    public void successTest() {
