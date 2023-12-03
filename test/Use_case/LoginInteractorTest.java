@@ -2,31 +2,19 @@ package Use_case;
 
 import data_access.UserDataAccessObject;
 import entity.CommonUserFactory;
-import interface_adapter.login.LoginController;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import use_case.login.*;
 
 import static org.junit.Assert.*;
 
-public class LoginTest {
-
-    CommonUserFactory userFactory = new CommonUserFactory();
-
-    LoginDataAccessInterface userRepository;
-
-    @BeforeEach
-    public void init(){
-
-        String masterKey = "$2a$10$xfVheBzZjicxu..Dy7zLHeBNVrrPWZ/jEK/qfX7nTY.WKY/Tx9LM2";
-
-        userRepository = new UserDataAccessObject(masterKey, userFactory);
-    }
-
+public class LoginInteractorTest {
     @Test
     public void successTest() {
+        LoginInputData loginInputData = new LoginInputData("admin", "admin");
+        String masterKey = "$2a$10$xfVheBzZjicxu..Dy7zLHeBNVrrPWZ/jEK/qfX7nTY.WKY/Tx9LM2";
+        CommonUserFactory userFactory = new CommonUserFactory();
+        LoginDataAccessInterface userRepository = new UserDataAccessObject(masterKey, userFactory);
 
-        init();
         LoginOutputBoundary successPresenter = new LoginOutputBoundary() {
             @Override
             public void prepareSuccessView(LoginOutputData user) {
@@ -39,19 +27,17 @@ public class LoginTest {
 
             }
         };
-        LoginInputData loginInputData = new LoginInputData("admin", "admin");
         LoginInputBoundary interactor = new LoginInteractor(successPresenter, userRepository);
-        LoginController controller = new LoginController(interactor);
-        controller.execute(loginInputData.getUsername(), loginInputData.getPassword());
+        interactor.execute(loginInputData);
 
     }
 
-
-
     @Test
     public void failureTest() {
-
-        init();
+        LoginInputData loginInputData = new LoginInputData("timothy", "admin");
+        String masterKey = "$2a$10$xfVheBzZjicxu..Dy7zLHeBNVrrPWZ/jEK/qfX7nTY.WKY/Tx9LM2";
+        CommonUserFactory userFactory = new CommonUserFactory();
+        LoginDataAccessInterface userRepository = new UserDataAccessObject(masterKey, userFactory);
 
         LoginOutputBoundary successPresenter = new LoginOutputBoundary() {
             @Override
@@ -65,10 +51,8 @@ public class LoginTest {
 
             }
         };
-        LoginInputData loginInputData = new LoginInputData("timothy", "admin");
         LoginInputBoundary interactor = new LoginInteractor(successPresenter, userRepository);
-        LoginController controller = new LoginController(interactor);
-        controller.execute(loginInputData.getUsername(), loginInputData.getPassword());
+        interactor.execute(loginInputData);
 
     }
 
