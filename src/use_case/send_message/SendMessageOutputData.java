@@ -20,10 +20,6 @@ public class SendMessageOutputData {
         return sender;
     }
 
-    public String getText() {
-        return text;
-    }
-
     public String getDatetime() {
         return datetime;
     }

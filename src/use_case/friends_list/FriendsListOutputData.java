@@ -1,7 +1,6 @@
 package use_case.friends_list;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class FriendsListOutputData {
 

@@ -25,12 +25,11 @@ public class AddContactTest {
         this.userDataAccessObject = new UserDataAccessObject(masterKey, userFactory);
         userDataAccessObject.setCurrentUsername("admin");
         this.currentUser = userDataAccessObject.getCurrentUser();
-        this.friend = userDataAccessObject.get("user");
+        this.friend = userDataAccessObject.get("chris");
     }
 
     @Test
     public void testAddContact() {
-        userDataAccessObject.setCurrentUsername("admin");
         this.currentUser = userDataAccessObject.get("admin");
         this.friend = userDataAccessObject.get("chris");
     }
@@ -51,7 +50,7 @@ public class AddContactTest {
             }
         };
         AddContactInteractor addContactInteractor = new AddContactInteractor(successPresenter, userDataAccessObject);
-        AddContactInputData addContactInputData = new AddContactInputData("user");
+        AddContactInputData addContactInputData = new AddContactInputData("chris");
         AddContactController addContactController = new AddContactController(addContactInteractor);
         addContactController.execute(addContactInputData.getFriendUsername());
         tearDown();

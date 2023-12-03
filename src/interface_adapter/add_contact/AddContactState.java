@@ -4,11 +4,6 @@ public class AddContactState {
     private String username = "";
     private String usernameError = null;
 
-    public AddContactState(AddContactState copy) {
-        username = copy.username;
-        usernameError = copy.usernameError;
-    }
-
     public AddContactState() {}
 
     public String getUsername() {
